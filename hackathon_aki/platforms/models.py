@@ -1,3 +1,13 @@
 from django.db import models
 
-# Create your models here.
+
+class Platform(models):
+    pass
+
+
+class FreeSlot(models):
+    pass
+
+
+class Comment(models):
+    pass
