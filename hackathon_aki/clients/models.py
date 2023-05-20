@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Client(models.Model):
-    e_mail = models.CharField('Электронная почта', max_length=50, null=True, blank=True)
+    e_mail = models.EmailField('Электронная почта', null=True, blank=True)
     password = models.CharField('Пароль', max_length=50, null=True, blank=True)
     name = models.CharField('Имя', max_length=50, null=True, blank=True)
     surname = models.CharField('Фамилия', max_length=50, null=True, blank=True)
