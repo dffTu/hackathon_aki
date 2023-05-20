@@ -2,5 +2,3 @@ venv/
 .idea/
 
 *.bat
-
-hackathon_aki/hackathon_aki/config.py
