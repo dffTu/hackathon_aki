@@ -1,13 +1,13 @@
 from django.db import models
 
 
-class Platform(models):
+class Platform(models.Model):
     pass
 
 
-class FreeSlot(models):
+class FreeSlot(models.Model):
     pass
 
 
-class Comment(models):
+class Comment(models.Model):
     pass

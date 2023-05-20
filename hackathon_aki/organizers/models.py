@@ -1,9 +1,9 @@
 from django.db import models
 
 
-class Organizer(models):
+class Organizer(models.Model):
     pass
 
 
-class Entry(models):
+class Entry(models.Model):
     pass
