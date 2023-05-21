@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<form method="post">
+    {{ user_form.email }} <br>
+    {{ user_form.password }} <br>
+    {{ user_form.repeat_password }} <br>
+    {{ user_form.first_name }} <br>
+    {{ user_form.last_name }} <br>
+    {{ profile_form.middle_name }} <br>
+    {{ profile_form.phone_number }} <br>
+    {{ profile_form.position }} <br>
+    {{ profile_form.juridical_name }} <br>
+    {{ profile_form.inn }} <br>
+    {% csrf_token %}
+    <button type="submit">Зарегистрироваться</button>
+</form>
+</body>
+</html>

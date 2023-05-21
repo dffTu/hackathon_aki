@@ -1,17 +1,28 @@
 from django.shortcuts import render, redirect
-from .forms import OrganizerRegistrationForm
+from django.http import HttpResponse
+from .forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
 
 
 def registration(request):
-    data = {'form': OrganizerRegistrationForm()}
     if request.method == 'POST':
-        form = OrganizerRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(request.path)
-        return redirect(request.path)
-    else:
-        return render(request, 'clients/registration.html', data)
+        user_form = UserOrganizerRegistrationForm(request.POST)
+        profile_form = ProfileOrganizerRegistrationForm(request.POST)
+        print(user_form.is_valid(), user_form.errors)
+        print(profile_form.is_valid(), profile_form.errors)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save(commit=False)
+            user.username = user.email
+            user.save()
+
+            user_profile = profile_form.save(commit=False)
+            user_profile.user = user
+            user_profile.save()
+            return HttpResponse('congrats')
+        else:
+            return HttpResponse('!#@$#@#')
+
+    return render(request, 'organizers/registration.html', {'user_form': UserOrganizerRegistrationForm(),
+                                                            'profile_form': ProfileOrganizerRegistrationForm()})
 
 
 def redirect_to_organizer_profile(request):
