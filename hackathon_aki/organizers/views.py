@@ -12,3 +12,12 @@ def registration(request):
         return redirect(request.path)
     else:
         return render(request, 'clients/registration.html', data)
+
+
+def redirect_to_organizer_profile(request):
+    return redirect('/organizer/profile')
+
+
+def show_organizer_profile(request):
+    print("AABOBA")
+    return render(request, 'organizers/profile.html')
