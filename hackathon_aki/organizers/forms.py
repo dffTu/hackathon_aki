@@ -1,8 +1,8 @@
-from .models import Client
+from .models import Organizer
 from django import forms
 
 
-class ClientRegistrationForm(forms.ModelForm):
+class OrganizerRegistrationForm(forms.ModelForm):
     repeat_password = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
                 'class': 'form-control',
                 'type': 'password',
@@ -10,8 +10,8 @@ class ClientRegistrationForm(forms.ModelForm):
     }))
 
     class Meta:
-        model = Client
-        fields = ['e_mail', 'password', 'name', 'surname', 'middle_name', 'phone_number']
+        model = Organizer
+        fields = ['e_mail', 'password', 'name', 'surname', 'middle_name', 'phone_number', 'position', 'juridical_name', 'inn']
 
         widgets = {
             'e_mail': forms.EmailInput(attrs={
@@ -38,5 +38,17 @@ class ClientRegistrationForm(forms.ModelForm):
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Номер телефона',
+            }),
+            'position': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Должность',
+            }),
+            'juridical_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Название юридичиского лица',
+            }),
+            'inn': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'ИНН',
             }),
         }
