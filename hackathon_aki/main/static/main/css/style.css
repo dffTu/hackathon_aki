@@ -1,0 +1,31 @@
+*, *:befor, *:after{
+	background-size: border-box;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--index: calc(1vh + 1vw);
+	--color-text: #fff;
+}
+body {
+	background: linear-gradient(to right, #192E43, #0D151D);
+	opacity: 0.83;
+	font-family: Cantarell;
+	color: #fff;
+}
+.header{
+	width: 100%;
+	height: 130px;
+	background: linear-gradient(to right, #364F6D, #1B1E23);
+}
+.conteiner {
+	width: 100%;
+	max-width: 1700px;
+	margin: 0, auto; 
+	display: flex;
+	justify-content: center;
+}
+
