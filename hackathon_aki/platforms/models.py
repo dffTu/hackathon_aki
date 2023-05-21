@@ -2,14 +2,14 @@ from django.db import models
 
 
 class Platform(models.Model):
-    organizer = models.ForeignKey('organizers.Organizer', on_delete=models.CASCADE, null=True, blank=True)
-    agreement = models.ForeignKey('main.File', on_delete=models.SET_NULL, related_name='platform_agreement', null=True, blank=True)
-    photo = models.ForeignKey('main.File', on_delete=models.SET_NULL, related_name='platform_photo', null=True, blank=True)
+    organizer = models.ForeignKey('organizers.Organizer', on_delete=models.CASCADE)
+    agreement = models.ForeignKey('main.File', on_delete=models.SET_NULL, related_name='platform_agreement', null=True)
+    photo = models.ForeignKey('main.File', on_delete=models.SET_NULL, related_name='platform_photo', null=True)
 
-    name = models.CharField('Имя', max_length=50, null=True, blank=True)
-    description = models.TextField('Описание площадки', null=True, blank=True)
-    schedule = models.JSONField('Расписание', null=True, blank=True)
-    rating = models.FloatField('Рейтинг', null=True, blank=True)
+    name = models.CharField('Имя', max_length=50)
+    description = models.TextField('Описание площадки', blank=True)
+    schedule = models.JSONField('Расписание', blank=True)
+    rating = models.FloatField('Рейтинг')
 
     def __str__(self):
         return self.name
@@ -20,9 +20,9 @@ class Platform(models.Model):
 
 
 class FreeSlot(models.Model):
-    platform = models.ForeignKey(Platform, on_delete=models.CASCADE, null=True, blank=True)
+    platform = models.ForeignKey(Platform, on_delete=models.CASCADE)
 
-    date = models.DateField('Свободная дата', null=True, blank=True)
+    date = models.DateField('Свободная дата')
 
     def __str__(self):
         return f'Свободно {self.date}'
@@ -33,12 +33,12 @@ class FreeSlot(models.Model):
 
 
 class Comment(models.Model):
-    client = models.ForeignKey('clients.Client', on_delete=models.CASCADE, null=True, blank=True)
-    platform = models.ForeignKey(Platform, on_delete=models.CASCADE, null=True, blank=True)
-    attachment = models.ForeignKey('main.File', on_delete=models.SET_NULL, null=True, blank=True)
+    client = models.ForeignKey('clients.Client', on_delete=models.CASCADE)
+    platform = models.ForeignKey(Platform, on_delete=models.CASCADE)
+    attachment = models.ForeignKey('main.File', on_delete=models.SET_NULL, null=True)
 
-    text = models.TextField('Текст отзыва', null=True, blank=True)
-    rating = models.FloatField('Рейтинг', null=True, blank=True)
+    text = models.TextField('Текст отзыва', blank=True)
+    rating = models.FloatField('Рейтинг')
 
     def __str__(self):
         return self.text
