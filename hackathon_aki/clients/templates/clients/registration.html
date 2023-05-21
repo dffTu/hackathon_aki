@@ -9,10 +9,14 @@
 </head>
 <body>
 <form method="post">
-{% csrf_token %}
-{% for val in form %}
-    {{ val }}
-{% endfor %}
+    {% csrf_token %}
+    {{ form.e_mail }} <br>
+    {{ form.password }} <br>
+    <input type="password" placeholder="Повторите пароль" class="form-control"> <br>
+    {{ form.name }} <br>
+    {{ form.surname }} <br>
+    {{ form.middle_name }} <br>
+    {{ form.phone_number }} <br>
 <button type="submit">Зарегистрироваться</button>
 </form>
 </body>
