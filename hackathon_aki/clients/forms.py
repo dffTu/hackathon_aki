@@ -2,7 +2,7 @@ from .models import Client
 from django import forms
 
 
-class ClientRegistrationForm(forms.ModelForm):
+class UserClientRegistrationForm(forms.ModelForm):
     repeat_password = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
                 'class': 'form-control',
                 'type': 'password',
@@ -11,10 +11,10 @@ class ClientRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = Client
-        fields = ['e_mail', 'password', 'name', 'surname', 'middle_name', 'phone_number']
+        fields = ['email', 'password', 'first_name', 'last_name']
 
         widgets = {
-            'e_mail': forms.EmailInput(attrs={
+            'email': forms.EmailInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'E-mail',
             }),
@@ -23,14 +23,23 @@ class ClientRegistrationForm(forms.ModelForm):
                 'type': 'password',
                 'placeholder': 'Пароль',
             }),
-            'name': forms.TextInput(attrs={
+            'first_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Имя',
             }),
-            'surname': forms.TextInput(attrs={
+            'last_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Фамилия',
             }),
+        }
+
+
+class ProfileClientRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = ['middle_name', 'phone_number']
+
+        widgets = {
             'middle_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Отчество',
