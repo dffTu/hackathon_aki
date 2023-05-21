@@ -19,5 +19,4 @@ def redirect_to_organizer_profile(request):
 
 
 def show_organizer_profile(request):
-    print("AABOBA")
     return render(request, 'organizers/profile.html')

@@ -12,3 +12,7 @@ def registration(request):
         return redirect(request.path)
     else:
         return render(request, 'clients/registration.html', data)
+
+
+def show_client_profile(request):
+    return render(request, 'clients/profile.html')
