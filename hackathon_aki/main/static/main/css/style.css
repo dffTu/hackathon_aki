@@ -11,6 +11,7 @@
 	--color-text: #fff;
 }
 
+/*фон*/
 body {
 	background: linear-gradient(to right, #192E43, #0D151D);
 	opacity: 0.83;
@@ -26,53 +27,96 @@ body {
 
 .container {
 	align-items: center;
-	padding-top: 45px;
+	padding-top: 28px;
 	height: 85px;
 	width: 90%;
-	margin-left: 6%;
+	margin-left: 4%;
 }
 
 .header-inner{
 	width: 100%;
 	display: flex;
-	
+}
+
+.logo {
+	display: flex;
+	align-items: center;
 }
 
 .search {
 	width: 70%;
 	display: flex;
+	align-items: center;
 	margin-left: 10%;
 }
 
 .bar {
 	display: flex;
-	height: 20px;
-	background: #E0E0E0;
-	border-radius: 7px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-left: 18px;
-	padding-right: 70%;
+	width: 70%;
+	
 }
 .search p {
 	font-size: 18px;
 }
+
+input[type="search"]{
+	display: flex;
+   	background: #E0E0E0; 
+   	outline: none; 
+   	border: 0;
+   	border-bottom:1px solid #eee;
+   	height: 46px; 
+   	border-radius: 7px;
+	width: 100%;
+	font-size: 18px;
+	padding: 20px;
+}
+
+
+
 .button {
 	background: #E74362;
-	height: 20px;
-	padding: 10px 20px;
+	color: #fff;
+	font-size: 18px;
+	cursor: pointer;
+	height: 48px;
+	width: 90px;
+	border: 0;
+	padding: 10px;
 	border-radius: 7px;
-	margin-left: 30px;
+	margin-left: 3%;
 	font-weight: bold;
-	align-self: center;
 }
 
 .icons {
 	display: flex;
+}
 
 .catalog {
+	display: flex;
 	width: 77px;
 	height: 71px;
-	top: 39px;
-	vertical-align: middle;
+	margin-top: 3.5px;
+	padding-top: 4px;
+	margin-right: 10%;
+	flex-direction: column;
+    align-items: center;
+}
+
+.catalog img{
+	margin-bottom: 7px;
+}
+
+.user {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-left: 16%;
+}
+
+.user img{
+	margin-bottom: 1px;
+}
+.icons button {
+
 }
