@@ -8,8 +8,12 @@
     <title>Document</title>
 </head>
 <body>
+<form method="post">
+{% csrf_token %}
 {% for val in form %}
     {{ val }}
 {% endfor %}
+<button type="submit">Зарегистрироваться</button>
+</form>
 </body>
 </html>
