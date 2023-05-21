@@ -20,7 +20,7 @@ class Platform(models.Model):
 
 
 class FreeSlot(models.Model):
-    platform = models.ForeignKey(Platform, on_delete=models.CASCADE)
+    platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)
 
     date = models.DateField('Свободная дата')
 
@@ -34,7 +34,7 @@ class FreeSlot(models.Model):
 
 class Comment(models.Model):
     client = models.ForeignKey('clients.Client', on_delete=models.CASCADE)
-    platform = models.ForeignKey(Platform, on_delete=models.CASCADE)
+    platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)
     attachment = models.ForeignKey('main.File', on_delete=models.SET_NULL, null=True)
 
     text = models.TextField('Текст отзыва', blank=True)

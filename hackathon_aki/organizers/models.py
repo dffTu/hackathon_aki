@@ -21,8 +21,8 @@ class Organizer(models.Model):
 
 
 class Entry(models.Model):
-    #client = models.ForeignKey('clients.Client', on_delete=models.CASCADE)
-    #platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)
+    client = models.ForeignKey('clients.Client', on_delete=models.CASCADE)
+    platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)
 
     date = models.DateTimeField('Дата записи')
 
