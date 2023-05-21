@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main\css\style.css' %}">
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">
+                    <img src="{% static 'main\img\aki.svg' %}">
+                </div>
+                <div class="search">
+                    <div class="bar">
+                        <input type="search" name="Поиск" placeholder="Поиск">
+                        <!-- <p>Поиск</p> -->
+                    </div>
+                    <button class="button">Поиск</button>
+
+                </div>
+                <div class="icons">
+                    <!-- <input type="img" name="catalog"> -->
+                        <div class="catalog">
+                        <img src="{% static 'main\img\catalog.svg' %}">
+                        <p>Каталог</p>
+                        </div>
+
+
+                    <div class="user">
+                        <img src="{% static 'main\img\lk.svg' %}">
+                        <p>Войти</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

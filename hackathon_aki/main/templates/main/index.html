@@ -1,48 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Главная страница</title>
-    <link rel="stylesheet" href="{% static 'main\css\style.css' %}"> 
-</head>
+{% extends 'main/html_template.html' %}
 
-<body>
-    
-    <div class="header">
-        <div class="container">
-            <div class="header-inner">
-                <div class="logo">
-                    <img src="{% static 'main\img\aki.svg' %}">
-                </div>
-                <div class="search">
-                    <div class="bar">
-                        <input type="search" name="Поиск" placeholder="Поиск">
-                        <!-- <p>Поиск</p> -->
-                    </div>
-                    <button class="button">Поиск</button>
-                    
-                </div>
-                <div class="icons">
-                    <a href="#">
-                        <div class="catalog">
-                            <img src="{% static 'main\img\catalog.svg' %}">
-                            <p>Каталог</p>
-                        </div>
-                    </a>
+{% block title %}Главная страница{% endblock %}
 
-                    <a href="#">
-                        <div class="user">
-                            <img src="{% static 'main\img\lk.svg' %}">
-                            <p>Войти</p>
-                        </div>
-                    </a>
-                    
-                </div>
-            </div>
-            
-        </div>
-        
-    </div>
-</body>
-</html>
+{% block content %}
+{% endblock %}
