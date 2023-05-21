@@ -10,22 +10,69 @@
 	--index: calc(1vh + 1vw);
 	--color-text: #fff;
 }
+
 body {
 	background: linear-gradient(to right, #192E43, #0D151D);
 	opacity: 0.83;
 	font-family: Cantarell;
 	color: #fff;
 }
+
 .header{
 	width: 100%;
 	height: 130px;
 	background: linear-gradient(to right, #364F6D, #1B1E23);
 }
-.conteiner {
-	width: 100%;
-	max-width: 1700px;
-	margin: 0, auto; 
-	display: flex;
-	justify-content: center;
+
+.container {
+	align-items: center;
+	padding-top: 45px;
+	height: 85px;
+	width: 90%;
+	margin-left: 6%;
 }
 
+.header-inner{
+	width: 100%;
+	display: flex;
+	
+}
+
+.search {
+	width: 70%;
+	display: flex;
+	margin-left: 10%;
+}
+
+.bar {
+	display: flex;
+	height: 20px;
+	background: #E0E0E0;
+	border-radius: 7px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 18px;
+	padding-right: 70%;
+}
+.search p {
+	font-size: 18px;
+}
+.button {
+	background: #E74362;
+	height: 20px;
+	padding: 10px 20px;
+	border-radius: 7px;
+	margin-left: 30px;
+	font-weight: bold;
+	align-self: center;
+}
+
+.icons {
+	display: flex;
+
+.catalog {
+	width: 77px;
+	height: 71px;
+	top: 39px;
+	vertical-align: middle;
+}
