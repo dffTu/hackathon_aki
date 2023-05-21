@@ -1,8 +1,9 @@
-from .models import Organizer
 from django import forms
+from django.contrib.auth.models import User
+from .models import Organizer
 
 
-class OrganizerRegistrationForm(forms.ModelForm):
+class UserOrganizerRegistrationForm(forms.ModelForm):
     repeat_password = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
                 'class': 'form-control',
                 'type': 'password',
@@ -10,11 +11,11 @@ class OrganizerRegistrationForm(forms.ModelForm):
     }))
 
     class Meta:
-        model = Organizer
-        fields = ['e_mail', 'password', 'name', 'surname', 'middle_name', 'phone_number', 'position', 'juridical_name', 'inn']
+        model = User
+        fields = ['email', 'password', 'first_name', 'last_name']
 
         widgets = {
-            'e_mail': forms.EmailInput(attrs={
+            'email': forms.EmailInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'E-mail',
             }),
@@ -23,14 +24,23 @@ class OrganizerRegistrationForm(forms.ModelForm):
                 'type': 'password',
                 'placeholder': 'Пароль',
             }),
-            'name': forms.TextInput(attrs={
+            'first_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Имя',
             }),
-            'surname': forms.TextInput(attrs={
+            'last_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Фамилия',
             }),
+        }
+
+
+class ProfileOrganizerRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = Organizer
+        fields = ['middle_name', 'phone_number', 'position', 'juridical_name', 'inn']
+
+        widgets = {
             'middle_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Отчество',
