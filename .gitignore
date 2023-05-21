@@ -3,4 +3,5 @@ venv/
 
 *.bat
 
+*__pycache__*
 hackathon_aki/hackathon_aki/config.py
