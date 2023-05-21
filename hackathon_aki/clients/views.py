@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from .forms import ClientRegistrationForm
 
-# Create your views here.
+def registration(request):
+    data = {'form': ClientRegistrationForm()}
+    return render(request, 'clients/registration.html', data)
+
