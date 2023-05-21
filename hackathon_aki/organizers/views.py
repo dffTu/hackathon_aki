@@ -15,9 +15,8 @@ def registration(request):
 
 
 def redirect_to_organizer_profile(request):
-    return redirect('/organizer/profile')
+    return redirect('show_organizer_profile')
 
 
 def show_organizer_profile(request):
-    print("AABOBA")
     return render(request, 'organizers/profile.html')

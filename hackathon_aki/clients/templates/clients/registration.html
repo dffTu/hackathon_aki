@@ -9,15 +9,15 @@
 </head>
 <body>
 <form method="post">
+    {{ user_form.email }} <br>
+    {{ user_form.password }} <br>
+    {{ user_form.repeat_password }} <br>
+    {{ user_form.first_name }} <br>
+    {{ user_form.last_name }} <br>
+    {{ profile_form.middle_name }} <br>
+    {{ profile_form.phone_number }} <br>
     {% csrf_token %}
-    {{ form.e_mail }} <br>
-    {{ form.password }} <br>
-    <input type="password" placeholder="Повторите пароль" class="form-control"> <br>
-    {{ form.name }} <br>
-    {{ form.surname }} <br>
-    {{ form.middle_name }} <br>
-    {{ form.phone_number }} <br>
-<button type="submit">Зарегистрироваться</button>
+    <button type="submit">Зарегистрироваться</button>
 </form>
 </body>
 </html>

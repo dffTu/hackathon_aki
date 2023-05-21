@@ -1,7 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Organizer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+
     e_mail = models.EmailField('Электронная почта', unique=True)
     password = models.CharField('Пароль', max_length=50)
     name = models.CharField('Имя', max_length=50)
