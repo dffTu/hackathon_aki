@@ -34,7 +34,7 @@ body {
 	padding-top: 28px;
 	height: 85px;
 	width: 90%;
-	margin-left: 4%;
+	margin-left: 10%;
 	margin-right: 4%;
 }
 
@@ -96,7 +96,6 @@ input[type="search"]{
 .icons {
 	display: flex;
 	width: 20%;
-	margin-left: 5%;
 }
 
 .catalog {
@@ -118,7 +117,7 @@ input[type="search"]{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-left: 5%;
+	margin-left: 25%;
 }
 
 .user img{
