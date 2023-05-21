@@ -1,5 +1,6 @@
-from .models import Client
 from django import forms
+from django.contrib.auth.models import User
+from .models import Client
 
 
 class UserClientRegistrationForm(forms.ModelForm):
@@ -10,7 +11,7 @@ class UserClientRegistrationForm(forms.ModelForm):
     }))
 
     class Meta:
-        model = Client
+        model = User
         fields = ['email', 'password', 'first_name', 'last_name']
 
         widgets = {
