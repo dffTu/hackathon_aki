@@ -3,12 +3,13 @@ from django.db import models
 
 class Platform(models.Model):
     organizer = models.ForeignKey('organizers.Organizer', on_delete=models.CASCADE)
-    agreement = models.ForeignKey('main.File', on_delete=models.SET_NULL, related_name='platform_agreement', null=True)
 
     name = models.CharField('Имя', max_length=50)
     description = models.TextField('Описание площадки', blank=True)
     schedule = models.JSONField('Расписание', null=True)
     rating = models.FloatField('Рейтинг')
+
+    agreement = models.FileField('Соглашение', null=True)
 
     def __str__(self):
         return self.name

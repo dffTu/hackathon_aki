@@ -33,7 +33,7 @@ class PlatformCreatingForm(forms.ModelForm):
 
     class Meta:
         model = Platform
-        fields = ['name', 'description']
+        fields = ['name', 'description', 'agreement']
 
         widgets = {
             'name': forms.TextInput(attrs={
@@ -43,6 +43,9 @@ class PlatformCreatingForm(forms.ModelForm):
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Описание',
+            }),
+            'agreement': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
             }),
         }
 

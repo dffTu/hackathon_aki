@@ -61,11 +61,9 @@ def create_platform(request):
               'description': []}
 
     if request.method == 'POST':
-        creating_form = PlatformCreatingForm(request.POST)
+        creating_form = PlatformCreatingForm(request.POST, request.FILES)
         attachment_form = PlatformFileAttachingForm(request.POST, request.FILES)
-
-        is_valid = creating_form.validate(errors)
-        if is_valid and attachment_form.is_valid():
+        if creating_form.validate(errors) and attachment_form.is_valid():
             platform = creating_form.save(commit=False)
             platform.organizer = request.user.organizer
             platform.rating = 5
