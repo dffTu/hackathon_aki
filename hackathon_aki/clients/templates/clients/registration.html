@@ -4,13 +4,13 @@
 
 {% block content %}
     <form method="post">
-        {{ user_form.email }} <span>{{ errors.email }}</span> <br>
-        {{ user_form.password }} <span>{{ errors.password }}</span> <br>
-        {{ user_form.repeat_password }} <span>{{ errors.repeat_password }}</span> <br>
-        {{ user_form.first_name }} <span>{{ errors.first_name }}</span> <br>
-        {{ user_form.last_name }} <span>{{ errors.last_name }}</span> <br>
-        {{ profile_form.middle_name }} <span>{{ errors.middle_name }}</span> <br>
-        {{ profile_form.phone_number }} <span>{{ errors.phone_number }}</span> <br>
+        {{ user_form.email }} <span class="text-white">{{ errors.email }}</span> <br>
+        {{ user_form.password }} <span class="text-white">{{ errors.password }}</span> <br>
+        {{ user_form.repeat_password }} <span class="text-white">{{ errors.repeat_password }}</span> <br>
+        {{ user_form.first_name }} <span class="text-white">{{ errors.first_name }}</span> <br>
+        {{ user_form.last_name }} <span class="text-white">{{ errors.last_name }}</span> <br>
+        {{ profile_form.middle_name }} <span class="text-white">{{ errors.middle_name }}</span> <br>
+        {{ profile_form.phone_number }} <span class="text-white">{{ errors.phone_number }}</span> <br>
         {% csrf_token %}
         <button type="submit">Зарегистрироваться</button>
     </form>

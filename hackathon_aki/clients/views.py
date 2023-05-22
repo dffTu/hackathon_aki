@@ -1,9 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.contrib import auth
-from .models import Client
 from .forms import UserClientRegistrationForm, ProfileClientRegistrationForm
-from utils import validate_unique, validate_length, validate_charset
 
 
 def redirect_to_client_profile(request):
@@ -23,23 +20,16 @@ def registration(request):
               'phone_number': []}
 
     if request.method == 'POST':
-        user_form = UserClientRegistrationForm(request.POST)
-        profile_form = ProfileClientRegistrationForm(request.POST)
-
         is_valid = True
         if request.POST['password'] != request.POST['repeat_password']:
             errors['repeat_password'].append('Пароли не совпадают')
             is_valid = False
 
-        is_valid = validate_unique(UserClientRegistrationForm.unique_fields, request.POST, User, errors) and is_valid
-        is_valid = validate_unique(ProfileClientRegistrationForm.unique_fields, request.POST, Client, errors) and is_valid
+        user_form = UserClientRegistrationForm(request.POST)
+        profile_form = ProfileClientRegistrationForm(request.POST)
 
-        is_valid = validate_length(UserClientRegistrationForm.length_validation_fields, request.POST, errors) and is_valid
-        is_valid = validate_length(ProfileClientRegistrationForm.length_validation_fields, request.POST, errors) and is_valid
-
-        is_valid = validate_charset(UserClientRegistrationForm.charset_validation_fields, request.POST, errors) and is_valid
-        is_valid = validate_charset(ProfileClientRegistrationForm.charset_validation_fields, request.POST, errors) and is_valid
-
+        is_valid = user_form.validate(errors) and is_valid
+        is_valid = profile_form.validate(errors) and is_valid
         if is_valid:
             user = user_form.save(commit=False)
             user.set_password(user.password)

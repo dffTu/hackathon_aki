@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.contrib import auth
 from .forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
 
 
@@ -8,12 +8,28 @@ def redirect_to_organizer_profile(request):
 
 
 def registration(request):
+    if request.user.is_authenticated:
+        return redirect('show_organizer_profile')
+
+    errors = {'email': [],
+              'password': [],
+              'repeat_password': [],
+              'first_name': [],
+              'last_name': [],
+              'middle_name': [],
+              'position': [],
+              'juridical_name': [],
+              'inn': []}
+
     if request.method == 'POST':
+        is_valid = True
+        if request.POST['password'] != request.POST['repeat_password']:
+            errors['repeat_password'].append('Пароли не совпадают')
+            is_valid = False
+
         user_form = UserOrganizerRegistrationForm(request.POST)
         profile_form = ProfileOrganizerRegistrationForm(request.POST)
-        print(user_form.is_valid(), user_form.errors)
-        print(profile_form.is_valid(), profile_form.errors)
-        if user_form.is_valid() and profile_form.is_valid():
+        if is_valid:
             user = user_form.save(commit=False)
             user.set_password(user.password)
             user.username = user.email
@@ -22,9 +38,9 @@ def registration(request):
             user_profile = profile_form.save(commit=False)
             user_profile.user = user
             user_profile.save()
-            return HttpResponse('congrats')
-        else:
-            return HttpResponse('!#@$#@#')
+
+            auth.login(request, user)
+            return redirect(request.path)
 
     return render(request, 'organizers/registration.html', {'user_form': UserOrganizerRegistrationForm(),
                                                             'profile_form': ProfileOrganizerRegistrationForm()})

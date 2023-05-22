@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Client
+from utils import validate_unique, validate_length, validate_charset
 
 
 class UserClientRegistrationForm(forms.ModelForm):
@@ -38,6 +39,12 @@ class UserClientRegistrationForm(forms.ModelForm):
             }),
         }
 
+    def validate(self, error_log):
+        is_valid = validate_unique(self.unique_fields, self.data, self._meta.model, error_log)
+        is_valid = validate_length(self.length_validation_fields, self.data, error_log) and is_valid
+        is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
+        return is_valid
+
 
 class ProfileClientRegistrationForm(forms.ModelForm):
     unique_fields = {'phone_number': 'phone_number'}
@@ -58,3 +65,9 @@ class ProfileClientRegistrationForm(forms.ModelForm):
                 'placeholder': 'Номер телефона',
             }),
         }
+
+    def validate(self, error_log):
+        is_valid = validate_unique(self.unique_fields, self.data, self._meta.model, error_log)
+        is_valid = validate_length(self.length_validation_fields, self.data, error_log) and is_valid
+        is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
+        return is_valid
