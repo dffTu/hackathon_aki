@@ -13,7 +13,9 @@ MAX_LENGTH = {
     'phone_number': 15,
     'position': 30,
     'juridical_name': 30,
-    'inn': 15
+    'inn': 15,
+    'name': 30,
+    'description': 256
 }
 
 
@@ -42,7 +44,13 @@ CHARSET = {
     ],
     'inn': [
         lambda x: x.isdigit() or x.isspace(),
-    ]
+    ],
+    'name': [
+        lambda x: x.isprintable(),
+    ],
+    'description': [
+        lambda x: x.isprintable(),
+    ],
 }
 
 

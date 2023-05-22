@@ -6,7 +6,7 @@ class Organizer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 
     middle_name = models.CharField('Отчество', max_length=50, blank=True)
-    phone_number = models.CharField('Номер телефона', max_length=50, unique=True)
+    phone_number = models.CharField('Номер телефона', max_length=50)
     position = models.CharField('Должность', max_length=50, blank=True)
     juridical_name = models.CharField('Юридическое лицо', max_length=50, blank=True)
     inn = models.CharField('ИНН', max_length=50, blank=True)
