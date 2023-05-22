@@ -22,20 +22,20 @@ class UserClientRegistrationForm(forms.ModelForm):
         widgets = {
             'email': forms.EmailInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'E-mail',
+                'placeholder': 'name@example.com',
             }),
             'password': forms.TextInput(attrs={
                 'class': 'form-control',
                 'type': 'password',
-                'placeholder': 'Пароль',
+                'placeholder': '123456',
             }),
             'first_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Имя',
+                'placeholder': 'Иван',
             }),
             'last_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Фамилия',
+                'placeholder': 'Иванов',
             }),
         }
 
@@ -58,11 +58,11 @@ class ProfileClientRegistrationForm(forms.ModelForm):
         widgets = {
             'middle_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Отчество',
+                'placeholder': 'Иванович',
             }),
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Номер телефона',
+                'placeholder': '+7 (917) 123-45-67',
             }),
         }
 
