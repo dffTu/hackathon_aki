@@ -63,40 +63,28 @@
     </div>
 
     <div id="authorize-window" class="authorize-window">
+
         <div class="authorize-content" id="authorize-content">
+
             <div class="choose-authentication-form">
-                <button class="btn btn-danger log-in" id="log-in">Войти</button>
-                <button class="btn btn-danger register" id="register">Зарегистрироваться</button><br>
+
+                <div class="enter">
+                    <button class="btn log-in" id="log-in">Войти</button>
+                </div>
+                
+                <div class="rega">
+                    <button class="btn register" id="register">Зарегистрироваться</button>
+                </div>
+                
             </div>
 
             <div class="register-content" id="register-content">
+
                 <button class="btn btn-warning register-client" id="register-client">Арендатор</button>
                 <button class="btn btn-warning register-organizer" id="register-organizer">Арендодатель</button>
             </div>
-            <div class="log-in-content" id="log-in-content">
 
-                <form method="post" enctype='multipart/form-data'>
-                    {% if error %}
-                    <div class="alert alert-danger">
-                        {{ error }}
-                    </div>
-                    {% endif %}
-                    <div class="form-group">
-                        <label class="text-muted">Email</label>
-                        {{ login_form.email }}
-                    </div>
-                    <div class="form-group">
-                        <label class="text-muted">Пароль</label>
-                        {{ login_form.password }}
-                    </div>
-
-                    <div class="form-group text-center">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">Войти</button>
-                    </div>
-                </form>
-
-            </div>
+            <div class="log-in-content" id="log-in-content">Вход</div>
         </div>
     </div>
     <script src="{% static 'main\js\script.js' %}"></script>
