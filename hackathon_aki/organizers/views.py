@@ -3,6 +3,7 @@ from django.contrib import auth
 from main.models import PlatformAttachment
 from platforms.forms import PlatformCreatingForm, PlatformFileAttachingForm
 from .forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
+from form_utils import get_basic_arguments_for_html_pages
 
 
 def redirect_to_organizer_profile(request):
@@ -48,9 +49,10 @@ def registration(request):
             auth.login(request, user)
             return redirect(request.path)
 
-    return render(request, 'organizers/registration.html', {'user_form': UserOrganizerRegistrationForm(),
-                                                            'profile_form': ProfileOrganizerRegistrationForm(),
-                                                            'errors': errors})
+    data = get_basic_arguments_for_html_pages()
+    data['errors'] = errors
+
+    return render(request, 'organizers/registration.html', data)
 
 
 def create_platform(request):
@@ -75,9 +77,12 @@ def create_platform(request):
 
             return redirect('show_organizer_platforms')
 
-    return render(request, 'platforms/create_platform.html', {'creating_form': PlatformCreatingForm(),
-                                                              'attachment_form': PlatformFileAttachingForm(),
-                                                              'errors': errors})
+    data = get_basic_arguments_for_html_pages()
+    data['errors'] = errors
+    data['creating_form'] = PlatformCreatingForm()
+    data['attachment_form'] = PlatformFileAttachingForm()
+
+    return render(request, 'platforms/create_platform.html', data)
 
 
 def show_organizer_profile(request):
@@ -87,7 +92,10 @@ def show_organizer_profile(request):
     if not hasattr(request.user, 'organizer'):
         return redirect('show_client_profile')
 
-    return render(request, 'organizers/profile.html', {'email': request.user.username})
+    data = get_basic_arguments_for_html_pages()
+    data['email'] = request.user.username
+
+    return render(request, 'organizers/profile.html', data)
 
 
 def show_organizer_platforms(request):
@@ -97,4 +105,7 @@ def show_organizer_platforms(request):
     if not hasattr(request.user, 'organizer'):
         return redirect('show_client_profile')
 
-    return render(request, 'organizers/profile.html', {'email': request.user.username})
+    data = get_basic_arguments_for_html_pages()
+    data['email'] = request.user.username
+
+    return render(request, 'organizers/profile.html', data)
