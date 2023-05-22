@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .forms import PlatformCreatingForm
 
 
@@ -11,21 +10,22 @@ def create_platform(request):
     if not request.user.is_authenticated or not hasattr(request.user, 'organizer'):
         return redirect('home')
 
+    errors = {'name': [],
+              'description': []}
+
     if request.method == 'POST':
         form = PlatformCreatingForm(request.POST)
-        print(form.is_valid(), form.errors)
-        if form.is_valid():
+        if form.validate(errors):
             platform = form.save(commit=False)
             platform.organizer = request.user.organizer
+            platform.rating = 5
             platform.save()
 
-            return HttpResponse('congrats')
-        else:
-            return HttpResponse('!#@$#@#')
+            return redirect('show_organizer_platforms')
 
-    return render(request, 'platforms/create_platform.html', {'form': PlatformCreatingForm()})
+    return render(request, 'platforms/create_platform.html', {'form': PlatformCreatingForm(),
+                                                              'errors': errors})
 
 
 def show_page(request, page_id):            # Shows catalogue page
-    data = {'page_id': page_id}
-    return render(request, 'platforms/catalogue_page.html', data)
+    return render(request, 'platforms/catalogue_page.html', {'page_id': page_id})

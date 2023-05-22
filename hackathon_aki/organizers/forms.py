@@ -1,9 +1,14 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Organizer
+from utils import validate_unique, validate_length, validate_charset
 
 
 class UserOrganizerRegistrationForm(forms.ModelForm):
+    unique_fields = {'username': 'email'}
+    length_validation_fields = ['email', 'password', 'first_name', 'last_name']
+    charset_validation_fields = ['password', 'first_name', 'last_name']
+
     repeat_password = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
         'class': 'form-control',
         'type': 'password',
@@ -34,8 +39,17 @@ class UserOrganizerRegistrationForm(forms.ModelForm):
             }),
         }
 
+    def validate(self, error_log):
+        is_valid = validate_unique(self.unique_fields, self.data, self._meta.model, error_log)
+        is_valid = validate_length(self.length_validation_fields, self.data, error_log) and is_valid
+        is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
+        return is_valid
+
 
 class ProfileOrganizerRegistrationForm(forms.ModelForm):
+    length_validation_fields = ['middle_name', 'phone_number', 'position', 'juridical_name', 'inn']
+    charset_validation_fields = ['middle_name', 'phone_number', 'position', 'juridical_name', 'inn']
+
     class Meta:
         model = Organizer
         fields = ['middle_name', 'phone_number', 'position', 'juridical_name', 'inn']
@@ -62,3 +76,8 @@ class ProfileOrganizerRegistrationForm(forms.ModelForm):
                 'placeholder': 'ИНН',
             }),
         }
+
+    def validate(self, error_log):
+        is_valid = validate_length(self.length_validation_fields, self.data, error_log)
+        is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
+        return is_valid
