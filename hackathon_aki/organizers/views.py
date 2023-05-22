@@ -59,3 +59,13 @@ def show_organizer_profile(request):
         return redirect('show_client_profile')
 
     return render(request, 'organizers/profile.html', {'email': request.user.username})
+
+
+def show_organizer_platforms(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+
+    if not hasattr(request.user, 'organizer'):
+        return redirect('show_client_profile')
+
+    return render(request, 'organizers/profile.html', {'email': request.user.username})

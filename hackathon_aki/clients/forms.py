@@ -47,7 +47,6 @@ class UserClientRegistrationForm(forms.ModelForm):
 
 
 class ProfileClientRegistrationForm(forms.ModelForm):
-    unique_fields = {'phone_number': 'phone_number'}
     length_validation_fields = ['middle_name', 'phone_number']
     charset_validation_fields = ['middle_name', 'phone_number']
 
@@ -67,7 +66,6 @@ class ProfileClientRegistrationForm(forms.ModelForm):
         }
 
     def validate(self, error_log):
-        is_valid = validate_unique(self.unique_fields, self.data, self._meta.model, error_log)
-        is_valid = validate_length(self.length_validation_fields, self.data, error_log) and is_valid
+        is_valid = validate_length(self.length_validation_fields, self.data, error_log)
         is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
         return is_valid
