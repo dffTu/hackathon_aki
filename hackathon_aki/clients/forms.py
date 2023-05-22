@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Client
+from utils import validate_unique, validate_length, validate_charset
 
 
 class UserClientRegistrationForm(forms.ModelForm):
@@ -21,26 +22,31 @@ class UserClientRegistrationForm(forms.ModelForm):
         widgets = {
             'email': forms.EmailInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'E-mail',
+                'placeholder': 'name@example.com',
             }),
             'password': forms.TextInput(attrs={
                 'class': 'form-control',
                 'type': 'password',
-                'placeholder': 'Пароль',
+                'placeholder': '123456',
             }),
             'first_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Имя',
+                'placeholder': 'Иван',
             }),
             'last_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Фамилия',
+                'placeholder': 'Иванов',
             }),
         }
 
+    def validate(self, error_log):
+        is_valid = validate_unique(self.unique_fields, self.data, self._meta.model, error_log)
+        is_valid = validate_length(self.length_validation_fields, self.data, error_log) and is_valid
+        is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
+        return is_valid
+
 
 class ProfileClientRegistrationForm(forms.ModelForm):
-    unique_fields = {'phone_number': 'phone_number'}
     length_validation_fields = ['middle_name', 'phone_number']
     charset_validation_fields = ['middle_name', 'phone_number']
 
@@ -51,10 +57,15 @@ class ProfileClientRegistrationForm(forms.ModelForm):
         widgets = {
             'middle_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Отчество',
+                'placeholder': 'Иванович',
             }),
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Номер телефона',
+                'placeholder': '+7 (917) 123-45-67',
             }),
         }
+
+    def validate(self, error_log):
+        is_valid = validate_length(self.length_validation_fields, self.data, error_log)
+        is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
+        return is_valid

@@ -11,6 +11,11 @@ MAX_LENGTH = {
     'last_name': 30,
     'middle_name': 30,
     'phone_number': 15,
+    'position': 30,
+    'juridical_name': 30,
+    'inn': 15,
+    'name': 30,
+    'description': 256
 }
 
 
@@ -30,7 +35,22 @@ CHARSET = {
     ],
     'phone_number': [
         lambda x: x.isascii() and (x.isdigit() or x in '+()-'),
-    ]
+    ],
+    'position': [
+        lambda x: x.isprintable(),
+    ],
+    'juridical_name': [
+        lambda x: x.isprintable(),
+    ],
+    'inn': [
+        lambda x: x.isdigit() or x.isspace(),
+    ],
+    'name': [
+        lambda x: x.isprintable(),
+    ],
+    'description': [
+        lambda x: x.isprintable(),
+    ],
 }
 
 
@@ -62,7 +82,5 @@ def validate_charset(field_names: list[str], form_data, error_log: dict[str, lis
                 error_log[field_name].append(f'Символ \'{char}\' запрещён для этого поля')
                 is_valid = False
                 break
-        if not is_valid:
-            break
 
     return is_valid
