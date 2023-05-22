@@ -4,10 +4,14 @@ from .models import Client
 
 
 class UserClientRegistrationForm(forms.ModelForm):
+    unique_fields = {'username': 'email'}
+    length_validation_fields = ['email', 'password', 'first_name', 'last_name']
+    charset_validation_fields = ['password', 'first_name', 'last_name']
+
     repeat_password = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
-                'class': 'form-control',
-                'type': 'password',
-                'placeholder': 'Повторите пароль',
+        'class': 'form-control',
+        'type': 'password',
+        'placeholder': 'Повторите пароль',
     }))
 
     class Meta:
@@ -36,6 +40,10 @@ class UserClientRegistrationForm(forms.ModelForm):
 
 
 class ProfileClientRegistrationForm(forms.ModelForm):
+    unique_fields = {'phone_number': 'phone_number'}
+    length_validation_fields = ['middle_name', 'phone_number']
+    charset_validation_fields = ['middle_name', 'phone_number']
+
     class Meta:
         model = Client
         fields = ['middle_name', 'phone_number']

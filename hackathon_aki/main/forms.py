@@ -1,7 +1,7 @@
 from django import forms
 
 
-class ClientLoginForm(forms.Form):
+class LoginForm(forms.Form):
     email = forms.CharField(widget=forms.EmailInput(attrs={
         'class': 'form-control',
         'placeholder': 'E-mail',

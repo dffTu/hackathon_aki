@@ -3,16 +3,11 @@
 {% block title %}Авторизация{% endblock %}
 
 {% block content %}
-
-    {% if error %}
-        <h1>{{ error }}</h1>
-    {% endif %}
-
+    <span>{{ error }}</span>
     <form method="post">
+        {{ form.email }} <br>
+        {{ form.password }} <br>
         {% csrf_token %}
-        {% for val in form %}
-            {{ val }}
-        {% endfor %}
         <button type="submit">Войти</button>
     </form>
 {% endblock %}
