@@ -11,20 +11,29 @@
 }
 
 .authorize-content {
-    display: none;
+
+    flex-direction: column;
+    align-items: center;
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 50%;
-    flex-direction: row;
     justify-content: space-evenly
+}
+
+.choose-authentication-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5%;
+    width: 90%;
 }
 
 .register-content {
     display: none;
     background-color: #fefefe;
-    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 50%;
@@ -35,10 +44,19 @@
 .log-in-content {
     display: none;
     background-color: #fefefe;
-    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 50%;
     flex-direction: row;
     justify-content: space-evenly
+}
+
+.log-in {
+    margin-right: 2.5%;
+    width: 50%;
+}
+
+.register {
+    margin-left: 2.5%;
+    width: 50%;
 }
