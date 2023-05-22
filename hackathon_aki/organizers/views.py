@@ -31,4 +31,10 @@ def registration(request):
 
 
 def show_organizer_profile(request):
-    return render(request, 'organizers/profile.html')
+    if not request.user.is_authenticated:
+        return redirect('home')
+
+    if not hasattr(request.user, 'organizer'):
+        return redirect('show_client_profile')
+
+    return render(request, 'organizers/profile.html', {'email': request.user.username})

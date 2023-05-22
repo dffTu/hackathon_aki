@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.contrib import auth
 from .models import Client
 from .forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 from utils import validate_unique, validate_length, validate_charset
@@ -48,6 +49,8 @@ def registration(request):
             user_profile = profile_form.save(commit=False)
             user_profile.user = user
             user_profile.save()
+
+            auth.login(request, user)
             return redirect(request.path)
 
     return render(request, 'clients/registration.html', {'user_form': UserClientRegistrationForm(),
@@ -62,4 +65,4 @@ def show_client_profile(request):
     if not hasattr(request.user, 'client'):
         return redirect('show_organizer_profile')
 
-    return render(request, 'clients/profile.html')
+    return render(request, 'clients/profile.html', {'email': request.user.username})
