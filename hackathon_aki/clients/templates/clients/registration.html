@@ -6,7 +6,7 @@
     <form method="post" enctype='multipart/form-data'>
         <div class="form-group">
             <label class="text-muted">Email</label>
-            {{ user_form.email }}
+            {{ user_client_registration_form.email }}
             {% for error in errors.email %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -16,7 +16,7 @@
 
         <div class="form-group">
             <label class="text-muted">Пароль</label>
-            {{ user_form.password }}
+            {{ user_client_registration_form.password }}
             {% for error in errors.password %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -26,7 +26,7 @@
 
         <div class="form-group">
             <label class="text-muted">Повторите пароль</label>
-            {{ user_form.repeat_password }}
+            {{ user_client_registration_form.repeat_password }}
             {% for error in errors.repeat_password %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -36,7 +36,7 @@
 
         <div class="form-group">
             <label class="text-muted">Фамилия</label>
-            {{ user_form.last_name }}
+            {{ user_client_registration_form.last_name }}
             {% for error in errors.last_name %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -46,7 +46,7 @@
 
         <div class="form-group">
             <label class="text-muted">Имя</label>
-            {{ user_form.first_name }}
+            {{ user_client_registration_form.first_name }}
             {% for error in errors.first_name %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -56,7 +56,7 @@
 
         <div class="form-group">
             <label class="text-muted">Отчество (при наличии)</label>
-            {{ profile_form.middle_name }}
+            {{ profile_client_registration_form.middle_name }}
             {% for error in errors.middle_name %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -66,7 +66,7 @@
 
         <div class="form-group">
             <label class="text-muted">Номер телефона</label>
-            {{ profile_form.phone_number }}
+            {{ profile_client_registration_form.phone_number }}
             {% for error in errors.phone_number %}
                 <div class="alert alert-danger">
                 {{ error }}

@@ -6,7 +6,7 @@
     <form method="post" enctype='multipart/form-data'>
         <div class="form-group">
             <label class="text-muted">Email</label>
-            {{ user_form.email }}
+            {{ user_organizer_registration_form.email }}
             {% for error in errors.email %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -16,7 +16,7 @@
 
         <div class="form-group">
             <label class="text-muted">Пароль</label>
-            {{ user_form.password }}
+            {{ user_organizer_registration_form.password }}
             {% for error in errors.password %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -26,7 +26,7 @@
 
         <div class="form-group">
             <label class="text-muted">Повторите пароль</label>
-            {{ user_form.repeat_password }}
+            {{ user_organizer_registration_form.repeat_password }}
             {% for error in errors.repeat_password %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -36,7 +36,7 @@
 
         <div class="form-group">
             <label class="text-muted">Фамилия</label>
-            {{ user_form.last_name }}
+            {{ user_organizer_registration_form.last_name }}
             {% for error in errors.last_name %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -46,7 +46,7 @@
 
         <div class="form-group">
             <label class="text-muted">Имя</label>
-            {{ user_form.first_name }}
+            {{ user_organizer_registration_form.first_name }}
             {% for error in errors.first_name %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -56,7 +56,7 @@
 
          <div class="form-group">
             <label class="text-muted">Отчество (при наличии)</label>
-            {{ profile_form.middle_name }}
+            {{ profile_organizer_registration_form.middle_name }}
             {% for error in errors.middle_name %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -66,7 +66,7 @@
 
         <div class="form-group">
             <label class="text-muted">Номер телефона</label>
-            {{ profile_form.phone_number }}
+            {{ profile_organizer_registration_form.phone_number }}
             {% for error in errors.phone_number %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -76,7 +76,7 @@
 
         <div class="form-group">
             <label class="text-muted">Позиция в компании</label>
-            {{ profile_form.position }}
+            {{ profile_organizer_registration_form.position }}
             {% for error in errors.position %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -86,7 +86,7 @@
 
          <div class="form-group">
             <label class="text-muted">Юридическое имя компании</label>
-            {{ profile_form.juridical_name }}
+            {{ profile_organizer_registration_form.juridical_name }}
             {% for error in errors.juridical_name %}
                 <div class="alert alert-danger">
                 {{ error }}
@@ -96,7 +96,7 @@
 
         <div class="form-group">
             <label class="text-muted">ИНН</label>
-            {{ profile_form.inn }}
+            {{ profile_organizer_registration_form.inn }}
             {% for error in errors.inn %}
                 <div class="alert alert-danger">
                 {{ error }}

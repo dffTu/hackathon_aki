@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from utils import send_email_for_verify
 from .forms import UserClientRegistrationForm, ProfileClientRegistrationForm
+from form_utils import get_basic_arguments_for_html_pages
 
 
 def redirect_to_client_profile(request):
@@ -45,9 +46,12 @@ def registration(request):
             send_email_for_verify(user)
             return redirect(request.path)
 
-    return render(request, 'clients/registration.html', {'user_form': UserClientRegistrationForm(),
-                                                         'profile_form': ProfileClientRegistrationForm(),
-                                                         'errors': errors})
+    data = get_basic_arguments_for_html_pages()
+    data['user_form'] = UserClientRegistrationForm()
+    data['profile_form'] = ProfileClientRegistrationForm()
+    data['errors'] = errors
+
+    return render(request, 'clients/registration.html', data)
 
 
 def show_client_profile(request):
@@ -57,4 +61,7 @@ def show_client_profile(request):
     if not hasattr(request.user, 'client'):
         return redirect('show_organizer_profile')
 
-    return render(request, 'clients/profile.html', {'email': request.user.username})
+    data = get_basic_arguments_for_html_pages()
+    data['email'] = request.user.username
+
+    return render(request, 'clients/profile.html', data)
