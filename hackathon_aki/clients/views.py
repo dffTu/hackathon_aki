@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
+from utils import send_email_for_verify
 from .forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 
 
@@ -41,6 +42,7 @@ def registration(request):
             user_profile.save()
 
             auth.login(request, user)
+            send_email_for_verify(user)
             return redirect(request.path)
 
     return render(request, 'clients/registration.html', {'user_form': UserClientRegistrationForm(),
