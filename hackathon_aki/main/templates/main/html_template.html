@@ -64,14 +64,17 @@
 
     <div id="authorize-window" class="authorize-window">
         <div class="authorize-content" id="authorize-content">
-            <button class="btn btn-danger log-in" id="log-in">Войти</button>
-            <button class="btn btn-danger register" id="register">Зарегистрироваться</button>
+            <div class="choose-authentication-form">
+                <button class="btn btn-danger log-in" id="log-in">Войти</button>
+                <button class="btn btn-danger register" id="register">Зарегистрироваться</button><br>
+            </div>
+
+            <div class="register-content" id="register-content">
+                <button class="btn btn-warning register-client" id="register-client">Арендатор</button>
+                <button class="btn btn-warning register-organizer" id="register-organizer">Арендодатель</button>
+            </div>
+            <div class="log-in-content" id="log-in-content">Вход</div>
         </div>
-        <div class="register-content" id="register-content">
-            <button class="btn btn-danger register-client" id="register-client">Арендатор</button>
-            <button class="btn btn-danger register-organizer" id="register-organizer">Арендодатель</button>
-        </div>
-        <div class="log-in-content" id="log-in-content">Вход</div>
     </div>
     <script src="{% static 'main\js\script.js' %}"></script>
 
