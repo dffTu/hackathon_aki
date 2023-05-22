@@ -71,11 +71,11 @@
 
 
 
-register-window-client{
+.register-window-client{
     display: none;
 
 }
-register-window-organizer{
+.register-window-organizer{
     display: none;
 }
 
