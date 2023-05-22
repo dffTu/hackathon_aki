@@ -8,4 +8,5 @@ def redirect_to_first_page(request):        # Redirects to first catalogue page
 
 def show_page(request, page_id):            # Shows catalogue page
     platforms = Platform.objects.all()
+    print(platforms[0].platformattachment_set.all()[0].file)
     return render(request, 'platforms/catalogue_page.html', {'page_id': page_id, 'platforms': platforms})
