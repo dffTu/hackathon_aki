@@ -15,36 +15,49 @@
 
 <body>
     <div class="header">
-        <div class="container">
-            <div class="header-inner">
-                <div class="logo">
-                    <img src="{% static 'main\img\aki.svg' %}">
-                </div>
-                <div class="search">
-                    <div class="bar">
-                        <input type="search" name="Поиск" placeholder="Поиск">
-                        <!-- <p>Поиск</p> -->
+        <div class="container-fluid"">
+            <div class="container text-center">
+
+                <div class="row">
+                    <div class="col">
+                        <a class="navbar-brand" href="#">
+                        <img src="{% static 'main\img\aki.svg' %}" alt = "aki">
+                        </a>
                     </div>
-                    <button class="button">Поиск</button>
-
-                </div>
-                <div class="icons">
                     
-                        <a href="#">
-                        <div class="catalog">
-                            <img src="{% static 'main\img\catalog.svg' %}">
-                            <p>Каталог</p>
+                
+                    <div class="col-6">
+                        <div class="search">
+                        <div class="bar">
+                            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+                            <!-- <input type="search" name="Поиск" placeholder="Поиск"> -->
                         </div>
-                        </a>
+                        <button class="button">Поиск</button>
+                        </div>
+                    </div>
+                    
+                    <div class="col" id="three">
+                        <div class="icons">
 
-                        <a href="#">
-                            <div class="user">
-                                <img src="{% static 'main\img\lk.svg' %}">
-                                <p>Войти</p>
+                            <a href="#" id="open-catalog">
+                            <div class="catalog">
+                                <img src="{% static 'main\img\catalog.svg' %}">
+                                <p>Каталог</p>
                             </div>
-                        </a>
+                            </a>
+
+                            <a href="#" id="open-user">
+                                <div class="user">
+                                    <img src="{% static 'main\img\lk.svg' %}">
+                                    <p>Войти</p>
+                                </div>
+                            </a>
+                    </div>
+                    </div>
+                    
                 </div>
             </div>
+            
         </div>
     </div>
     {% block content %}
