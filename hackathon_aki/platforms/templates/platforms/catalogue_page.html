@@ -3,5 +3,15 @@
 {% block title %}Страница каталога{% endblock %}
 
 {% block content %}
-    <p>Страница каталога {{ page_id }}</p>
+<h1>Страница каталога {{ page_id }}</h1>
+<div class="card" style="width: 18rem;">
+    <img src="..." class="card-img-top" alt="...">
+    {% for platform in platforms %}
+    <div class="card-body">
+        <h5 class="card-title">{{ platform.name }}</h5>
+        <p class="card-text">{{ platform.description }}</p>
+        <a href="#" class="btn btn-primary">Подробнее</a>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
