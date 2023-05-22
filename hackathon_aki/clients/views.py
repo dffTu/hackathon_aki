@@ -3,6 +3,10 @@ from django.http import HttpResponse
 from .forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 
 
+def redirect_to_client_profile(request):
+    return redirect('show_client_profile')
+
+
 def registration(request):
     if request.method == 'POST':
         user_form = UserClientRegistrationForm(request.POST)
@@ -11,6 +15,7 @@ def registration(request):
         print(profile_form.is_valid(), profile_form.errors)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save(commit=False)
+            user.set_password(user.password)
             user.username = user.email
             user.save()
 
@@ -23,10 +28,6 @@ def registration(request):
 
     return render(request, 'clients/registration.html', {'user_form': UserClientRegistrationForm(),
                                                          'profile_form': ProfileClientRegistrationForm()})
-
-
-def redirect_to_client_profile(request):
-    return redirect('show_client_profile')
 
 
 def show_client_profile(request):

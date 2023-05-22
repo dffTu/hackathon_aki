@@ -1,17 +1,18 @@
 {% extends 'main/html_template.html' %}
 
 {% block title %}Авторизация{% endblock %}
+
 {% block content %}
 
-{% if error %}
-    <h1>{{ error }}</h1>
-{% endif %}
+    {% if error %}
+        <h1>{{ error }}</h1>
+    {% endif %}
 
-<form method="post">
-{% csrf_token %}
-{% for val in form %}
-    {{ val }}
-{% endfor %}
-<button type="submit">Войти</button>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        {% for val in form %}
+            {{ val }}
+        {% endfor %}
+        <button type="submit">Войти</button>
+    </form>
 {% endblock %}

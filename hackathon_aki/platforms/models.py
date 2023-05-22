@@ -8,7 +8,7 @@ class Platform(models.Model):
 
     name = models.CharField('Имя', max_length=50)
     description = models.TextField('Описание площадки', blank=True)
-    schedule = models.JSONField('Расписание', blank=True)
+    schedule = models.JSONField('Расписание', null=True)
     rating = models.FloatField('Рейтинг')
 
     def __str__(self):

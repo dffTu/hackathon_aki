@@ -3,15 +3,15 @@
 {% block title %}Страница регистрации{% endblock %}
 
 {% block content %}
-<form method="post">
-    {{ user_form.email }} <br>
-    {{ user_form.password }} <br>
-    {{ user_form.repeat_password }} <br>
-    {{ user_form.first_name }} <br>
-    {{ user_form.last_name }} <br>
-    {{ profile_form.middle_name }} <br>
-    {{ profile_form.phone_number }} <br>
-    {% csrf_token %}
-    <button type="submit">Зарегистрироваться</button>
-</form>
+    <form method="post">
+        {{ user_form.email }} <br>
+        {{ user_form.password }} <br>
+        {{ user_form.repeat_password }} <br>
+        {{ user_form.first_name }} <br>
+        {{ user_form.last_name }} <br>
+        {{ profile_form.middle_name }} <br>
+        {{ profile_form.phone_number }} <br>
+        {% csrf_token %}
+        <button type="submit">Зарегистрироваться</button>
+    </form>
 {% endblock %}

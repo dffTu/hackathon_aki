@@ -1,0 +1,13 @@
+{% extends 'main/html_template.html' %}
+
+{% block title %}Создание площадки{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {{ form.name }} <br>
+        {{ form.description }} <br>
+        {{ form.rating }} <br>
+        {% csrf_token %}
+        <button type="submit">Создать</button>
+    </form>
+{% endblock %}
