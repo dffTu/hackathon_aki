@@ -1,4 +1,4 @@
-.modal {
+.authorize-window {
     display: none;
     position: fixed;
     z-index: 1;
@@ -10,10 +10,35 @@
     background-color: rgb(0,0,0,0.8);
 }
 
-.modal-content {
+.authorize-content {
+    display: none;
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 50%;
+    flex-direction: row;
+    justify-content: space-evenly
+}
+
+.register-content {
+    display: none;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    flex-direction: row;
+    justify-content: space-evenly
+}
+
+.log-in-content {
+    display: none;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    flex-direction: row;
+    justify-content: space-evenly
 }
