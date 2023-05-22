@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from .models import Platform
 
 
 def redirect_to_first_page(request):        # Redirects to first catalogue page
@@ -6,4 +7,5 @@ def redirect_to_first_page(request):        # Redirects to first catalogue page
 
 
 def show_page(request, page_id):            # Shows catalogue page
-    return render(request, 'platforms/catalogue_page.html', {'page_id': page_id})
+    platforms = Platform.objects.all()
+    return render(request, 'platforms/catalogue_page.html', {'page_id': page_id, 'platforms': platforms})
