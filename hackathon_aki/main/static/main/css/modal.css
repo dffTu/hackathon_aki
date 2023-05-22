@@ -1,4 +1,27 @@
+
+@font-face{
+    font-family: "Cera Pro Medium";
+    font-style: normal;
+    font-weight: medium;
+    src: url("../fonts/CeraPro-Medium.ttf");
+}
+@font-face{
+    font-family: "Cera Pro Bold";
+    font-style: normal;
+    font-weight: bold;
+    src: url("../fonts/CeraPro-Bold.ttf");
+}
+@font-face{
+    font-family: "Cera Pro Black";
+    font-style: normal;
+    font-weight: black;
+    src: url("../fonts/CeraPro-Black.ttf");
+}
+
 .authorize-window {
+    font-family: "Cera Pro Medium";
+    font-weight: medium;
+    font-size: 18px;
     display: none;
     position: fixed;
     z-index: 1;
@@ -14,17 +37,21 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background-color: #fefefe;
-    margin: 15% auto;
+    background-color: #eeecec;
+    margin: 10% auto;
     padding: 20px;
     border: 3px solid #888;
     border-radius: 7px;
     width: 50%;
-    height: 30%;
+    height: 70%;
+}
+
+.up-form{
+    width: 100%;
+    height: 8%;
 }
 
 .choose-authentication-form {
-    height: 10%;
     display: flex;
     position: relative;
     align-items: center;
@@ -33,17 +60,10 @@
     flex-direction: row;
 }
 
-.register-content {
-    display: none;
-    background-color: #fefefe;
-    padding: 20px;
-    border: 1px solid #888;
-    flex-direction: row;
-    justify-content: space-evenly
-}
+
 
 .log-in-content {
-    display: none;
+    justify-content: center;
     background-color: #fefefe;
     padding: 20px;
     width: 50%;
@@ -52,7 +72,12 @@
 }
 
 .enter {
+    padding: 1px 2%;
     border-bottom: 2px solid #E74362;
+}
+
+btn .log-in {
+    padding: 0;
 }
 .log-in:hover{
     background-color: #E74362;
@@ -61,14 +86,13 @@
 
 
 .rega {
+    padding: 1px 2%;
     border-bottom: 2px solid #E74362;
 }
 .register:hover{
     background-color: #E74362;
     border-radius: 10px 10px 0px 0px;
 }
-
-
 
 
 .register-window-client{
@@ -79,3 +103,44 @@
     display: none;
 }
 
+
+
+.forma {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 60%;
+}
+.log-in-content{
+    width: 80%;
+    border-radius: 7px;
+}
+.forma button {
+    width: 50%;
+    background-color: #E74362;
+    border: none;
+    margin-top: 10%;
+}
+.buttons {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.register-content {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+
+}
+
+.register-window-client {
+    width: 80%;
+    height: 90%;
+}
+.register-content button {
+    background-color: #E74362;
+}
