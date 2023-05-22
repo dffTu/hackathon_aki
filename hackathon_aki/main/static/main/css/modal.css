@@ -11,24 +11,26 @@
 }
 
 .authorize-content {
-
+    display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: space-around;
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 3px solid #888;
+    border-radius: 7px;
     width: 50%;
-    justify-content: space-evenly
+    height: 30%;
 }
 
 .choose-authentication-form {
+    height: 10%;
     display: flex;
-    flex-direction: row;
+    position: relative;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 5%;
-    width: 90%;
+    right: 1%;
+    justify-content: flex-end;
+    flex-direction: row;
 }
 
 .register-content {
@@ -36,7 +38,6 @@
     background-color: #fefefe;
     padding: 20px;
     border: 1px solid #888;
-    width: 50%;
     flex-direction: row;
     justify-content: space-evenly
 }
@@ -45,18 +46,25 @@
     display: none;
     background-color: #fefefe;
     padding: 20px;
-    border: 1px solid #888;
     width: 50%;
     flex-direction: row;
     justify-content: space-evenly
 }
 
-.log-in {
-    margin-right: 2.5%;
-    width: 50%;
+.enter {
+    border-bottom: 2px solid #E74362;
+}
+.log-in:hover{
+    background-color: #E74362;
+    border-radius: 10px 10px 0px 0px;
 }
 
-.register {
-    margin-left: 2.5%;
-    width: 50%;
+
+.rega {
+    border-bottom: 2px solid #E74362;
 }
+.register:hover{
+    background-color: #E74362;
+    border-radius: 10px 10px 0px 0px;
+}
+

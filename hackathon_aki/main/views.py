@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
-from .forms import LoginForm
+from form_utils import get_basic_arguments_for_html_pages
 
 
 def index(request):
-    return render(request, 'main/index.html')
+    data = get_basic_arguments_for_html_pages()
+    return render(request, 'main/index.html', data)
 
 
 def logout(request):
@@ -16,7 +17,7 @@ def login(request):
     if request.user.is_authenticated:
         return redirect('home')
 
-    data = {'form': LoginForm(), 'error': ''}
+    data = get_basic_arguments_for_html_pages()
     if request.method == 'POST':
         user = auth.authenticate(request, username=request.POST['email'], password=request.POST['password'])
         if user is not None:
