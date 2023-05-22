@@ -1,9 +1,5 @@
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import EmailMessage
-from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
-from django.contrib.auth.tokens import default_token_generator as token_generator
+from hackathon_aki import config
+from django.core.mail import send_mail
 
 
 UNIQUE_ERRORS = {
@@ -13,11 +9,11 @@ UNIQUE_ERRORS = {
 
 
 MAX_LENGTH = {
-    'email': 25,
+    'email': 50,
     'password': 25,
-    'first_name': 30,
-    'last_name': 30,
-    'middle_name': 30,
+    'first_name': 50,
+    'last_name': 50,
+    'middle_name': 50,
     'phone_number': 15,
     'position': 30,
     'juridical_name': 30,
@@ -94,21 +90,11 @@ def validate_charset(field_names: list[str], form_data, error_log: dict[str, lis
     return is_valid
 
 
-def send_email_for_verify(request, user):
-    current_site = get_current_site(request)
-    context = {
-        'user': user,
-        'domain': current_site.domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': token_generator.make_token(user),
-    }
-    message = render_to_string(
-        'registration/verify_email.html',
-        context=context,
+def send_email_for_verify(user):
+    send_mail(
+        "Subject here",
+        "Here is the message.",
+        config.EMAIL_LOGIN,
+        [user.email],
+        fail_silently=False,
     )
-    email = EmailMessage(
-        'Veryfi email',
-        message,
-        to=[user.email],
-    )
-    email.send()

@@ -140,3 +140,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_HOST = config.EMAIL_HOST
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config.EMAIL_LOGIN
+EMAIL_HOST_PASSWORD = config.EMAIL_PASSWORD
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

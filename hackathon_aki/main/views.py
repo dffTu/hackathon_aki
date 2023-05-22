@@ -24,6 +24,6 @@ def login(request):
             auth.login(request, user)
             return redirect(request.path)
         else:
-            data['error'] = 'Введён неправильный логин или пароль'
+            data['error_message'] = 'Введён неправильный логин или пароль'
 
     return render(request, 'main/login.html', data)

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
+from utils import send_email_for_verify
 from .forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 from form_utils import get_basic_arguments_for_html_pages
 
@@ -42,6 +43,7 @@ def registration(request):
             user_profile.save()
 
             auth.login(request, user)
+            send_email_for_verify(user)
             return redirect(request.path)
 
     data = get_basic_arguments_for_html_pages()

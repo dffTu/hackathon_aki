@@ -22,7 +22,7 @@ class MultipleFileField(forms.FileField):
 
 
 class PlatformFileAttachingForm(forms.Form):
-    file_field = MultipleFileField(widget=MultipleFileInput(attrs={
+    file_field = MultipleFileField(required=False, widget=MultipleFileInput(attrs={
         'class': 'form-control'
     }))
 

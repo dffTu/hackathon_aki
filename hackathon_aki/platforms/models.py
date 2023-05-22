@@ -9,7 +9,7 @@ class Platform(models.Model):
     schedule = models.JSONField('Расписание', null=True)
     rating = models.FloatField('Рейтинг')
 
-    agreement = models.FileField('Соглашение', null=True)
+    agreement = models.FileField('Соглашение', null=True, blank=True)
 
     def __str__(self):
         return self.name
