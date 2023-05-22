@@ -40,7 +40,11 @@ class UserOrganizerRegistrationForm(forms.ModelForm):
         }
 
     def validate(self, error_log):
-        is_valid = validate_unique(self.unique_fields, self.data, self._meta.model, error_log)
+        is_valid = self.is_valid()
+        if not is_valid:
+            error_log['email'].append('Некорректный адрес электронной почты.')
+
+        is_valid = validate_unique(self.unique_fields, self.data, self._meta.model, error_log) and is_valid
         is_valid = validate_length(self.length_validation_fields, self.data, error_log) and is_valid
         is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
         return is_valid
