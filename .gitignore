@@ -1,5 +1,6 @@
 venv/
 .idea/
+hackathon_aki/media
 
 *.bat
 

@@ -3,9 +3,11 @@
 {% block title %}Создание площадки{% endblock %}
 
 {% block content %}
-    <form method="post">
-        {{ form.name }} <span class="text-white">{{ errors.name }}</span> <br>
-        {{ form.description }} <span class="text-white">{{ errors.description }}</span> <br>
+    <form method="POST" enctype="multipart/form-data" action="">
+        {{ creating_form.name }} <span class="text-white">{{ errors.name }}</span> <br>
+        {{ creating_form.description }} <span class="text-white">{{ errors.description }}</span> <br>
+        {{ attachment_form.file_field }} <br>
+        {{ creating_form.agreement }} <br>
         {% csrf_token %}
         <button type="submit">Создать</button>
     </form>

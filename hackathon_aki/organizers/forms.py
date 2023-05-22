@@ -12,7 +12,7 @@ class UserOrganizerRegistrationForm(forms.ModelForm):
     repeat_password = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
         'class': 'form-control',
         'type': 'password',
-        'placeholder': 'Повторите пароль',
+        'placeholder': '123456',
     }))
 
     class Meta:
@@ -22,20 +22,20 @@ class UserOrganizerRegistrationForm(forms.ModelForm):
         widgets = {
             'email': forms.EmailInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'E-mail',
+                'placeholder': 'name@example.com',
             }),
             'password': forms.TextInput(attrs={
                 'class': 'form-control',
                 'type': 'password',
-                'placeholder': 'Пароль',
+                'placeholder': '123456',
             }),
             'first_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Имя',
+                'placeholder': 'Иван',
             }),
             'last_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Фамилия',
+                'placeholder': 'Иванов',
             }),
         }
 
@@ -57,23 +57,23 @@ class ProfileOrganizerRegistrationForm(forms.ModelForm):
         widgets = {
             'middle_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Отчество',
+                'placeholder': 'Иванович',
             }),
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Номер телефона',
+                'placeholder': '+7 (917) 123-45-67',
             }),
             'position': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Должность',
+                'placeholder': 'Директор',
             }),
             'juridical_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Название юридичиского лица',
+                'placeholder': 'ООО "Яндекс"',
             }),
             'inn': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'ИНН',
+                'placeholder': '123412341234',
             }),
         }
 

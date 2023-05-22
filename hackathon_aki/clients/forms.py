@@ -12,7 +12,7 @@ class UserClientRegistrationForm(forms.ModelForm):
     repeat_password = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
         'class': 'form-control',
         'type': 'password',
-        'placeholder': 'Повторите пароль',
+        'placeholder': '123456',
     }))
 
     class Meta:
