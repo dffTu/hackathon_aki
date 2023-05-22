@@ -3,18 +3,110 @@
 {% block title %}Регистрация{% endblock %}
 
 {% block content %}
-    <form method="post">
-        {{ user_form.email }} <span class="text-white">{{ errors.email }}</span> <br>
-        {{ user_form.password }} <span class="text-white">{{ errors.password }}</span> <br>
-        {{ user_form.repeat_password }} <span class="text-white">{{ errors.repeat_password }}</span> <br>
-        {{ user_form.first_name }} <span class="text-white">{{ errors.first_name }}</span> <br>
-        {{ user_form.last_name }} <span class="text-white">{{ errors.last_name }}</span> <br>
-        {{ profile_form.middle_name }} <span class="text-white">{{ errors.middle_name }}</span> <br>
-        {{ profile_form.phone_number }} <span class="text-white">{{ errors.phone_number }}</span> <br>
-        {{ profile_form.position }} <span class="text-white">{{ errors.position }}</span> <br>
-        {{ profile_form.juridical_name }} <span class="text-white">{{ errors.juridical_name }}</span> <br>
-        {{ profile_form.inn }} <span class="text-white">{{ errors.inn }}</span> <br>
-        {% csrf_token %}
-        <button type="submit">Зарегистрироваться</button>
+    <form method="post" enctype='multipart/form-data'>
+        <div class="form-group">
+            <label class="text-muted">Email</label>
+            {{ user_form.email }}
+            {% for error in errors.email %}
+                <div class="alert alert-danger">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <label class="text-muted">Пароль</label>
+            {{ user_form.password }}
+            {% for error in errors.password %}
+                <div class="alert alert-danger">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <label class="text-muted">Повторите пароль</label>
+            {{ user_form.repeat_password }}
+            {% for error in errors.repeat_password %}
+                <div class="alert alert-danger">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <label class="text-muted">Фамилия</label>
+            {{ user_form.last_name }}
+            {% for error in errors.last_name %}
+                <div class="alert alert-danger">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <label class="text-muted">Имя</label>
+            {{ user_form.first_name }}
+            {% for error in errors.first_name %}
+                <div class="alert alert-danger">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+         <div class="form-group">
+            <label class="text-muted">Отчество (при наличии)</label>
+            {{ profile_form.middle_name }}
+            {% for error in errors.middle_name %}
+                <div class="alert alert-danger">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <label class="text-muted">Номер телефона</label>
+            {{ profile_form.phone_number }}
+            {% for error in errors.phone_number %}
+                <div class="alert alert-danger">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <label class="text-muted">Позиция в компании</label>
+            {{ profile_form.position }}
+            {% for error in errors.position %}
+                <div class="alert alert-danger">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+         <div class="form-group">
+            <label class="text-muted">Юридическое имя компании</label>
+            {{ profile_form.juridical_name }}
+            {% for error in errors.juridical_name %}
+                <div class="alert alert-danger">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <label class="text-muted">ИНН</label>
+            {{ profile_form.inn }}
+            {% for error in errors.inn %}
+                <div class="alert alert-danger">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group text-center">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        </div>
     </form>
 {% endblock %}
