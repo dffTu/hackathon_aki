@@ -68,3 +68,14 @@
     border-radius: 10px 10px 0px 0px;
 }
 
+
+
+
+.register-window-client{
+    display: none;
+
+}
+.register-window-organizer{
+    display: none;
+}
+

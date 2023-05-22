@@ -83,7 +83,7 @@
                 <button class="btn btn-warning register-organizer" id="register-organizer">Арендодатель</button>
 
                 <div class="register-window-client" id="register-window-client">
-                    <form method="post" enctype='multipart/form-data' action="client_registration">
+                    <form method="post" enctype='multipart/form-data' action="{% url 'client_registration' %}">
                         <div class="form-group">
                             <label class="text-muted">Email</label>
                             {{ user_client_registration_form.email }}
@@ -162,7 +162,7 @@
                 </div>
 
                 <div class="register-window-organizer" id="register-window-organizer">
-                    <form method="post" enctype='multipart/form-data' action="organizer_registration">
+                    <form method="post" enctype='multipart/form-data' action="{% url 'organizer_registration' %}">
                         <div class="form-group">
                             <label class="text-muted">Email</label>
                             {{ user_organizer_registration_form.email }}
@@ -273,9 +273,9 @@
             <div class="log-in-content" id="log-in-content">
 
                 <form method="post" enctype='multipart/form-data' action="{% url 'login' %}">
-                    {% if error %}
+                    {% if error_message %}
                     <div class="alert alert-danger">
-                        {{ error }}
+                        {{ error_message }}
                     </div>
                     {% endif %}
                     <div class="form-group">
