@@ -17,6 +17,7 @@ def registration(request):
               'first_name': [],
               'last_name': [],
               'middle_name': [],
+              'phone_number': [],
               'position': [],
               'juridical_name': [],
               'inn': []}
@@ -29,6 +30,9 @@ def registration(request):
 
         user_form = UserOrganizerRegistrationForm(request.POST)
         profile_form = ProfileOrganizerRegistrationForm(request.POST)
+
+        is_valid = user_form.validate(errors) and is_valid
+        is_valid = profile_form.validate(errors) and is_valid
         if is_valid:
             user = user_form.save(commit=False)
             user.set_password(user.password)
@@ -43,7 +47,8 @@ def registration(request):
             return redirect(request.path)
 
     return render(request, 'organizers/registration.html', {'user_form': UserOrganizerRegistrationForm(),
-                                                            'profile_form': ProfileOrganizerRegistrationForm()})
+                                                            'profile_form': ProfileOrganizerRegistrationForm(),
+                                                            'errors': errors})
 
 
 def show_organizer_profile(request):
