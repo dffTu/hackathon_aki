@@ -5,8 +5,8 @@
 {% block content %}
 <h1>Страница каталога {{ page_id }}</h1>
 <div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
     {% for platform in platforms %}
+    <img src="{{ platform.platformattachment_set.all[0].file.url }}" class="card-img-top" alt="{{ platform.name }}">
     <div class="card-body">
         <h5 class="card-title">{{ platform.name }}</h5>
         <p class="card-text">{{ platform.description }}</p>
