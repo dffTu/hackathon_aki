@@ -1,4 +1,4 @@
-/*Шрифты*/
+/* Шрифты */
 @font-face{
     font-family: "Cera Pro Medium";
     font-style: normal;
@@ -18,7 +18,7 @@
     src: url("../fonts/CeraPro-Black.ttf");
 }
 
-/*основная страница формы авторизации*/
+/* Основная страница формы авторизации */
 .authorize-window {
     font-family: "Cera Pro Medium";
     font-weight: medium;
@@ -31,30 +31,26 @@
     width: 100%;
     height: 100%;
     overflow: auto;
+    align-items: center;
     background-color: rgb(0,0,0,0.8);
 }
 
 .authorize-content {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     background-color: #eeecec;
     margin: 10% auto;
     padding: 20px;
     border: 3px solid #888;
     border-radius: 7px;
     width: 60%;
-    height: 80%;
 }
 
-
-/*кнопки сверху формы Войти и Зарег.*/
-.up-form{
+/* Кнопки сверху формы "войти" и "зарегистрироваться" */
+.choose-authentication-form {
     width: 100%;
     height: 8%;
-}
-
-.choose-authentication-form {
     display: flex;
     position: relative;
     align-items: center;
@@ -63,116 +59,112 @@
     flex-direction: row;
 }
 
-
-
 .log-in-content {
     justify-content: center;
+    align-items: center;
     background-color: #fefefe;
     padding: 20px;
     width: 50%;
     flex-direction: row;
-    justify-content: space-evenly
 }
 
-.enter {
-    padding: 1px 2%;
+.log-in-button-div, .registration-button-div {
+    padding: 1px 2px;
     border-bottom: 2px solid #E74362;
 }
 
-btn .log-in {
-    padding: 0;
+.log-in, .register {
+    box-shadow: none !important;
+    padding: 5px auto;
+    border-bottom: 2px solid #E74362;
 }
+
 .log-in:hover{
     background-color: #E74362;
     border-radius: 10px 10px 0px 0px;
 }
 
-.rega {
-    padding: 1px 2%;
-    border-bottom: 2px solid #E74362;
-}
 .register:hover{
     background-color: #E74362;
     border-radius: 10px 10px 0px 0px;
 }
 
-
-/**/
-.register-window-client{
-    display: none;
-
-}
 .register-window-organizer{
     display: none;
 }
 
-
-/*форма для входа*/
-.forma {
-    display: flex;
+/* Форма для входа */
+.log-in-content {
+    display: none;
     justify-content: center;
-    width: 100%;
-    height: 60%;
+    align-items: center;
+    width: 80%;
+    height: 50%;
+    margin: 5% auto;
 }
-.log-in-content{
+
+.log-in-content form {
     width: 80%;
     border-radius: 7px;
 }
-.forma button {
+
+.log-in-content button {
     width: 50%;
     background-color: #E74362;
     border: none;
     margin-top: 10%;
 }
+
 .buttons {
     display: flex;
     justify-content: center;
 }
 
-
 .buttons_ar {
-    width: 70%;
-    display: flex;
+    display: none;
+    width: 100%;
     justify-content: space-evenly;
-    margin-bottom: 10%;
+    margin: 2% auto
 }
+
 .buttons_ar button {
     width: 35%;
     font-family: 'Cera Pro Black';
     color: #fff;
     font-size: 18px;
 }
-/*форма для регистрации*/
 
+/*Форма для регистрации*/
 .register-content {
     height: 100%;
-    display: flex;
-    justify-content: center;
+    display: none;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    padding: 20px;
+    padding: 5px;
+}
 
+.col {
+    flex-direction: column;
 }
-.colums {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    margin: 0px;
-    width: 90%;
-    grid-gap: 10%;
-}
-.column1 {
-}
-.column2 {
 
+.register-window-organizer col{
+    flex-direction: column;
 }
 
 .register-window-client {
-    display: flex;
+    display: none;
+    justify-content: center;
     align-items: center;
     height: 90%;
 }
+
 .register-content button {
     background-color: #E74362;
+}
+
+.form-group button{
+    margin-top: 5%;
+    color: #fff;
+    font-family: 'Cera Pro Bold';
 }

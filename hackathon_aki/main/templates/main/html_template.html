@@ -65,24 +65,23 @@
     <div id="authorize-window" class="authorize-window">
         <div class="authorize-content" id="authorize-content">
 
-            <div class="up-form">
-                <div class="choose-authentication-form">
+            <div class="choose-authentication-form">
 
-                    <div class="enter">
-                        <button class="btn log-in" id="log-in" style="padding: 0px;">Войти</button>
-                    </div>
-                    
-                    <div class="rega">
-                        <button class="btn register" id="register" style="padding: 0px;">Зарегистрироваться</button>
-                    </div>
-                
+                <div class="log-in-button-div">
+                    <button class="btn log-in" id="log-in">Войти</button>
                 </div>
+
+                <div class="registration-button-div">
+                    <button class="btn register" id="register">Зарегистрироваться</button>
+                </div>
+
             </div>
 
-            <div class="forma">
-                <div class="log-in-content" id="log-in-content">
 
-                    <form method="post" enctype='multipart/form-data' action="{% url 'login' %}">
+
+            <div class="log-in-content" id="log-in-content">
+
+                <form method="post" enctype='multipart/form-data' action="{% url 'login' %}">
                         {% if error %}
                         <div class="alert alert-danger">
                             {{ error }}
@@ -100,19 +99,18 @@
                         <div class="form-group text-center">
                             {% csrf_token %}
 
-                            <button type="submit" class="btn btn-primary">Войти</button>
+                            <button type="submit" class="btn ">Войти</button>
                         </div>
 
                     </form>
 
-                </div>
             </div>
 
             <div class="register-content" id="register-content">
 
-                <div class="buttons_ar" style="margin: 5% auto;">
+                <div class="buttons_ar" id="buttons_ar">
                     <button class="btn register-client" id="register-client">Арендатор</button>
-                    <button class="btn register-organizer" id="register-organizer">Арендодатель</button> 
+                    <button class="btn register-organizer" id="register-organizer">Арендодатель</button>
                 </div>
 
                 <div class="register-window-client" id="register-window-client">
@@ -178,9 +176,6 @@
                                 {% endfor %}
                             </div>
 
-
-                            <!--  новая колонка должна быть -->
-
                             <div class="form-group">
                                 <label class="text-muted">Номер телефона</label>
                                 {{ profile_client_registration_form.phone_number }}
@@ -191,22 +186,23 @@
                                 {% endfor %}
                             </div>
                             
-                            <div class="form-group text-center">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-                            </div>
-                        </form>
-                    </div>
-                    
                             
+                        </form>
+                        <div class="form-group text-center">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">Зарегистрироваться</button>
+                            </div>
+                    </div>
+                      
                 </div> 
 
                 <div class="register-window-organizer" id="register-window-organizer">
                     
                     <form method="post" enctype='multipart/form-data' action="{% url 'organizer_registration' %}">
-                        <div class="colums">
 
-                            <div class="column1">
+                        <div class="row">
+
+                            <div class="col" style="flex-direction: column;">
 
                                 <div class="form-group">
                                     <label class="text-muted">Email</label>
@@ -270,7 +266,7 @@
                             </div>
 
 
-                            <div class="column2">
+                            <div class="col" style="flex-direction: column;">
                                 <div class="form-group">
                                 <label class="text-muted">Номер телефона</label>
                                 {{ profile_organizer_registration_form.phone_number }}
@@ -292,7 +288,7 @@
                                 </div>
 
                                  <div class="form-group">
-                                    <label class="text-muted">Юридическое имя компании</label>
+                                    <label class="text-muted">Юридическое имя</label>
                                     {{ profile_organizer_registration_form.juridical_name }}
                                     {% for error in errors.juridical_name %}
                                         <div class="alert alert-danger">
@@ -311,11 +307,10 @@
                                     {% endfor %}
                                 </div>
 
-                                <div class="form-group text-center">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-                                </div>
-
+                            </div>
+                            <div class="form-group text-center">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">Зарегистрироваться</button>
                             </div>
 
                         </div>
