@@ -23,7 +23,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <a class="navbar-brand" href="#">
+                        <a class="navbar-brand" href="{% url 'home' %}">
                         <img src="{% static 'main\img\aki.svg' %}" alt = "aki">
                         </a>
                     </div>
@@ -42,11 +42,11 @@
                     <div class="col" id="three">
                         <div class="icons">
 
-                            <a href="#" id="open-catalog">
-                            <div class="catalog">
-                                <img src="{% static 'main\img\catalog.svg' %}">
-                                <p>Каталог</p>
-                            </div>
+                            <a href="{% url 'show_page' page_id=1 %}" id="open-catalog">
+                                <div class="catalog">
+                                    <img src="{% static 'main\img\catalog.svg' %}">
+                                    <p>Каталог</p>
+                                </div>
                             </a>
 
                             <a href="#" id="open-user">
