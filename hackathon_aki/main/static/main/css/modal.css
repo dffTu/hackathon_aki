@@ -1,4 +1,4 @@
-
+/*Шрифты*/
 @font-face{
     font-family: "Cera Pro Medium";
     font-style: normal;
@@ -18,6 +18,7 @@
     src: url("../fonts/CeraPro-Black.ttf");
 }
 
+/*основная страница формы авторизации*/
 .authorize-window {
     font-family: "Cera Pro Medium";
     font-weight: medium;
@@ -42,10 +43,12 @@
     padding: 20px;
     border: 3px solid #888;
     border-radius: 7px;
-    width: 50%;
+    width: 60%;
     height: 70%;
 }
 
+
+/*кнопки сверху формы Войти и Зарег.*/
 .up-form{
     width: 100%;
     height: 8%;
@@ -84,7 +87,6 @@ btn .log-in {
     border-radius: 10px 10px 0px 0px;
 }
 
-
 .rega {
     padding: 1px 2%;
     border-bottom: 2px solid #E74362;
@@ -95,6 +97,7 @@ btn .log-in {
 }
 
 
+/**/
 .register-window-client{
     display: none;
 
@@ -104,7 +107,7 @@ btn .log-in {
 }
 
 
-
+/*форма для входа*/
 .forma {
     display: flex;
     justify-content: center;
@@ -124,8 +127,15 @@ btn .log-in {
 .buttons {
     display: flex;
     justify-content: center;
-    
 }
+
+
+.buttons_ar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10%;
+}
+/*форма для регистрации*/
 
 .register-content {
     height: 100%;
@@ -138,6 +148,9 @@ btn .log-in {
 }
 
 .register-window-client {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     width: 80%;
     height: 90%;
 }

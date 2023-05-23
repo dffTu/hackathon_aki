@@ -110,7 +110,7 @@
 
             <div class="register-content" id="register-content">
 
-                <div class="buttons_ar">
+                <div class="buttons_ar" style="margin: 5% auto;">
                     <button class="btn register-client" id="register-client">Арендатор</button>
                     <button class="btn register-organizer" id="register-organizer">Арендодатель</button> 
                 </div>
@@ -176,6 +176,9 @@
                                 </div>
                             {% endfor %}
                         </div>
+
+
+                        <!--  новая колонка должна быть -->
 
                         <div class="form-group">
                             <label class="text-muted">Номер телефона</label>
@@ -257,6 +260,10 @@
                             {% endfor %}
                         </div>
 
+
+
+                        <!-- новая колонка -->
+                        
                         <div class="form-group">
                             <label class="text-muted">Номер телефона</label>
                             {{ profile_organizer_registration_form.phone_number }}
