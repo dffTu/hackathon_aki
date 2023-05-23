@@ -81,7 +81,7 @@
 
             <div class="log-in-content" id="log-in-content">
 
-                    <form method="post" enctype='multipart/form-data' action="{% url 'login' %}">
+                <form method="post" enctype='multipart/form-data' action="{% url 'login' %}">
                         {% if error %}
                         <div class="alert alert-danger">
                             {{ error }}
@@ -104,7 +104,7 @@
 
                     </form>
 
-                </div>
+            </div>
 
             <div class="register-content" id="register-content">
 

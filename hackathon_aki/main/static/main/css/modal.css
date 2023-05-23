@@ -74,6 +74,7 @@
 }
 
 .log-in, .register {
+    box-shadow: none !important;
     padding: 5px auto;
     border-bottom: 2px solid #E74362;
 }
