@@ -6,7 +6,7 @@ from form_utils import get_basic_arguments_for_html_pages
 
 
 def index(request):
-    data = get_basic_arguments_for_html_pages(request)
+    data = get_basic_arguments_for_html_pages(request.user)
     return render(request, 'main/index.html', data)
 
 
@@ -19,7 +19,7 @@ def login(request):
     if request.user.is_authenticated:
         return redirect('home')
 
-    data = get_basic_arguments_for_html_pages(request)
+    data = get_basic_arguments_for_html_pages(request.user)
     if request.method == 'POST':
         user = auth.authenticate(request, username=request.POST['email'], password=request.POST['password'])
         if user is not None:
@@ -37,7 +37,7 @@ def email_verification(request, verification_code):
 
     email_verify = EmailVerification.objects.filter(verification_code=verification_code)
 
-    data = get_basic_arguments_for_html_pages(request)
+    data = get_basic_arguments_for_html_pages(request.user)
     if not email_verify.exists():
         data['status'] = 'Некорректный код подтверждения.'
         return render(request, 'main/email_verification.html', data)
@@ -46,6 +46,7 @@ def email_verification(request, verification_code):
     user = User(username=email_verify.email, email=email_verify.email, first_name=email_verify.first_name,
                 last_name=email_verify.last_name, password=email_verify.password)
     user.save()
+    data = get_basic_arguments_for_html_pages(user)
 
     if hasattr(email_verify, 'client'):
         user_data = email_verify.client

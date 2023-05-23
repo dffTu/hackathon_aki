@@ -49,12 +49,25 @@
                                 </div>
                             </a>
 
-                            <a href="#" id="open-user">
-                                <div class="user">
-                                    <img src="{% static 'main\img\lk.svg' %}">
-                                    <p>Войти</p>
-                                </div>
-                            </a>
+                            {% if user_fields %}
+                                {% if user_fields.client %}
+                                    <a href="{% url 'show_client_profile' %}" id="open-profile">
+                                {% else %}
+                                    <a href="{% url 'show_organizer_profile' %}" id="open-profile">
+                                {% endif %}
+                                        <div class="user">
+                                            <img src="{% static 'main\img\lk.svg' %}">
+                                            <p>{{ user_fields.first_name }}</p>
+                                        </div>
+                                    </a>
+                            {% else %}
+                                <a href="#" id="open-user">
+                                    <div class="user">
+                                        <img src="{% static 'main\img\lk.svg' %}">
+                                        <p>Войти</p>
+                                    </div>
+                                </a>
+                            {% endif %}
                     </div>
                     </div>
                     
