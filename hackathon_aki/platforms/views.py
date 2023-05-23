@@ -12,7 +12,7 @@ def redirect_to_first_page(request):        # Redirects to first catalogue page
 def show_page(request, page_id):            # Shows catalogue page
     platforms = Platform.objects.all()
 
-    data = get_basic_arguments_for_html_pages(request)
+    data = get_basic_arguments_for_html_pages(request.user)
     data['page_id'] = page_id
     data['platforms'] = platforms
 
@@ -20,7 +20,7 @@ def show_page(request, page_id):            # Shows catalogue page
 
 
 def show_platform_description(request, platform_id):
-    data = get_basic_arguments_for_html_pages(request)
+    data = get_basic_arguments_for_html_pages(request.user)
     data['platform_id'] = platform_id
 
     platform = Platform.objects.filter(id=platform_id)
@@ -37,7 +37,7 @@ def leave_comment(request, platform_id):
     if not request.user.is_authenticated or not hasattr(request.user, 'client'):
         return redirect('show_platform_description', platform_id=platform_id)
 
-    data = get_basic_arguments_for_html_pages(request)
+    data = get_basic_arguments_for_html_pages(request.user)
     data['platform_id'] = platform_id
 
     platform = Platform.objects.filter(id=platform_id)
@@ -61,9 +61,13 @@ def leave_comment(request, platform_id):
 
             return redirect('show_platform_description', platform_id=platform_id)
 
-    data = get_basic_arguments_for_html_pages(request)
     data['errors'] = errors
     data['comment_form'] = CommentLeavingForm()
     data['attachment_form'] = CommentFileAttachingForm()
 
     return render(request, 'platforms/leave_comment.html', data)
+
+
+def calendar(request):
+    data = get_basic_arguments_for_html_pages(request.user)
+    return render(request, 'platforms/calendar.html', data)
