@@ -57,7 +57,6 @@ def registration(request):
     data['user_form'] = UserClientRegistrationForm()
     data['profile_form'] = ProfileClientRegistrationForm()
     data['errors'] = errors
-
     return render(request, 'clients/registration.html', data)
 
 
@@ -70,6 +69,5 @@ def show_client_profile(request):
 
     data = get_basic_arguments_for_html_pages()
     data['email'] = request.user.username
-    data['is_verified'] = request.user.client.email_verification is None
 
     return render(request, 'clients/profile.html', data)

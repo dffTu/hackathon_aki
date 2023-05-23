@@ -13,7 +13,9 @@ class Organizer(models.Model):
     inn = models.CharField('ИНН', max_length=50, blank=True)
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name} {self.middle_name}'
+        if self.user is not None:
+            return f'{self.user.first_name} {self.user.last_name} {self.middle_name}'
+        return f'Ожидание подтверждения {self.email_verification.email}'
 
     class Meta:
         verbose_name = 'Организатор'
