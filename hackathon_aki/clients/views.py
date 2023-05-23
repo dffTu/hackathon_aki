@@ -30,7 +30,7 @@ def registration(request):
               'middle_name': [],
               'phone_number': []}
 
-    data = get_basic_arguments_for_html_pages(request)
+    data = get_basic_arguments_for_html_pages(request.user)
     if request.method == 'POST':
         is_valid = True
         if request.POST['password'] != request.POST['repeat_password']:
@@ -73,7 +73,7 @@ def show_client_profile(request):
     if not hasattr(request.user, 'client'):
         return redirect('show_organizer_profile')
 
-    data = get_basic_arguments_for_html_pages(request)
+    data = get_basic_arguments_for_html_pages(request.user)
     data['email'] = request.user.username
 
     return render(request, 'clients/profile.html', data)
