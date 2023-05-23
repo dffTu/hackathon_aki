@@ -35,7 +35,7 @@ def registration(request):
               'juridical_name': [],
               'inn': []}
 
-    data = get_basic_arguments_for_html_pages()
+    data = get_basic_arguments_for_html_pages(request)
     if request.method == 'POST':
         is_valid = True
         if request.POST['password'] != request.POST['repeat_password']:
@@ -91,7 +91,7 @@ def create_platform(request):
 
             return redirect('show_organizer_platforms')
 
-    data = get_basic_arguments_for_html_pages()
+    data = get_basic_arguments_for_html_pages(request)
     data['errors'] = errors
     data['creating_form'] = PlatformCreatingForm()
     data['attachment_form'] = PlatformFileAttachingForm()
@@ -106,7 +106,7 @@ def show_organizer_profile(request):
     if not hasattr(request.user, 'organizer'):
         return redirect('show_client_profile')
 
-    data = get_basic_arguments_for_html_pages()
+    data = get_basic_arguments_for_html_pages(request)
     data['email'] = request.user.username
 
     return render(request, 'organizers/profile.html', data)
@@ -119,7 +119,7 @@ def show_organizer_platforms(request):
     if not hasattr(request.user, 'organizer'):
         return redirect('show_client_profile')
 
-    data = get_basic_arguments_for_html_pages()
+    data = get_basic_arguments_for_html_pages(request)
     data['email'] = request.user.username
 
     return render(request, 'organizers/profile.html', data)

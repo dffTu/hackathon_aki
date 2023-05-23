@@ -3,7 +3,7 @@ from clients.forms import UserClientRegistrationForm, ProfileClientRegistrationF
 from organizers.forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
 
 
-def get_basic_arguments_for_html_pages():
+def get_basic_arguments_for_html_pages(request):
     data = {
         'login_form': LoginForm(),
         'user_client_registration_form': UserClientRegistrationForm(),

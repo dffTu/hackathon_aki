@@ -10,7 +10,7 @@ def redirect_to_first_page(request):        # Redirects to first catalogue page
 def show_page(request, page_id):            # Shows catalogue page
     platforms = Platform.objects.all()
 
-    data = get_basic_arguments_for_html_pages()
+    data = get_basic_arguments_for_html_pages(request)
     data['page_id'] = page_id
     data['platforms'] = platforms
 
@@ -18,7 +18,7 @@ def show_page(request, page_id):            # Shows catalogue page
 
 
 def show_platform_description(request, platform_id):
-    data = get_basic_arguments_for_html_pages()
+    data = get_basic_arguments_for_html_pages(request)
     data['platform_id'] = platform_id
 
     platform = Platform.objects.filter(id=platform_id)
@@ -32,7 +32,7 @@ def leave_comment(request, platform_id):
     if not request.user.is_authenticated or not hasattr(request.user, 'client'):
         return redirect('show_platform_description', platform_id=platform_id)
 
-    data = get_basic_arguments_for_html_pages()
+    data = get_basic_arguments_for_html_pages(request)
     data['platform_id'] = platform_id
 
     platform = Platform.objects.filter(id=platform_id)
@@ -45,6 +45,6 @@ def leave_comment(request, platform_id):
     errors = {'name': [],
               'description': []}
 
-    data = get_basic_arguments_for_html_pages()
+    data = get_basic_arguments_for_html_pages(request)
     data['platform_id'] = platform_id
     return render(request, 'platforms/platform_description.html', data)
