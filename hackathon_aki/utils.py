@@ -1,5 +1,5 @@
-from hackathon_aki import config
 from django.core.mail import send_mail
+from hackathon_aki import config
 
 
 UNIQUE_ERRORS = {
@@ -90,11 +90,21 @@ def validate_charset(field_names: list[str], form_data, error_log: dict[str, lis
     return is_valid
 
 
-def send_email_for_verify(user):
+def send_email_for_verify(request, user, verification_code):
     send_mail(
-        "Subject here",
-        "Here is the message.",
+        "Подтверждение E-mail адреса",
+        f"Перейдите по ссылке для подтверждения: {request.build_absolute_uri()[:-len(request.path)]}/email_verification/{verification_code}",
         config.EMAIL_LOGIN,
         [user.email],
         fail_silently=False,
     )
+
+
+def check_user_verification(user):
+    if not user.is_authenticated:
+        return False
+
+    if hasattr(user, 'client'):
+        return user.client.email_verification is None
+    else:
+        return user.organizer.email_verification is None

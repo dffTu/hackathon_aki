@@ -1,7 +1,13 @@
 {% extends 'main/html_template.html' %}
 
-{% block title %}Форма по добавлению статьи{% endblock %}
+{% block title %}Профиль{% endblock %}
 
 {% block content %}
-    <p>Профиль арендатора {{ email }}</p>
+    <h1 class="text-white">Профиль арендатора</h1>
+    <span class="text-white">{{ email }}</span> <br>
+    {% if is_verified %}
+        <span class="text-white">Почта подтверждена</span>
+    {% else %}
+        <span class="text-white">Почта не подтверждена</span>
+    {% endif %}
 {% endblock %}

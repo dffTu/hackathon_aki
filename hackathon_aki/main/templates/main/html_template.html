@@ -117,7 +117,7 @@
 
                 <div class="register-window-client" id="register-window-client">
                     <div class="forms_cl">
-                        <form method="post" enctype='multipart/form-data' action="client_registration">
+                        <form method="post" enctype='multipart/form-data' action="{% url 'client_registration' %}">
                             <div class="form-group">
                                 <label class="text-muted">Email</label>
                                 {{ user_client_registration_form.email }}
@@ -203,7 +203,7 @@
 
                 <div class="register-window-organizer" id="register-window-organizer">
                     
-                    <form method="post" enctype='multipart/form-data' action="organizer_registration">
+                    <form method="post" enctype='multipart/form-data' action="{% url 'organizer_registration' %}">
                         <div class="colums">
 
                             <div class="column1">

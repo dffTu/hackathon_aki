@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
-from utils import send_email_for_verify
 from .forms import UserClientRegistrationForm, ProfileClientRegistrationForm
+from main.models import EmailVerification
+from utils import send_email_for_verify
 from form_utils import get_basic_arguments_for_html_pages
 
 
@@ -38,12 +39,16 @@ def registration(request):
             user.username = user.email
             user.save()
 
+            email_verification = EmailVerification(email=user.email)
+            email_verification.save()
+
             user_profile = profile_form.save(commit=False)
+            user_profile.email_verification = email_verification
             user_profile.user = user
             user_profile.save()
 
             auth.login(request, user)
-            send_email_for_verify(user)
+            send_email_for_verify(request, user, email_verification.id)
             return redirect(request.path)
 
     data = get_basic_arguments_for_html_pages()
@@ -63,5 +68,6 @@ def show_client_profile(request):
 
     data = get_basic_arguments_for_html_pages()
     data['email'] = request.user.username
+    data['is_verified'] = request.user.client.email_verification is None
 
     return render(request, 'clients/profile.html', data)
