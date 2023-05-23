@@ -1,11 +1,10 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Organizer
-from utils import validate_unique, validate_length, validate_charset
+from utils import validate_length, validate_charset
 
 
 class UserOrganizerRegistrationForm(forms.ModelForm):
-    unique_fields = {'username': 'email'}
     length_validation_fields = ['email', 'password', 'first_name', 'last_name']
     charset_validation_fields = ['password', 'first_name', 'last_name']
 
@@ -44,7 +43,6 @@ class UserOrganizerRegistrationForm(forms.ModelForm):
         if not is_valid:
             error_log['email'].append('Некорректный адрес электронной почты.')
 
-        is_valid = validate_unique(self.unique_fields, self.data, self._meta.model, error_log) and is_valid
         is_valid = validate_length(self.length_validation_fields, self.data, error_log) and is_valid
         is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
         return is_valid
