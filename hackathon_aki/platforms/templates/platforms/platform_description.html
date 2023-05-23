@@ -4,4 +4,11 @@
 
 {% block content %}
     <p class="text-white">Описание площадки номер {{ platform_id }}</p>
+    {% for comment in comments %}
+        <div>
+            <span class="text-white">{{ comment.text }}</span> <br>
+            <span class="text-white">{{ comment.rating }}</span> <br>
+            <img src="{{ comment.commentattachment_set.first.file.url }}" class="card-img-top">
+        </div>
+    {% endfor %}
 {% endblock %}

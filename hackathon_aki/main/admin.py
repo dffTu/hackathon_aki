@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
-from .models import File, PlatformAttachment, EmailVerification
+from .models import CommentAttachment, PlatformAttachment, EmailVerification
 from platforms.models import Platform
 
 
-@receiver(pre_delete, sender=File)
+@receiver(pre_delete, sender=CommentAttachment)
 def file_delete(sender, instance, **kwargs):
     instance.file.delete(False)
 
@@ -22,4 +22,4 @@ def platform_delete(sender, instance, **kwargs):
 
 admin.site.register(EmailVerification)
 admin.site.register(PlatformAttachment)
-admin.site.register(File)
+admin.site.register(CommentAttachment)

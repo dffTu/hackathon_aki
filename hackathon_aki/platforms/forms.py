@@ -1,5 +1,5 @@
 from django import forms
-from .models import Platform
+from .models import Platform, Comment
 from utils import validate_length, validate_charset
 
 
@@ -28,23 +28,57 @@ class PlatformFileAttachingForm(forms.Form):
 
 
 class PlatformCreatingForm(forms.ModelForm):
-    length_validation_fields = ['name', 'description']
-    charset_validation_fields = ['name', 'description']
+    length_validation_fields = ['name', 'short_description', 'description']
+    charset_validation_fields = ['name', 'short_description', 'description']
 
     class Meta:
         model = Platform
-        fields = ['name', 'description', 'agreement']
+        fields = ['name', 'short_description', 'description', 'agreement']
 
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Название',
             }),
+            'short_description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Краткое описание',
+            }),
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Описание',
             }),
             'agreement': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+            }),
+        }
+
+    def validate(self, error_log):
+        is_valid = validate_length(self.length_validation_fields, self.data, error_log)
+        is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
+        return is_valid
+
+
+class CommentFileAttachingForm(forms.Form):
+    file_field = MultipleFileField(required=False, widget=MultipleFileInput(attrs={
+        'class': 'form-control'
+    }))
+
+
+class CommentLeavingForm(forms.ModelForm):
+    length_validation_fields = ['text']
+    charset_validation_fields = ['text']
+
+    class Meta:
+        model = Comment
+        fields = ['text', 'rating']
+
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Текст отзыва',
+            }),
+            'rating': forms.NumberInput(attrs={
                 'class': 'form-control',
             }),
         }

@@ -6,6 +6,7 @@ class Platform(models.Model):
 
     name = models.CharField('Имя', max_length=50)
     category = models.CharField('Категория', max_length=50)
+    short_description = models.TextField('Краткое описание', blank=True)
     description = models.TextField('Описание площадки', blank=True)
     schedule = models.JSONField('Расписание', null=True)
     rating = models.FloatField('Рейтинг')
@@ -37,7 +38,6 @@ class FreeSlot(models.Model):
 class Comment(models.Model):
     client = models.ForeignKey('clients.Client', on_delete=models.CASCADE)
     platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)
-    attachment = models.ForeignKey('main.File', on_delete=models.SET_NULL, null=True)
 
     text = models.TextField('Текст отзыва', blank=True)
     rating = models.FloatField('Рейтинг')

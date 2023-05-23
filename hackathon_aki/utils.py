@@ -13,7 +13,9 @@ MAX_LENGTH = {
     'juridical_name': 30,
     'inn': 15,
     'name': 30,
-    'description': 256
+    'short_description': 1000,
+    'description': 10000,
+    'text': 5000
 }
 
 
@@ -46,7 +48,13 @@ CHARSET = {
     'name': [
         lambda x: x.isprintable(),
     ],
+    'short_description': [
+        lambda x: x.isprintable(),
+    ],
     'description': [
+        lambda x: x.isprintable(),
+    ],
+    'text': [
         lambda x: x.isprintable(),
     ],
 }

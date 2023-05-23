@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Platform
+from .models import Platform, Comment
+from main.models import CommentAttachment
+from .forms import CommentFileAttachingForm, CommentLeavingForm
 from form_utils import get_basic_arguments_for_html_pages
 
 
@@ -24,6 +26,9 @@ def show_platform_description(request, platform_id):
     platform = Platform.objects.filter(id=platform_id)
     if not platform.exists():
         return render(request, 'platforms/platform_not_found.html', data)
+    platform = platform.first()
+
+    data['comments'] = Comment.objects.filter(platform=platform)
 
     return render(request, 'platforms/platform_description.html', data)
 
@@ -40,11 +45,25 @@ def leave_comment(request, platform_id):
         return render(request, 'platforms/platform_not_found.html', data)
     platform = platform.first()
 
-    print(platform)
+    errors = {'text': []}
+    if request.method == 'POST':
+        comment_form = CommentLeavingForm(request.POST)
+        attachment_form = CommentFileAttachingForm(request.POST, request.FILES)
+        if comment_form.validate(errors) and attachment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.client = request.user.client
+            comment.platform = platform
+            comment.save()
 
-    errors = {'name': [],
-              'description': []}
+            for file_description in attachment_form.cleaned_data['file_field']:
+                file = CommentAttachment(comment=comment, file=file_description)
+                file.save()
+
+            return redirect('show_platform_description', platform_id=platform_id)
 
     data = get_basic_arguments_for_html_pages(request)
-    data['platform_id'] = platform_id
-    return render(request, 'platforms/platform_description.html', data)
+    data['errors'] = errors
+    data['comment_form'] = CommentLeavingForm()
+    data['attachment_form'] = CommentFileAttachingForm()
+
+    return render(request, 'platforms/leave_comment.html', data)

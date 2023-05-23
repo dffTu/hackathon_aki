@@ -29,12 +29,14 @@ class PlatformAttachment(models.Model):
         verbose_name_plural = 'Закреплённые файлы площадок'
 
 
-class File(models.Model):
-    file = models.FileField('Файл', null=True)
+class CommentAttachment(models.Model):
+    comment = models.ForeignKey('platforms.Comment', on_delete=models.CASCADE)
+
+    file = models.FileField('Файл')
 
     def __str__(self):
         return self.file.name
 
     class Meta:
-        verbose_name = 'Файл'
-        verbose_name_plural = 'Файлы'
+        verbose_name = 'Закреплённый файл отзыва'
+        verbose_name_plural = 'Закреплённые файлы отзывов'

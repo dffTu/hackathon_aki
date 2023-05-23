@@ -1,0 +1,13 @@
+{% extends 'main/html_template.html' %}
+
+{% block title %}Создание отзыва{% endblock %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data" action="">
+        {{ comment_form.text }} <span class="text-white">{{ errors.text }}</span> <br>
+        {{ comment_form.rating }} <br>
+        {{ attachment_form.file_field }} <br>
+        {% csrf_token %}
+        <button type="submit">Создать</button>
+    </form>
+{% endblock %}
