@@ -69,11 +69,11 @@
                 <div class="choose-authentication-form">
 
                     <div class="enter">
-                        <button class="btn log-in" id="log-in" style="padding: 0px;">Войти</button>
+                        <button class="btn log-in" id="log-in" style="padding: 5px auto;">Войти</button>
                     </div>
                     
                     <div class="rega">
-                        <button class="btn register" id="register" style="padding: 0px;">Зарегистрироваться</button>
+                        <button class="btn register" id="register" style="padding: 5px auto;">Зарегистрироваться</button>
                     </div>
                 
                 </div>
@@ -100,7 +100,7 @@
                         <div class="form-group text-center">
                             {% csrf_token %}
 
-                            <button type="submit" class="btn btn-primary">Войти</button>
+                            <button type="submit" class="btn ">Войти</button>
                         </div>
 
                     </form>
@@ -110,7 +110,7 @@
 
             <div class="register-content" id="register-content">
 
-                <div class="buttons_ar" style="margin: 5% auto;">
+                <div class="buttons_ar" style="margin: 2% auto;">
                     <button class="btn register-client" id="register-client">Арендатор</button>
                     <button class="btn register-organizer" id="register-organizer">Арендодатель</button> 
                 </div>
@@ -178,9 +178,6 @@
                                 {% endfor %}
                             </div>
 
-
-                            <!--  новая колонка должна быть -->
-
                             <div class="form-group">
                                 <label class="text-muted">Номер телефона</label>
                                 {{ profile_client_registration_form.phone_number }}
@@ -191,22 +188,23 @@
                                 {% endfor %}
                             </div>
                             
-                            <div class="form-group text-center">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-                            </div>
-                        </form>
-                    </div>
-                    
                             
+                        </form>
+                        <div class="form-group text-center">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">Зарегистрироваться</button>
+                            </div>
+                    </div>
+                      
                 </div> 
 
                 <div class="register-window-organizer" id="register-window-organizer">
                     
                     <form method="post" enctype='multipart/form-data' action="{% url 'organizer_registration' %}">
-                        <div class="colums">
 
-                            <div class="column1">
+                        <div class="row">
+
+                            <div class="col" style="flex-direction: column;">
 
                                 <div class="form-group">
                                     <label class="text-muted">Email</label>
@@ -270,7 +268,7 @@
                             </div>
 
 
-                            <div class="column2">
+                            <div class="col" style="flex-direction: column;">
                                 <div class="form-group">
                                 <label class="text-muted">Номер телефона</label>
                                 {{ profile_organizer_registration_form.phone_number }}
@@ -311,11 +309,10 @@
                                     {% endfor %}
                                 </div>
 
-                                <div class="form-group text-center">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-                                </div>
-
+                            </div>
+                            <div class="form-group text-center">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">Зарегистрироваться</button>
                             </div>
 
                         </div>
