@@ -11,6 +11,12 @@ from form_utils import get_basic_arguments_for_html_pages
 
 
 def redirect_to_organizer_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+
+    if not hasattr(request.user, 'organizer'):
+        return redirect('show_client_profile')
+
     return redirect('show_organizer_profile')
 
 
