@@ -48,3 +48,8 @@ def leave_comment(request, platform_id):
     data = get_basic_arguments_for_html_pages(request.user)
     data['platform_id'] = platform_id
     return render(request, 'platforms/platform_description.html', data)
+
+
+def calendar(request):
+    data = get_basic_arguments_for_html_pages(request.user)
+    return render(request, 'platforms/calendar.html', data)
