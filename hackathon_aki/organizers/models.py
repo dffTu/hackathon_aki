@@ -26,10 +26,11 @@ class Entry(models.Model):
     client = models.ForeignKey('clients.Client', on_delete=models.CASCADE)
     platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)
 
-    date = models.DateTimeField('Дата записи')
+    date_start = models.DateTimeField('Дата начала записи')
+    date_end = models.DateTimeField('Дата окончания записи')
 
     def __str__(self):
-        return f'Запись на {self.date}'
+        return f'Запись на {self.date_start}, до {date_end}'
 
     class Meta:
         verbose_name = 'Запись'
