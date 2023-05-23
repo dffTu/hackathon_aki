@@ -7,6 +7,11 @@ def redirect_to_first_page(request):        # Redirects to first catalogue page
     return redirect('show_page', page_id=1)
 
 
+def show_platform_description(request, platform_id):
+    data = get_basic_arguments_for_html_pages()
+    return render(request, 'platforms/platform_description.html', data)
+
+
 def show_page(request, page_id):            # Shows catalogue page
     platforms = Platform.objects.all()
 

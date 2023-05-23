@@ -5,6 +5,7 @@ class Platform(models.Model):
     organizer = models.ForeignKey('organizers.Organizer', on_delete=models.CASCADE)
 
     name = models.CharField('Имя', max_length=50)
+    category = models.CharField('Категория', max_length=50)
     description = models.TextField('Описание площадки', blank=True)
     schedule = models.JSONField('Расписание', null=True)
     rating = models.FloatField('Рейтинг')
@@ -23,6 +24,7 @@ class FreeSlot(models.Model):
     platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)
 
     date = models.DateField('Свободная дата')
+    price = models.IntegerField('Цена', null=True)
 
     def __str__(self):
         return f'Свободно {self.date}'
