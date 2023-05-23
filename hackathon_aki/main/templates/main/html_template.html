@@ -116,207 +116,218 @@
                 </div>
 
                 <div class="register-window-client" id="register-window-client">
-                    <form method="post" enctype='multipart/form-data' action="client_registration">
-                        <div class="form-group">
-                            <label class="text-muted">Email</label>
-                            {{ user_client_registration_form.email }}
-                            {% for error in errors.email %}
-                                <div class="alert alert-danger">
-                                {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
+                    <div class="forms_cl">
+                        <form method="post" enctype='multipart/form-data' action="client_registration">
+                            <div class="form-group">
+                                <label class="text-muted">Email</label>
+                                {{ user_client_registration_form.email }}
+                                {% for error in errors.email %}
+                                    <div class="alert alert-danger">
+                                    {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
 
-                        <div class="form-group">
-                            <label class="text-muted">Пароль</label>
-                            {{ user_client_registration_form.password }}
-                            {% for error in errors.password %}
-                                <div class="alert alert-danger">
-                                {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
+                            <div class="form-group">
+                                <label class="text-muted">Пароль</label>
+                                {{ user_client_registration_form.password }}
+                                {% for error in errors.password %}
+                                    <div class="alert alert-danger">
+                                    {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
 
-                        <div class="form-group">
-                            <label class="text-muted">Повторите пароль</label>
-                            {{ user_client_registration_form.repeat_password }}
-                            {% for error in errors.repeat_password %}
-                                <div class="alert alert-danger">
-                                {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
+                            <div class="form-group">
+                                <label class="text-muted">Повторите пароль</label>
+                                {{ user_client_registration_form.repeat_password }}
+                                {% for error in errors.repeat_password %}
+                                    <div class="alert alert-danger">
+                                    {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
 
-                        <div class="form-group">
-                            <label class="text-muted">Фамилия</label>
-                            {{ user_client_registration_form.last_name }}
-                            {% for error in errors.last_name %}
-                                <div class="alert alert-danger">
-                                {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
+                            <div class="form-group">
+                                <label class="text-muted">Фамилия</label>
+                                {{ user_client_registration_form.last_name }}
+                                {% for error in errors.last_name %}
+                                    <div class="alert alert-danger">
+                                    {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
 
-                        <div class="form-group">
-                            <label class="text-muted">Имя</label>
-                            {{ user_client_registration_form.first_name }}
-                            {% for error in errors.first_name %}
-                                <div class="alert alert-danger">
-                                {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
+                            <div class="form-group">
+                                <label class="text-muted">Имя</label>
+                                {{ user_client_registration_form.first_name }}
+                                {% for error in errors.first_name %}
+                                    <div class="alert alert-danger">
+                                    {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
 
-                        <div class="form-group">
-                            <label class="text-muted">Отчество (при наличии)</label>
-                            {{ profile_client_registration_form.middle_name }}
-                            {% for error in errors.middle_name %}
-                                <div class="alert alert-danger">
-                                {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
+                            <div class="form-group">
+                                <label class="text-muted">Отчество (при наличии)</label>
+                                {{ profile_client_registration_form.middle_name }}
+                                {% for error in errors.middle_name %}
+                                    <div class="alert alert-danger">
+                                    {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
 
 
-                        <!--  новая колонка должна быть -->
+                            <!--  новая колонка должна быть -->
 
-                        <div class="form-group">
-                            <label class="text-muted">Номер телефона</label>
-                            {{ profile_client_registration_form.phone_number }}
-                            {% for error in errors.phone_number %}
-                                <div class="alert alert-danger">
-                                {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="form-group text-center">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-                        </div>
-
-                    </form>
+                            <div class="form-group">
+                                <label class="text-muted">Номер телефона</label>
+                                {{ profile_client_registration_form.phone_number }}
+                                {% for error in errors.phone_number %}
+                                    <div class="alert alert-danger">
+                                    {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="form-group text-center">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                            </div>
+                        </form>
+                    </div>
+                    
                             
                 </div> 
 
                 <div class="register-window-organizer" id="register-window-organizer">
+                    
                     <form method="post" enctype='multipart/form-data' action="organizer_registration">
-                        <div class="form-group">
-                            <label class="text-muted">Email</label>
-                            {{ user_organizer_registration_form.email }}
-                            {% for error in errors.email %}
-                                <div class="alert alert-danger">
-                                {{ error }}
+                        <div class="colums">
+
+                            <div class="column1">
+
+                                <div class="form-group">
+                                    <label class="text-muted">Email</label>
+                                {{ user_organizer_registration_form.email }}
+                                {% for error in errors.email %}
+                                    <div class="alert alert-danger">
+                                    {{ error }}
+                                    </div>
+                                {% endfor %}
                                 </div>
-                            {% endfor %}
-                        </div>
 
-                        <div class="form-group">
-                            <label class="text-muted">Пароль</label>
-                            {{ user_organizer_registration_form.password }}
-                            {% for error in errors.password %}
-                                <div class="alert alert-danger">
-                                {{ error }}
+                                <div class="form-group">
+                                    <label class="text-muted">Пароль</label>
+                                    {{ user_organizer_registration_form.password }}
+                                    {% for error in errors.password %}
+                                        <div class="alert alert-danger">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                            {% endfor %}
-                        </div>
 
-                        <div class="form-group">
-                            <label class="text-muted">Повторите пароль</label>
-                            {{ user_organizer_registration_form.repeat_password }}
-                            {% for error in errors.repeat_password %}
-                                <div class="alert alert-danger">
-                                {{ error }}
+                                <div class="form-group">
+                                    <label class="text-muted">Повторите пароль</label>
+                                    {{ user_organizer_registration_form.repeat_password }}
+                                    {% for error in errors.repeat_password %}
+                                        <div class="alert alert-danger">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                            {% endfor %}
-                        </div>
 
-                        <div class="form-group">
-                            <label class="text-muted">Фамилия</label>
-                            {{ user_organizer_registration_form.last_name }}
-                            {% for error in errors.last_name %}
-                                <div class="alert alert-danger">
-                                {{ error }}
+                                <div class="form-group">
+                                    <label class="text-muted">Фамилия</label>
+                                    {{ user_organizer_registration_form.last_name }}
+                                    {% for error in errors.last_name %}
+                                        <div class="alert alert-danger">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                            {% endfor %}
-                        </div>
 
-                        <div class="form-group">
-                            <label class="text-muted">Имя</label>
-                            {{ user_organizer_registration_form.first_name }}
-                            {% for error in errors.first_name %}
-                                <div class="alert alert-danger">
-                                {{ error }}
+                                <div class="form-group">
+                                    <label class="text-muted">Имя</label>
+                                    {{ user_organizer_registration_form.first_name }}
+                                    {% for error in errors.first_name %}
+                                        <div class="alert alert-danger">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                            {% endfor %}
-                        </div>
 
-                         <div class="form-group">
-                            <label class="text-muted">Отчество (при наличии)</label>
-                            {{ profile_organizer_registration_form.middle_name }}
-                            {% for error in errors.middle_name %}
-                                <div class="alert alert-danger">
-                                {{ error }}
+                                 <div class="form-group">
+                                    <label class="text-muted">Отчество (при наличии)</label>
+                                    {{ profile_organizer_registration_form.middle_name }}
+                                    {% for error in errors.middle_name %}
+                                        <div class="alert alert-danger">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                            {% endfor %}
+                            </div>
+
+
+                            <div class="column2">
+                                <div class="form-group">
+                                <label class="text-muted">Номер телефона</label>
+                                {{ profile_organizer_registration_form.phone_number }}
+                                {% for error in errors.phone_number %}
+                                    <div class="alert alert-danger">
+                                    {{ error }}
+                                    </div>
+                                {% endfor %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-muted">Позиция в компании</label>
+                                    {{ profile_organizer_registration_form.position }}
+                                    {% for error in errors.position %}
+                                        <div class="alert alert-danger">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                 <div class="form-group">
+                                    <label class="text-muted">Юридическое имя компании</label>
+                                    {{ profile_organizer_registration_form.juridical_name }}
+                                    {% for error in errors.juridical_name %}
+                                        <div class="alert alert-danger">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-muted">ИНН</label>
+                                    {{ profile_organizer_registration_form.inn }}
+                                    {% for error in errors.inn %}
+                                        <div class="alert alert-danger">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="form-group text-center">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                                </div>
+
+                            </div>
+
                         </div>
-
-
-
-                        <!-- новая колонка -->
                         
-                        <div class="form-group">
-                            <label class="text-muted">Номер телефона</label>
-                            {{ profile_organizer_registration_form.phone_number }}
-                            {% for error in errors.phone_number %}
-                                <div class="alert alert-danger">
-                                {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="form-group">
-                            <label class="text-muted">Позиция в компании</label>
-                            {{ profile_organizer_registration_form.position }}
-                            {% for error in errors.position %}
-                                <div class="alert alert-danger">
-                                {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
-
-                         <div class="form-group">
-                            <label class="text-muted">Юридическое имя компании</label>
-                            {{ profile_organizer_registration_form.juridical_name }}
-                            {% for error in errors.juridical_name %}
-                                <div class="alert alert-danger">
-                                {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="form-group">
-                            <label class="text-muted">ИНН</label>
-                            {{ profile_organizer_registration_form.inn }}
-                            {% for error in errors.inn %}
-                                <div class="alert alert-danger">
-                                {{ error }}
-                                </div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="form-group text-center">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-                        </div>
                     </form>
                 </div>
+
             </div>
                     
 
         </div>
         
-
-
     </div>
     <script src="{% static 'main\js\script.js' %}"></script>
 

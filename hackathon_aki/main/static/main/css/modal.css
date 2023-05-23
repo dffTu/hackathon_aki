@@ -44,7 +44,7 @@
     border: 3px solid #888;
     border-radius: 7px;
     width: 60%;
-    height: 70%;
+    height: 80%;
 }
 
 
@@ -131,9 +131,16 @@ btn .log-in {
 
 
 .buttons_ar {
+    width: 70%;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     margin-bottom: 10%;
+}
+.buttons_ar button {
+    width: 35%;
+    font-family: 'Cera Pro Black';
+    color: #fff;
+    font-size: 18px;
 }
 /*форма для регистрации*/
 
@@ -146,12 +153,24 @@ btn .log-in {
     padding: 20px;
 
 }
+.colums {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 0px;
+    width: 90%;
+    grid-gap: 10%;
+}
+.column1 {
+}
+.column2 {
+
+}
 
 .register-window-client {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 80%;
+    align-items: center;
     height: 90%;
 }
 .register-content button {
