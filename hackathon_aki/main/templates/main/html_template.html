@@ -65,22 +65,21 @@
     <div id="authorize-window" class="authorize-window">
         <div class="authorize-content" id="authorize-content">
 
-            <div class="up-form">
-                <div class="choose-authentication-form">
+            <div class="choose-authentication-form">
 
-                    <div class="enter">
-                        <button class="btn log-in" id="log-in" style="padding: 5px auto;">Войти</button>
-                    </div>
-                    
-                    <div class="rega">
-                        <button class="btn register" id="register" style="padding: 5px auto;">Зарегистрироваться</button>
-                    </div>
-                
+                <div class="log-in-button-div">
+                    <button class="btn log-in" id="log-in">Войти</button>
                 </div>
+
+                <div class="registration-button-div">
+                    <button class="btn register" id="register">Зарегистрироваться</button>
+                </div>
+
             </div>
 
-            <div class="forma">
-                <div class="log-in-content" id="log-in-content">
+
+
+            <div class="log-in-content" id="log-in-content">
 
                     <form method="post" enctype='multipart/form-data' action="{% url 'login' %}">
                         {% if error %}
@@ -106,13 +105,12 @@
                     </form>
 
                 </div>
-            </div>
 
             <div class="register-content" id="register-content">
 
-                <div class="buttons_ar" style="margin: 2% auto;">
+                <div class="buttons_ar" id="buttons_ar">
                     <button class="btn register-client" id="register-client">Арендатор</button>
-                    <button class="btn register-organizer" id="register-organizer">Арендодатель</button> 
+                    <button class="btn register-organizer" id="register-organizer">Арендодатель</button>
                 </div>
 
                 <div class="register-window-client" id="register-window-client">
@@ -290,7 +288,7 @@
                                 </div>
 
                                  <div class="form-group">
-                                    <label class="text-muted">Юридическое имя компании</label>
+                                    <label class="text-muted">Юридическое имя</label>
                                     {{ profile_organizer_registration_form.juridical_name }}
                                     {% for error in errors.juridical_name %}
                                         <div class="alert alert-danger">
