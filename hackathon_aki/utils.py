@@ -2,12 +2,6 @@ from django.core.mail import send_mail
 from hackathon_aki import config
 
 
-UNIQUE_ERRORS = {
-    'email': 'Аккаунт с таким E-mail уже создан.',
-    'phone_number': 'Аккаунт с таким номером телефона уже создан.',
-}
-
-
 MAX_LENGTH = {
     'email': 50,
     'password': 25,
@@ -58,16 +52,6 @@ CHARSET = {
 }
 
 
-def validate_unique(field_names: dict[str, str], form_data, model, error_log: dict[str, list[str]]) -> bool:
-    is_valid = True
-    for column_name, field_name in field_names.items():
-        if model.objects.filter(**{column_name: form_data[field_name]}).exists():
-            error_log[field_name].append(UNIQUE_ERRORS[field_name])
-            is_valid = False
-
-    return is_valid
-
-
 def validate_length(field_names: list[str], form_data, error_log: dict[str, list[str]]) -> bool:
     is_valid = True
     for field_name in field_names:
@@ -90,21 +74,11 @@ def validate_charset(field_names: list[str], form_data, error_log: dict[str, lis
     return is_valid
 
 
-def send_email_for_verify(request, user, verification_code):
+def send_email_for_verify(request, email, verification_code):
     send_mail(
         "Подтверждение E-mail адреса",
-        f"Перейдите по ссылке для подтверждения: {request.build_absolute_uri()[:-len(request.path)]}/email_verification/{verification_code}",
+        f"Перейдите по ссылке для подтверждения: {request.build_absolute_uri()[:-len(request.path)]}/email_verification/{verification_code}/",
         config.EMAIL_LOGIN,
-        [user.email],
+        [email],
         fail_silently=False,
     )
-
-
-def check_user_verification(user):
-    if not user.is_authenticated:
-        return False
-
-    if hasattr(user, 'client'):
-        return user.client.email_verification is None
-    else:
-        return user.organizer.email_verification is None

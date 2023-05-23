@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
+from django.contrib.auth.models import User
 from .models import EmailVerification
-from utils import check_user_verification
 from form_utils import get_basic_arguments_for_html_pages
 
 
@@ -32,26 +32,31 @@ def login(request):
 
 
 def email_verification(request, verification_code):
-    data = get_basic_arguments_for_html_pages()
-    if not request.user.is_authenticated:
-        data['status'] = 'Для подтверждения адреса электронной почты требуется войти в аккаунт.'
-        return render(request, 'main/email_verification.html', data)
-
-    if hasattr(request.user, 'client'):
-        user_data = request.user.client
-    else:
-        user_data = request.user.organizer
-
-    if user_data.email_verification is None:
+    if request.user.is_authenticated:
         return redirect('home')
 
-    if user_data.email_verification.id != verification_code:
+    email_verify = EmailVerification.objects.filter(verification_code=verification_code)
+
+    data = get_basic_arguments_for_html_pages()
+    if not email_verify.exists():
         data['status'] = 'Некорректный код подтверждения.'
         return render(request, 'main/email_verification.html', data)
+    email_verify = email_verify.first()
 
+    user = User(username=email_verify.email, email=email_verify.email, first_name=email_verify.first_name,
+                last_name=email_verify.last_name, password=email_verify.password)
+    user.save()
+
+    if hasattr(email_verify, 'client'):
+        user_data = email_verify.client
+    else:
+        user_data = email_verify.organizer
+
+    user_data.user = user
     user_data.email_verification = None
     user_data.save()
-    EmailVerification.objects.filter(email=request.user.email).delete()
+    EmailVerification.objects.filter(email=email_verify.email).delete()
 
-    data['status'] = 'Почта подтверждена.'
+    auth.login(request, user)
+    data['status'] = 'Почта подтверждена. Вход в аккаунт выполнен.'
     return render(request, 'main/email_verification.html', data)

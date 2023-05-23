@@ -10,7 +10,9 @@ class Client(models.Model):
     phone_number = models.CharField('Номер телефона', max_length=50)
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name} {self.middle_name}'
+        if self.user is not None:
+            return f'{self.user.first_name} {self.user.last_name} {self.middle_name}'
+        return f'Ожидание подтверждения {self.email_verification.email}'
 
     class Meta:
         verbose_name = 'Клиент'

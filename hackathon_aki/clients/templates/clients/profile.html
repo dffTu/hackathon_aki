@@ -5,9 +5,4 @@
 {% block content %}
     <h1 class="text-white">Профиль арендатора</h1>
     <span class="text-white">{{ email }}</span> <br>
-    {% if is_verified %}
-        <span class="text-white">Почта подтверждена</span>
-    {% else %}
-        <span class="text-white">Почта не подтверждена</span>
-    {% endif %}
 {% endblock %}
