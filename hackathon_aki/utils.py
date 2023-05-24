@@ -62,6 +62,18 @@ CHARSET = {
 
 weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
+platform_categories = [
+    ('film-studio', 'Киностудия'),
+    ('gallery', 'Галерея'),
+    ('publishing-house', 'Издательство'),
+    ('book-shop', 'Книжный магазин'),
+    ('design-studio', 'Дизайн студия'),
+    ('creative-space', 'Креативное пространство'),
+    ('cinema-theater', 'Кинотеатр'),
+    ('sound-recording-studio', 'Звукозаписывающая студия'),
+    ('AR-VR-studio', 'AR-VR-студия'),
+]
+
 
 class Slot:
     def __init__(self, date, state):

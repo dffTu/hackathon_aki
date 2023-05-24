@@ -22,6 +22,10 @@
         <div class="points">
             <p>Lorem, ipsum.</p>
         </div>
+        <form method="get" action="{% url 'show_page' page_id=1 %}">
+            <textarea name="platform_categories" placeholder="Введите теги"></textarea>
+            <button type="submit">Применить фильтр</button>
+        </form>
     </div>
 
     <div class="col-6" id="catalog-page">
@@ -47,7 +51,7 @@
 
                                 </div>
                                 <div class="but-in-card">
-                                    <a href="#" class="btn">Подробнее</a>
+                                    <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn btn-primary">Подробнее</a>
                                 </div>
                             </div>
                         </div>
