@@ -76,32 +76,63 @@ platform_categories = [
 
 
 class Slot:
-    def __init__(self, date, state):
+    def __init__(self, date, time_comparison, is_free, is_booked):
         self.day = date.day
         self.weekday = date.weekday()
-        self.state = state
+        self.time_comparison = time_comparison
+        self.is_free = is_free
+        self.is_booked = is_booked
 
 
-def build_slots(today, platform_id):
-    slots = []
-    free_slots = FreeSlot.objects.filter(platform_id=platform_id)
-    for week in range(5):
+class Month:
+    def __init__(self, today, free_slots, entries):
+        self.day = today.day
+        self.month = today.month
+        self.weeks = []
+        for week_delta in range(-5, 6):
+            self.add_week(today + datetime.timedelta(weeks=week_delta), today, free_slots, entries)
+
+
+    @staticmethod
+    def get_next_sunday(date):
+        weekday = date.weekday()
+        return date + datetime.timedelta(days=6 - weekday)
+
+    @staticmethod
+    def get_prev_monday(date):
+        weekday = date.weekday()
+        return date + datetime.timedelta(days=-weekday)
+
+    def add_week(self, date, today, free_slots, entries):
+        if self.get_next_sunday(date).month < today.month or self.get_prev_monday(date).month > today.month:
+            return
+
         week_slots = []
+
         for weekday in range(7):
-            delta = weekday - today.weekday() + week * 7
-            if delta < 0:
-                state = 'previous'
-            elif delta == 0:
-                state = 'today'
-            else:
-                state = 'future'
+            delta = weekday - date.weekday()
             tmp_date = datetime.date.today() + datetime.timedelta(delta)
-            if not free_slots.filter(date=tmp_date).exists():
-                if state != 'previous':
-                    state = 'booked'
-            week_slots.append(Slot(tmp_date, state))
-        slots.append(week_slots, platform_id)
-    return slots
+
+            if tmp_date < today:
+                time_comparison = 'less'
+            elif tmp_date == today:
+                time_comparison = 'equal'
+            else:
+                time_comparison = 'more'
+
+            if free_slots.filter(date=tmp_date).exists():
+                is_free = True
+            else:
+                is_free = False
+
+            if entries.filter(date=tmp_date).exists():
+                is_booked = True
+            else:
+                is_booked = False
+
+            week_slots.append(Slot(tmp_date, time_comparison, is_free, is_booked))
+
+        self.weeks.append(week_slots)
 
 
 def validate_length(field_names: list[str], required_fields: list[str], form_data, error_log: dict[str, list[str]]) -> bool:

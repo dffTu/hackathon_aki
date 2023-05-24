@@ -47,10 +47,10 @@ body {
 	background: linear-gradient(to right, #364F6D, #1B1E23);
 }
 
-.container {
+#hat {
+    display: block;
 	padding-top: 1%;
 	padding-bottom: 1%;
-	
 	width: 90%;
 	margin-left: 10%;
 	margin-right: 4%;

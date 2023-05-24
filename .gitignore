@@ -5,4 +5,4 @@ hackathon_aki/media
 *.bat
 
 *__pycache__*
-hackathon_aki/hackathon_aki/config.py
+hackathon_aki/hackathon_aki/config.py.DS_Store

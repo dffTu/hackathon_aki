@@ -14,8 +14,7 @@ def redirect_to_first_page(request, data):        # Redirects to first catalogue
 
 @process_post_forms_requests
 def show_page(request, data, page_id):            # Shows catalogue page
-
-    if 'platform_categories' not in request.GET:
+    if 'platform_categories' not in request.GET or not request.GET['platform_categories']:
         platforms = Platform.objects.all()
 
         data['page_id'] = page_id
@@ -24,7 +23,8 @@ def show_page(request, data, page_id):            # Shows catalogue page
         categories = request.GET['platform_categories'].split(';')
         data['platforms'] = []
         for platform in Platform.objects.all():
-            current_platform_categories = platform.categories
+            print(platform.categories.split(';'))
+            current_platform_categories = platform.categories.split(';')
             should_add = False
             for current_platform_category in current_platform_categories:
                 if current_platform_category in categories:
@@ -92,6 +92,6 @@ def leave_comment(request, data, platform_id):
 @process_post_forms_requests
 def calendar(request, data, platform_id):
     today = datetime.date.today()
-    slots = build_slots(today)
+    slots = build_slots(today, platform_id)
     data['slots'] = slots
     return render(request, 'platforms/calendar.html', data)
