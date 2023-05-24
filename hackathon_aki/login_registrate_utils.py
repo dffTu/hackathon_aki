@@ -19,7 +19,7 @@ def login(request, data):
             auth.login(request, user)
             return redirect(request.path)
         else:
-            data['error_message'] = 'Введён неправильный логин или пароль'
+            data['error'] = 'Введён неправильный логин или пароль'
 
         data['drop_localstorage'] = False
 
