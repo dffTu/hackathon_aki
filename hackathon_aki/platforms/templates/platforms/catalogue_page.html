@@ -25,27 +25,29 @@
     </div>
 
     <div class="col-6" id="catalog-page">
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, commodi ratione doloremque aperiam nesciunt voluptates quidem repellendus soluta dolor iure nam libero error consequuntur sequi delectus reiciendis magni rerum nulla.</p>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, commodi ratione doloremque aperiam nesciunt
+            voluptates quidem repellendus soluta dolor iure nam libero error consequuntur sequi delectus reiciendis
+            magni rerum nulla.</p>
     </div>
-    
+
 </div>
 
 
-
 <div class="container" style="margin-top: 50px">
-        <div class="row justify-content-between" style="margin-top: 30px; margin-bottom: 20px;">
+    <div class="row justify-content-between" style="margin-top: 30px; margin-bottom: 20px;">
 
-                {% for platform in platforms %}
-                    <div class="col">
-                    <div class="card" style="width: 18rem;">
-                    <img src="{{ platform.platformattachment_set.first.file.url }}" class="card-img-top" alt="{{ platform.name }}">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: black;">{{ platform.name }}</h5>
-                        <p class="card-text" style="color: black;">{{ platform.description }}</p>
-                        <a href="#" class="btn btn-primary">Подробнее</a>
-                    </div>
-                    </div>
-                {% endfor %}
+        {% for platform in platforms %}
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ platform.platformattachment_set.first.file.url }}" class="card-img-top"
+                     alt="{{ platform.name }}">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: black;">{{ platform.name }}</h5>
+                    <p class="card-text" style="color: black;">{{ platform.description }}</p>
+                    <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
