@@ -1,7 +1,6 @@
 from django.core.mail import send_mail
 from hackathon_aki import config
 
-
 MAX_LENGTH = {
     'email': 50,
     'password': 25,

@@ -3,41 +3,28 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from .models import EmailVerification
 from form_utils import get_basic_arguments_for_html_pages
+from login_registrate_utils import process_post_forms_requests
 
 
-def index(request):
-    data = get_basic_arguments_for_html_pages(request.user)
+@process_post_forms_requests
+def index(request, data):
     return render(request, 'main/index.html', data)
 
 
-def logout(request):
+@process_post_forms_requests
+def logout(request, data):
     auth.logout(request)
     return redirect('home')
 
 
-def login(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-
-    data = get_basic_arguments_for_html_pages(request.user)
-    if request.method == 'POST':
-        user = auth.authenticate(request, username=request.POST['email'], password=request.POST['password'])
-        if user is not None:
-            auth.login(request, user)
-            return redirect(request.path)
-        else:
-            data['error_message'] = 'Введён неправильный логин или пароль'
-
-    return render(request, 'main/login.html', data)
-
-
-def email_verification(request, verification_code):
+@process_post_forms_requests
+def email_verification(request, data, verification_code):
     if request.user.is_authenticated:
         return redirect('home')
 
     email_verify = EmailVerification.objects.filter(verification_code=verification_code)
 
-    data = get_basic_arguments_for_html_pages(request.user)
+    data = get_basic_arguments_for_html_pages(request)
     if not email_verify.exists():
         data['status'] = 'Некорректный код подтверждения.'
         return render(request, 'main/email_verification.html', data)

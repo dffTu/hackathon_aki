@@ -3,7 +3,7 @@ from clients.forms import UserClientRegistrationForm, ProfileClientRegistrationF
 from organizers.forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
 
 
-def get_basic_arguments_for_html_pages(user):
+def get_basic_arguments_for_html_pages(request):
     data = {
         'login_form': LoginForm(),
         'user_client_registration_form': UserClientRegistrationForm(),
@@ -11,7 +11,9 @@ def get_basic_arguments_for_html_pages(user):
         'user_organizer_registration_form': UserOrganizerRegistrationForm(),
         'profile_organizer_registration_form': ProfileOrganizerRegistrationForm(),
         'error_message': '',
+        'url_path': request.path,
+        'drop_localstorage': True,
     }
-    if user.is_authenticated:
-        data['user_fields'] = user
+    if request.user.is_authenticated:
+        data['user_fields'] = request.user
     return data

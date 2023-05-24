@@ -17,6 +17,10 @@
 </head>
 
 <body>
+    {% if drop_localstorage %}
+    <div id="drop_localstorage"></div>
+    {% endif %}
+
     <div class="header">
         <div class="container-fluid">
             <div class="container text-center">
@@ -96,7 +100,8 @@
 
             <div class="log-in-content" id="log-in-content">
 
-                <form method="post" enctype='multipart/form-data' action="{% url 'login' %}">
+                <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
+                        <input name="__login_form" type="hidden">
                         {% if error %}
                         <div class="alert alert-danger">
                             {{ error }}
@@ -130,7 +135,8 @@
 
                 <div class="register-window-client" id="register-window-client">
                     <div class="forms_cl">
-                        <form method="post" enctype='multipart/form-data' action="{% url 'client_registration' %}">
+                        <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
+                            <input name="__client_register" type="hidden">
                             <div class="form-group">
                                 <label class="text-muted">Email</label>
                                 {{ user_client_registration_form.email }}
@@ -213,7 +219,8 @@
 
                 <div class="register-window-organizer" id="register-window-organizer">
                     
-                    <form method="post" enctype='multipart/form-data' action="{% url 'organizer_registration' %}">
+                    <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
+                        <input name="__organizer_register" type="hidden">
 
                         <div class="row">
 
