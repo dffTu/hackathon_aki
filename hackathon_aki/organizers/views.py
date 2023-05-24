@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from main.models import PlatformAttachment
 from platforms.forms import PlatformCreatingForm, PlatformFileAttachingForm
-from form_utils import get_basic_arguments_for_html_pages
 from login_registrate_utils import process_post_forms_requests
 
 

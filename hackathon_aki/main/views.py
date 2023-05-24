@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
 from .models import EmailVerification
-from form_utils import get_basic_arguments_for_html_pages
 from login_registrate_utils import process_post_forms_requests
 
 
@@ -24,7 +23,6 @@ def email_verification(request, data, verification_code):
 
     email_verify = EmailVerification.objects.filter(verification_code=verification_code)
 
-    data = get_basic_arguments_for_html_pages(request)
     if not email_verify.exists():
         data['status'] = 'Некорректный код подтверждения.'
         return render(request, 'main/email_verification.html', data)
@@ -33,7 +31,7 @@ def email_verification(request, data, verification_code):
     user = User(username=email_verify.email, email=email_verify.email, first_name=email_verify.first_name,
                 last_name=email_verify.last_name, password=email_verify.password)
     user.save()
-    data = get_basic_arguments_for_html_pages(user)
+    data['user_fields'] = user
 
     if hasattr(email_verify, 'client'):
         user_data = email_verify.client

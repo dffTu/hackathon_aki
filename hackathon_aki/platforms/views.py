@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from .models import Platform, Comment
 from main.models import CommentAttachment
 from .forms import CommentFileAttachingForm, CommentLeavingForm
-from form_utils import get_basic_arguments_for_html_pages
 from login_registrate_utils import process_post_forms_requests
 
 
