@@ -102,11 +102,6 @@
 
                 <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
                         <input name="__login_form" type="hidden">
-                        {% if error %}
-                        <div class="alert">
-                            {{ error }}
-                        </div>
-                        {% endif %}
                         <div class="form-group">
                             <label class="text-muted">Email</label>
                             {{ login_form.email }}
@@ -116,11 +111,18 @@
                             {{ login_form.password }}
                         </div>
 
+                        {% if error %}
+                        <div class="form_alert">
+                            {{ error }}
+                        </div>
+                        {% endif %}
+
                         <div class="form-group text-center">
                             {% csrf_token %}
 
                             <button type="submit" class="btn ">Войти</button>
                         </div>
+
 
                     </form>
 
