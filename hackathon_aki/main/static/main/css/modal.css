@@ -144,6 +144,16 @@
     padding: 5px;
 }
 
+.form_alert {
+    position: relative;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    font-size: 14px;
+    color: crimson;
+    padding: 0px;
+}
+
 .col {
     flex-direction: column;
 }

@@ -71,7 +71,7 @@ def client_registration(request, data):
 
         data['user_client_registration_form'] = user_form
         data['profile_client_registration_form'] = profile_form
-        data['errors'] = errors
+        data['client_errors'] = errors
         data['drop_localstorage'] = False
 
     return None
@@ -123,7 +123,7 @@ def organizer_registration(request, data):
 
         data['user_organizer_registration_form'] = user_form
         data['profile_organizer_registration_form'] = profile_form
-        data['errors'] = errors
+        data['organizer_errors'] = errors
         data['drop_localstorage'] = False
 
     return None
