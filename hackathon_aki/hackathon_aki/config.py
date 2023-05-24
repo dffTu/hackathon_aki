@@ -8,4 +8,4 @@ DB_USER_PASSWORD = '123'  # User password to connect to the database
 
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_LOGIN = 'artemsafin67@mail.ru'
-EMAIL_PASSWORD = 'M9ME47WV6xb73G9nvyAU'
+EMAIL_PASSWORD = 'gDcVuV6pRjRXvurHzBsu'
