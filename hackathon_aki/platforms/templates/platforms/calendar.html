@@ -10,7 +10,7 @@
 {% block content %}
     {% for month in months %}
     <h1 class="text-white">{{ month.month }}</h1>
-   <table class="table table-black bg-white table-bordered">
+   <table class="table table-black bg-white table-bordered" style="display: none">
        <caption class="text-white">Расписание площадки</caption>
       <thead>
       <tr>
@@ -30,22 +30,19 @@
             {% for day in week %}
                 {% if day.time_comparison == "less" %}
                     <td class="text-wrap bg-secondary">
-                        <button>{{ day.day }}</button>
+                        <button {% if day.time_comparison == "equal" %}class="bg-primary"{% endif %}>{{ day.day }}</button>
                     </td>
-                {% endif %}
-                {% if day.time_comparison == "equal" %}
-                    <td class="text-wrap bg-dander">
-                        <button>{{ day.day }} </button>
-                    </td>
-                {% endif %}
-                {% if day.time_comparison == "more" %}
-                    <td class="text-wrap bg-primary">
-                        <button>{{ day.day }}</button>
-                    </td>
-                {% endif %}
-                {% if day.state == "booked" %}
+                {% elif day.is_booked %}
                     <td class="text-wrap bg-danger">
-                        <button>{{ day.day }}</button>
+                        <button {% if day.time_comparison == "equal" %}class="bg-primary"{% endif %}>{{ day.day }}</button>
+                    </td>
+                {% elif day.is_free %}
+                    <td class="text-wrap bg-warning">
+                        <button {% if day.time_comparison == "equal" %}class="bg-primary"{% endif %}>{{ day.day }}</button>
+                    </td>
+                {% elif day.time_comparison == "more" %}
+                    <td class="text-wrap bg-primary">
+                        <button {% if day.time_comparison == "equal" %}class="bg-primary"{% endif %}>{{ day.day }}</button>
                     </td>
                 {% endif %}
             {% endfor %}
@@ -54,4 +51,5 @@
      </tbody>
    </table>
     {% endfor %}
+
 {% endblock %}
