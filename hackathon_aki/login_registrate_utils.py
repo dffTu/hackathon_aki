@@ -3,6 +3,7 @@ from datetime import datetime
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
+from main.forms import LoginForm
 from clients.forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 from organizers.forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
 from utils import send_email_for_verify
@@ -21,6 +22,7 @@ def login(request, data):
         else:
             data['error'] = 'Введён неправильный логин или пароль'
 
+        data['login_form'] = LoginForm(request.POST)
         data['drop_localstorage'] = False
 
     return None
@@ -67,9 +69,9 @@ def client_registration(request, data):
             send_email_for_verify(request, email_verify.email, email_verify.verification_code)
             return render(request, 'main/email_verification_sent.html', data)
 
-        data['user_form'] = user_form
-        data['profile_form'] = profile_form
-        data['errors'] = errors
+        data['user_client_registration_form'] = user_form
+        data['profile_client_registration_form'] = profile_form
+        data['client_errors'] = errors
         data['drop_localstorage'] = False
 
     return None
@@ -119,9 +121,9 @@ def organizer_registration(request, data):
             send_email_for_verify(request, email_verify.email, email_verify.verification_code)
             return render(request, 'main/email_verification_sent.html', data)
 
-        data['user_form'] = user_form
-        data['profile_form'] = profile_form
-        data['errors'] = errors
+        data['user_organizer_registration_form'] = user_form
+        data['profile_organizer_registration_form'] = profile_form
+        data['organizer_errors'] = errors
         data['drop_localstorage'] = False
 
     return None
