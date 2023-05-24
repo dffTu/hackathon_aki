@@ -4,6 +4,10 @@
 
 {% block content %}
     <form method="POST" action="">
+        {% if errors.incorrect_form %}
+            <p class="text-white">Некорректные данные формы</p>
+        {% endif %}
+
         {{ form.date }} <span class="text-white">{{ errors.date }}</span> <br>
         {{ form.price }} <span class="text-white">{{ errors.price }}</span> <br>
         {% csrf_token %}

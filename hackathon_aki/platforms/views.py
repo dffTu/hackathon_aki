@@ -3,7 +3,7 @@ from .models import Platform, Comment
 from main.models import CommentAttachment
 from .forms import CommentFileAttachingForm, CommentLeavingForm
 from login_registrate_utils import process_post_forms_requests
-from utils import build_slots
+from utils import build_slots, platform_categories
 import datetime
 
 
@@ -14,10 +14,26 @@ def redirect_to_first_page(request, data):        # Redirects to first catalogue
 
 @process_post_forms_requests
 def show_page(request, data, page_id):            # Shows catalogue page
-    platforms = Platform.objects.all()
 
-    data['page_id'] = page_id
-    data['platforms'] = platforms
+    if 'platform_categories' not in request.GET:
+        platforms = Platform.objects.all()
+
+        data['page_id'] = page_id
+        data['platforms'] = platforms
+    else:
+        categories = request.GET['platform_categories'].split(';')
+        data['platforms'] = []
+        for platform in Platform.objects.all():
+            current_platform_categories = platform.categories
+            should_add = False
+            for current_platform_category in current_platform_categories:
+                if current_platform_category in categories:
+                    should_add = True
+                    break
+            if should_add:
+                data['platforms'].append(platform)
+
+        data['page_id'] = page_id
 
     return render(request, 'platforms/catalogue_page.html', data)
 
