@@ -13,7 +13,7 @@ h4 {
 .cat {
     display: flex;
     margin-top: 2%;
-    margin-left: 5%;
+    margin-left: 9%;
     align-items: center;
 }
 
@@ -22,7 +22,7 @@ h4 {
     margin-bottom: 0px;
 }
 
-#filter, #catalog-page {
+#filter, .catalog-page {
     justify-content: flex-start;
     backdrop-filter: blur(100px);
     border-radius: 7px;
@@ -41,27 +41,31 @@ h4 {
     margin-left: 8%;
 }
 
-#catalog-page {
+.catalog-page {
+    flex-direction: column;
     padding: 40px;
     width: 70%;
     background: rgba(171, 174, 255, 0.05);
     margin-right: 5%;
     margin-left: 2%;
 }
-#catalog-pages {
+.catalog-pages {
     display: flex;
     padding: 0px;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .row {
     --bs-gutter-x: 0;
 }
 
-#cards{
+.cards{
     align-items: center;
     padding: 0;
 }
-#card {
+
+.card {
     width: 17rem;
     height: 27rem;
     border-radius: 10px;
@@ -80,9 +84,12 @@ h4 {
     justify-content: space-between;
 }
 
+.but-in-card {
+    margin-left: auto;
+}
+
 .but-in-card a{
     background: #E74362;
-    margin-left: auto;
     color: #fff;
     font-family: 'Cera Pro Bold';
 }
@@ -124,6 +131,15 @@ h4 {
     font-size: 0.7rem;
 }
 
+.img-platforms {
+    overflow:hidden;
+    position:relative;
+}
+
 .comment {
     margin-left: 5px;
+}
+
+.platform-row {
+    display: flex;
 }

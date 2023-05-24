@@ -29,37 +29,58 @@
         </form>
     </div>
 
-    <div class="col-6" id="catalog-page">
-        <div class="container" id="catalog-pages">
-            {% for platform in platforms %}
-                <div class="col" id="cards">
-                    <div class="card" id="card">
+    <div class="col-6 catalog-page">
+        <div class="container catalog-pages">
+            {% for row in platforms %}
+                <div class="platform-row">
+                    {% for platform in row %}
+                        <div class="col cards card">
+                            <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
 
-                        <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" class="card-img-top" alt="{{ platform.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ platform.name }}</h5>
+                                <h6>Тип: Дизайн</h6>
+                                <div class="top">
+                                    <div class="img-platforms">
+                                        <img src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
+                                    </div>
+                                    <p>4,5</p>
+                                    <img class="comment" src="{% static 'main\img\comment.svg' %}">
+                                    <p>100</p>
+                                </div>
+                                <p class="card-text">{{ platform.description }}</p>
 
-                        <div class="card-body">
-                            <h5 class="card-title">{{ platform.name }}</h5>
-                            <h6>Тип: Дизайн</h6>
-                            <div class="top">
-                                <img src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
-
-                                <p>4,5</p>
-                                <img class="comment" src="{% static 'main\img\comment.svg' %}">
-                                <p>100</p>
                             </div>
-                            <p class="card-text">{{ platform.description }}</p>
-
+                            <div class="but-in-card">
+                                <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
+                            </div>
                         </div>
-                        <div class="but-in-card">
-                            <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             {% endfor %}
         </div>
-        {% endblock %}
+        <table>
+            <tbody>
+                {% for page_number in all_pages %}
+                    <form method="get" action="{% url 'show_page' page_id=page_number %}">
+                        <tr>
+                            {% if filter_request %}
+                                <input type="hidden" name="platform_categories" value="{{ filter_request }}">
+                            {% endif %}
+                            {% if search %}
+                                <input type="hidden" name="search" value="{{ search }}">
+                            {% endif %}
+                            <button type="submit">
+                                {{ page_number }}
+                            </button>
+                        </tr>
+                    </form>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
+{% endblock %}
 
 
 

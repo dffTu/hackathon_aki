@@ -4,8 +4,10 @@ from main.models import CommentAttachment
 from .forms import CommentFileAttachingForm, CommentLeavingForm
 from login_registrate_utils import process_post_forms_requests
 from organizers.models import Entry
+from .search_utils import search_platforms
 from utils import Month
 import datetime
+
 
 
 @process_post_forms_requests
@@ -15,16 +17,29 @@ def redirect_to_first_page(request, data):        # Redirects to first catalogue
 
 @process_post_forms_requests
 def show_page(request, data, page_id):            # Shows catalogue page
-    if 'platform_categories' not in request.GET or not request.GET['platform_categories']:
-        platforms = Platform.objects.all()
+    relevant_platforms_list = Platform.objects.all()
+    data['search'] = ''
+    if 'search' in request.GET and request.GET['search'] != '':
+        relevant_platforms_list = []
+        platform_names = [platform.name for platform in Platform.objects.all()]
+        result_platforms = search_platforms(request.GET['search'], platform_names)
+        for platform_name in result_platforms:
+            for platform in Platform.objects.filter(name=platform_name):
+                relevant_platforms_list.append(platform)
+        data['search'] = request.GET['search']
 
+    if 'platform_categories' not in request.GET or not request.GET['platform_categories']:
         data['page_id'] = page_id
-        data['platforms'] = platforms
+        data['platforms'] = [[]]
+        for platform in relevant_platforms_list:
+            if len(data['platforms'][-1]) == 3:
+                data['platforms'].append([])
+            data['platforms'][-1].append(platform)
+        data['filter_request'] = ''
     else:
         categories = request.GET['platform_categories'].split(';')
-        data['platforms'] = []
-        for platform in Platform.objects.all():
-            print(platform.categories.split(';'))
+        data['platforms'] = [[]]
+        for platform in relevant_platforms_list:
             current_platform_categories = platform.categories.split(';')
             should_add = False
             for current_platform_category in current_platform_categories:
@@ -32,9 +47,14 @@ def show_page(request, data, page_id):            # Shows catalogue page
                     should_add = True
                     break
             if should_add:
-                data['platforms'].append(platform)
+                if len(data['platforms'][-1]) == 3:
+                    data['platforms'].append([])
+                data['platforms'][-1].append(platform)
 
         data['page_id'] = page_id
+        data['filter_request'] = request.GET['platform_categories']
+
+    data['all_pages'] = list(range(1, len(data['platforms']) + 1))
 
     return render(request, 'platforms/catalogue_page.html', data)
 
