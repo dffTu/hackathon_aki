@@ -1,4 +1,5 @@
 import hashlib
+from platforms.search_utils import search_platforms
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.contrib import auth
@@ -6,6 +7,7 @@ from django.contrib.auth.models import User
 from main.forms import LoginForm
 from clients.forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 from organizers.forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
+from platforms.models import Platform
 from utils import send_email_for_verify
 from form_utils import get_basic_arguments_for_html_pages
 
@@ -129,6 +131,23 @@ def organizer_registration(request, data):
     return None
 
 
+def search_platforms_by_name(request, data):
+    if request.method == 'POST':
+        return redirect('home')
+
+    if request.method == 'GET':
+        platform_names = [platform.name for platform in Platform.objects.all()]
+        result_platforms = search_platforms(request.GET['search'], platform_names)
+        data['platforms'] = []
+        for platform_name in result_platforms:
+            for platform in Platform.objects.filter(name=platform_name):
+                data['platforms'].append(platform)
+        data['page_id'] = 1
+        return render(request, 'platforms/catalogue_page.html', data)
+
+    return None
+
+
 def process_post_forms_requests(f):
     def g(request, *args, **kwargs):
         data = get_basic_arguments_for_html_pages(request)
@@ -143,6 +162,11 @@ def process_post_forms_requests(f):
                     return result
             if '__organizer_register' in request.POST:
                 result = organizer_registration(request, data)
+                if not result is None:
+                    return result
+        elif request.method == "GET":
+            if 'search' in request.GET:
+                result = search_platforms_by_name(request, data)
                 if not result is None:
                     return result
         return f(request, data, *args, **kwargs)

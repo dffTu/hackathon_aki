@@ -35,6 +35,5 @@ def search_platforms(search_request: str, platforms_names: list[str]) -> list[st
     levenshtein_list.sort(key=lambda x: x[0])
     answer = []
     for i in levenshtein_list:
-        print(i[0], i[1])
         answer.append(i[1])
     return answer
