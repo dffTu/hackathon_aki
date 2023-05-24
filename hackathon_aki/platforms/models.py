@@ -4,8 +4,8 @@ from django.db import models
 class Platform(models.Model):
     organizer = models.ForeignKey('organizers.Organizer', on_delete=models.CASCADE)
 
-    name = models.CharField('Имя', max_length=50)
-    category = models.CharField('Категория', max_length=50)
+    name = models.CharField('Имя', max_length=250, blank=True)
+    categories = models.CharField('Категории', max_length=250, blank=True)
     short_description = models.TextField('Краткое описание', blank=True)
     description = models.TextField('Описание площадки', blank=True)
     schedule = models.JSONField('Расписание', null=True)
@@ -24,8 +24,8 @@ class Platform(models.Model):
 class FreeSlot(models.Model):
     platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)
 
-    date = models.DateField('Свободная дата')
-    price = models.IntegerField('Цена', null=True)
+    date = models.DateField('Свободная дата', blank=True)
+    price = models.IntegerField('Цена', blank=True)
 
     def __str__(self):
         return f'Свободно {self.date}'
@@ -40,7 +40,7 @@ class Comment(models.Model):
     platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)
 
     text = models.TextField('Текст отзыва', blank=True)
-    rating = models.FloatField('Рейтинг')
+    rating = models.FloatField('Рейтинг', blank=True)
 
     def __str__(self):
         return self.text

@@ -34,18 +34,18 @@
                     
                 
                     <div class="col-6">
-                        <div class="search">
-                        <div class="bar">
-                            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
-                            <!-- <input type="search" name="Поиск" placeholder="Поиск"> -->
-                        </div>
-                        <button class="button">Поиск</button>
-                        </div>
+                        <form class="search" method="get" action="{{ url_path }}">
+                            <input type="hidden">
+                            <div class="bar">
+                                <input name="search" class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+                                <!-- <input type="search" name="Поиск" placeholder="Поиск"> -->
+                            </div>
+                            <button class="button">Поиск</button>
+                        </form>
                     </div>
                     
                     <div class="col" id="three">
                         <div class="icons">
-
                             <a href="{% url 'show_page' page_id=1 %}" id="open-catalog">
                                 <div class="catalog">
                                     <img src="{% static 'main\img\catalog.svg' %}">
@@ -83,19 +83,14 @@
 
     <div id="authorize-window" class="authorize-window">
         <div class="authorize-content" id="authorize-content">
-
             <div class="choose-authentication-form">
-
                 <div class="log-in-button-div">
                     <button class="btn log-in" id="log-in">Войти</button>
                 </div>
-
                 <div class="registration-button-div">
                     <button class="btn register" id="register">Зарегистрироваться</button>
                 </div>
-
             </div>
-
 
 
             <div class="log-in-content" id="log-in-content">
@@ -345,7 +340,6 @@
                 </div>
 
             </div>
-                    
 
         </div>
         

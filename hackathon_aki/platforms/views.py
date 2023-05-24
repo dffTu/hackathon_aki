@@ -3,6 +3,8 @@ from .models import Platform, Comment
 from main.models import CommentAttachment
 from .forms import CommentFileAttachingForm, CommentLeavingForm
 from login_registrate_utils import process_post_forms_requests
+from utils import build_slots
+import datetime
 
 
 @process_post_forms_requests
@@ -46,7 +48,9 @@ def leave_comment(request, data, platform_id):
         return render(request, 'platforms/platform_not_found.html', data)
     platform = platform.first()
 
-    errors = {'text': []}
+    errors = {'text': [],
+              'rating': []}
+
     if request.method == 'POST':
         comment_form = CommentLeavingForm(request.POST)
         attachment_form = CommentFileAttachingForm(request.POST, request.FILES)
@@ -70,5 +74,8 @@ def leave_comment(request, data, platform_id):
 
 
 @process_post_forms_requests
-def calendar(request, data):
+def calendar(request, data, platform_id):
+    today = datetime.date.today()
+    slots = build_slots(today)
+    data['slots'] = slots
     return render(request, 'platforms/calendar.html', data)

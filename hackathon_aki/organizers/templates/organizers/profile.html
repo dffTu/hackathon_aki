@@ -5,8 +5,10 @@
 {% block content %}
     <h1 class="text-white">Профиль арендодателя</h1>
     <span class="text-white">{{ email }}</span> <br>
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
+    <form action="{% url 'logout' %}">
         <button class="btn btn-warning" type="submit">Выйти</button>
+    </form>
+    <form action="{% url 'create_platform' %}">
+        <button class="btn btn-info" type="submit">Создать площадку</button>
     </form>
 {% endblock %}
