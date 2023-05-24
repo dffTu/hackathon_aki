@@ -1,0 +1,17 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Карта</title>
+
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=0c302373-1600-40fe-8920-973e5e09b5e0&lang=ru_RU" type="text/javascript"></script>
+    <script src="{% static 'main\js\ymap_script.js' %}"></script>
+</head>
+<body>
+    <div id="map" style="width: 600px; height: 400px">
+    </div>
+</body>
+</html>

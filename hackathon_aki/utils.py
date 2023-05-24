@@ -1,6 +1,5 @@
 from django.core.mail import send_mail
 from hackathon_aki import config
-from platforms.models import FreeSlot
 import datetime
 
 MAX_LENGTH = {
@@ -60,7 +59,19 @@ CHARSET = {
     ],
 }
 
-weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+WEEKDAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+MONTHS = ['Январь',
+          'Февраль',
+          'Март',
+          'Апрель',
+          'Май',
+          'Июнь',
+          'Июль',
+          'Август',
+          'Сентябрь',
+          'Октябрь',
+          'Ноябрь',
+          'Декабрь']
 
 platform_categories = [
     ('film-studio', 'Киностудия'),
@@ -76,33 +87,62 @@ platform_categories = [
 
 
 class Slot:
-    def __init__(self, date, is_today, state):
+    def __init__(self, date, time_comparison, is_free, is_booked):
         self.day = date.day
         self.weekday = date.weekday()
-        self.is_today = is_today
-        self.state = state
+        self.time_comparison = time_comparison
+        self.is_free = is_free
+        self.is_booked = is_booked
 
 
-def build_slots(today, platform_id):
-    slots = []
-    free_slots = FreeSlot.objects.filter(platform_id=platform_id)
-    for week in range(5):
+class Month:
+    def __init__(self, tmp, today, free_slots, entries):
+        self.tmp = tmp
+        self.month = MONTHS[tmp.month - 1]
+        self.weeks = []
+        for week_delta in range(-5, 6):
+            self.add_week(self.tmp + datetime.timedelta(weeks=week_delta), today, free_slots, entries)
+
+    @staticmethod
+    def get_next_sunday(date):
+        weekday = date.weekday()
+        return date + datetime.timedelta(days=6 - weekday)
+
+    @staticmethod
+    def get_prev_monday(date):
+        weekday = date.weekday()
+        return date + datetime.timedelta(days=-weekday)
+
+    def add_week(self, date, today, free_slots, entries):
+        if self.get_next_sunday(date).month < self.tmp.month or self.get_prev_monday(date).month > self.tmp.month:
+            return
+
         week_slots = []
+
         for weekday in range(7):
-            delta = weekday - today.weekday() + week * 7
-            if delta < 0:
-                state = 'previous'
-            elif delta == 0:
-                state = 'today'
+            delta = weekday - date.weekday()
+            tmp_date = date + datetime.timedelta(delta)
+
+            if tmp_date < today:
+                time_comparison = 'less'
+            elif tmp_date == today:
+                time_comparison = 'equal'
             else:
-                state = 'future'
-            tmp_date = datetime.date.today() + datetime.timedelta(delta)
-            if not free_slots.filter(date=tmp_date).exists():
-                if state != 'previous':
-                    state = 'booked'
-            week_slots.append(Slot(tmp_date, tmp_date == today, state))
-        slots.append(week_slots)
-    return slots
+                time_comparison = 'more'
+
+            if free_slots.filter(date=tmp_date).exists():
+                is_free = True
+            else:
+                is_free = False
+
+            if entries.filter(date=tmp_date).exists():
+                is_booked = True
+            else:
+                is_booked = False
+
+            week_slots.append(Slot(tmp_date, time_comparison, is_free, is_booked))
+
+        self.weeks.append(week_slots)
 
 
 def validate_length(field_names: list[str], required_fields: list[str], form_data, error_log: dict[str, list[str]]) -> bool:

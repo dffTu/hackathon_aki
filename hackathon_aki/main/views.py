@@ -5,6 +5,10 @@ from .models import EmailVerification
 from login_registrate_utils import process_post_forms_requests
 
 
+def show_map(request):
+    return render(request, 'main/show_map.html')
+
+
 @process_post_forms_requests
 def index(request, data):
     return render(request, 'main/index.html', data)

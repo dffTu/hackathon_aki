@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import Platform, Comment
+from .models import Platform, Comment, FreeSlot
 from main.models import CommentAttachment
 from .forms import CommentFileAttachingForm, CommentLeavingForm
 from login_registrate_utils import process_post_forms_requests
-from utils import build_slots, platform_categories
+from organizers.models import Entry
+from utils import Month
 import datetime
 
 
@@ -92,6 +93,18 @@ def leave_comment(request, data, platform_id):
 @process_post_forms_requests
 def calendar(request, data, platform_id):
     today = datetime.date.today()
-    slots = build_slots(today, platform_id)
-    data['slots'] = slots
+    free_slots = FreeSlot.objects.filter(platform_id=platform_id)
+    entries = Entry.objects.filter(platform_id=platform_id)
+
+    months = []
+    tmp = today
+    for i in range(3):
+        months.append(Month(tmp, today, free_slots, entries))
+        if tmp.month == 12:
+            tmp = datetime.date(tmp.year + 1, 1, 1)
+        else:
+            tmp = datetime.date(tmp.year, tmp.month + 1, 1)
+    data['months'] = months
+    print(months)
+
     return render(request, 'platforms/calendar.html', data)
