@@ -64,9 +64,10 @@ weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
 
 class Slot:
-    def __init__(self, date, state):
+    def __init__(self, date, is_today, state):
         self.day = date.day
         self.weekday = date.weekday()
+        self.is_today = is_today
         self.state = state
 
 
@@ -87,8 +88,8 @@ def build_slots(today, platform_id):
             if not free_slots.filter(date=tmp_date).exists():
                 if state != 'previous':
                     state = 'booked'
-            week_slots.append(Slot(tmp_date, state))
-        slots.append(week_slots, platform_id)
+            week_slots.append(Slot(tmp_date, tmp_date == today, state))
+        slots.append(week_slots)
     return slots
 
 

@@ -23,22 +23,28 @@
       </thead>
 
      <tbody>
-         {% for week in calendar %}
+         {% for week in slots %}
             <tr>
             {% for day in week %}
                 {% if day.state == "previous" %}
-                    <td class="text-wrap text-secondary">
+                    <td class="text-wrap bg-secondary">
                         <button>{{ day.day }}</button>
                     </td>
                 {% endif %}
-                {% if day.state == "today" %}
-                    <td class="text-wrap text-info">{{ day.day }}</td>
+                {% if day.is_today %}
+                    <td class="text-wrap bg-primary">
+                        <button class="text-danger">{{ day.day }} </button>
+                    </td>
                 {% endif %}
                 {% if day.state == "future" %}
-                    <td class="text-wrap white">{{ day.day }}</td>
+                    <td class="text-wrap bg-primary">
+                        <button>{{ day.day }}</button>
+                    </td>
                 {% endif %}
                 {% if day.state == "booked" %}
-                    <td class="text-wrap bg-secondary">{{ day.day }}</td>
+                    <td class="text-wrap bg-danger">
+                        <button>{{ day.day }}</button>
+                    </td>
                 {% endif %}
             {% endfor %}
             </tr>
