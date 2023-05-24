@@ -81,7 +81,8 @@ def validate_length(field_names: list[str], required_fields: list[str], form_dat
 
     for field_name in required_fields:
         if field_name not in form_data or len(form_data[field_name]) == 0:
-            error_log[field_name].append(f'Поле не заполнено.')
+            error_log[field_name].append('Поле не заполнено.')
+            is_valid = False
 
     return is_valid
 
