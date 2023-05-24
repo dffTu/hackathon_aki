@@ -3,10 +3,8 @@ from .models import Platform, Comment
 from main.models import CommentAttachment
 from .forms import CommentFileAttachingForm, CommentLeavingForm
 from login_registrate_utils import process_post_forms_requests
-from utils import Day
+from utils import build_slots, platform_categories
 import datetime
-
-from random import randint
 
 
 @process_post_forms_requests
@@ -16,10 +14,26 @@ def redirect_to_first_page(request, data):        # Redirects to first catalogue
 
 @process_post_forms_requests
 def show_page(request, data, page_id):            # Shows catalogue page
-    platforms = Platform.objects.all()
 
-    data['page_id'] = page_id
-    data['platforms'] = platforms
+    if 'platform_categories' not in request.GET:
+        platforms = Platform.objects.all()
+
+        data['page_id'] = page_id
+        data['platforms'] = platforms
+    else:
+        categories = request.GET['platform_categories'].split(';')
+        data['platforms'] = []
+        for platform in Platform.objects.all():
+            current_platform_categories = platform.categories
+            should_add = False
+            for current_platform_category in current_platform_categories:
+                if current_platform_category in categories:
+                    should_add = True
+                    break
+            if should_add:
+                data['platforms'].append(platform)
+
+        data['page_id'] = page_id
 
     return render(request, 'platforms/catalogue_page.html', data)
 
@@ -76,27 +90,8 @@ def leave_comment(request, data, platform_id):
 
 
 @process_post_forms_requests
-def calendar(request, data):
+def calendar(request, data, platform_id):
     today = datetime.date.today()
-    calendar = []
-
-    for week in range(5):
-        week_table = []
-        for weekday in range(7):
-            delta = weekday - today.weekday() + week * 7
-            if delta < 0:
-                state = 'previous'
-            elif delta == 0:
-                state = 'today'
-            else:
-                state = 'future'
-            tmp_date = datetime.date.today() + datetime.timedelta(delta)
-            week_table.append(Day(tmp_date, state))
-
-        for _ in range(2):
-            week_table[randint(0, 6)].state = "booked"
-        calendar.append(week_table)
-
-    data['calendar'] = calendar
-
+    slots = build_slots(today)
+    data['slots'] = slots
     return render(request, 'platforms/calendar.html', data)

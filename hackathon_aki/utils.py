@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from hackathon_aki import config
+from platforms.models import FreeSlot
 import datetime
 
 MAX_LENGTH = {
@@ -37,36 +38,70 @@ CHARSET = {
         lambda x: x.isascii() and (x.isdigit() or x in '+()-'),
     ],
     'position': [
-        lambda x: x.isprintable(),
+        lambda x: x.isprintable() or x.isascii(),
     ],
     'juridical_name': [
-        lambda x: x.isprintable(),
+        lambda x: x.isprintable() or x.isascii(),
     ],
     'inn': [
         lambda x: x.isdigit() or x.isspace(),
     ],
     'name': [
-        lambda x: x.isprintable(),
+        lambda x: x.isprintable() or x.isascii(),
     ],
     'short_description': [
-        lambda x: x.isprintable(),
+        lambda x: x.isprintable() or x.isascii(),
     ],
     'description': [
-        lambda x: x.isprintable(),
+        lambda x: x.isprintable() or x.isascii(),
     ],
     'text': [
-        lambda x: x.isprintable(),
+        lambda x: x.isprintable() or x.isascii(),
     ],
 }
 
 weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
+platform_categories = [
+    ('film-studio', 'Киностудия'),
+    ('gallery', 'Галерея'),
+    ('publishing-house', 'Издательство'),
+    ('book-shop', 'Книжный магазин'),
+    ('design-studio', 'Дизайн студия'),
+    ('creative-space', 'Креативное пространство'),
+    ('cinema-theater', 'Кинотеатр'),
+    ('sound-recording-studio', 'Звукозаписывающая студия'),
+    ('AR-VR-studio', 'AR-VR-студия'),
+]
 
-class Day:
+
+class Slot:
     def __init__(self, date, state):
         self.day = date.day
         self.weekday = date.weekday()
         self.state = state
+
+
+def build_slots(today, platform_id):
+    slots = []
+    free_slots = FreeSlot.objects.filter(platform_id=platform_id)
+    for week in range(5):
+        week_slots = []
+        for weekday in range(7):
+            delta = weekday - today.weekday() + week * 7
+            if delta < 0:
+                state = 'previous'
+            elif delta == 0:
+                state = 'today'
+            else:
+                state = 'future'
+            tmp_date = datetime.date.today() + datetime.timedelta(delta)
+            if not free_slots.filter(date=tmp_date).exists():
+                if state != 'previous':
+                    state = 'booked'
+            week_slots.append(Slot(tmp_date, state))
+        slots.append(week_slots, platform_id)
+    return slots
 
 
 def validate_length(field_names: list[str], required_fields: list[str], form_data, error_log: dict[str, list[str]]) -> bool:

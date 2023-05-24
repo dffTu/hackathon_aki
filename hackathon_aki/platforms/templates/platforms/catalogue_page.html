@@ -22,33 +22,45 @@
         <div class="points">
             <p>Lorem, ipsum.</p>
         </div>
+        <form method="get" action="{% url 'show_page' page_id=1 %}">
+            <textarea name="platform_categories" placeholder="Введите теги"></textarea>
+            <button type="submit">Применить фильтр</button>
+        </form>
     </div>
 
     <div class="col-6" id="catalog-page">
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, commodi ratione doloremque aperiam nesciunt
-            voluptates quidem repellendus soluta dolor iure nam libero error consequuntur sequi delectus reiciendis
-            magni rerum nulla.</p>
-    </div>
+        <div class="container">
+            <div class="row justify-content-between">
 
-</div>
+                    {% for platform in platforms %}
+                        <div class="col" id="cards">
+                            <div class="card" id="card">
 
+                                <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" class="card-img-top" alt="{{ platform.name }}">
 
-<div class="container" style="margin-top: 50px">
-    <div class="row justify-content-between" style="margin-top: 30px; margin-bottom: 20px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ platform.name }}</h5>
+                                    <h6>Тип: Дизайн</h6>
+                                    <div class="top">
+                                        <img src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
+                                        <p>4,5</p>
+                                        <img class="comment" src="{% static 'main\img\comment.svg' %}">
+                                        <p>100</p>
+                                    </div>
+                                    <p class="card-text">{{ platform.description }}</p>
 
-        {% for platform in platforms %}
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <img src="{{ platform.platformattachment_set.first.file.url }}" class="card-img-top"
-                     alt="{{ platform.name }}">
-                <div class="card-body">
-                    <h5 class="card-title" style="color: black;">{{ platform.name }}</h5>
-                    <p class="card-text" style="color: black;">{{ platform.description }}</p>
-                    <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn btn-primary">Подробнее</a>
-                </div>
+                                </div>
+                                <div class="but-in-card">
+                                    <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn btn-primary">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
             </div>
-            {% endfor %}
         </div>
+        {% endblock %}
     </div>
 </div>
-{% endblock %}
+
+
+

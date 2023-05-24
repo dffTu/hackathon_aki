@@ -49,3 +49,84 @@ h4 {
 .points {
     margin-left: 8%;
 }
+
+.container{
+    padding: 0px;
+}
+
+.container .row {
+    margin: 0;
+}
+.row {
+    --bs-gutter-x: 0;
+}
+
+#cards{
+    padding: 0;
+    flex-direction: row;
+}
+#card {
+    width: 20rem;
+    height: 30rem;
+    border-radius: 10px;
+    padding: 10px;
+    align-items: center;
+    background: linear-gradient(201.41deg, rgba(15, 33, 68, 0.8) 3.33%, rgba(38, 64, 116, 0.6) 95.63%);
+}
+
+
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.but-in-card {
+    margin-left: auto;
+}
+
+.but-in-card a{
+    background: #E74362;
+    color: #fff;
+    font-family: 'Cera Pro Bold';
+}
+
+.card-img-top, .card-body, .but-in-card {
+    margin: auto;
+    width: 95%;
+    margin-top: 2%;
+}
+
+.card-img-top, .card-body {
+    height: 55%;
+}
+
+.card-body {
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 0;
+}
+
+.card-body h5{
+    font-family: "Cera Pro Bold";
+}
+
+.card-body img{
+    width: 20px;
+    height: 17px;
+}
+
+.top{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 3px;
+}
+.top p{
+    margin: 0;
+}
+.comment {
+    margin-left: 5px;
+}

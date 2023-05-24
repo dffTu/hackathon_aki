@@ -61,7 +61,7 @@ body {
 	display: flex;
 }
 
-.navbar-brand {
+#logo {
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -122,6 +122,9 @@ input[type="search"]{
 	justify-content: center;	
 }
 
+#three {
+    align-items: center;
+}
 .icons {
 	padding-top: 1%;
 	display: flex;
