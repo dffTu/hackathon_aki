@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from hackathon_aki import config
+import datetime
 
 MAX_LENGTH = {
     'email': 50,
@@ -57,6 +58,15 @@ CHARSET = {
         lambda x: x.isprintable(),
     ],
 }
+
+weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+
+
+class Day:
+    def __init__(self, date, state):
+        self.day = date.day
+        self.weekday = date.weekday()
+        self.state = state
 
 
 def validate_length(field_names: list[str], form_data, error_log: dict[str, list[str]]) -> bool:
