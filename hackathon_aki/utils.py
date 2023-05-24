@@ -4,18 +4,18 @@ import datetime
 
 MAX_LENGTH = {
     'email': 50,
-    'password': 25,
+    'password': 50,
     'first_name': 50,
     'last_name': 50,
     'middle_name': 50,
     'phone_number': 15,
-    'position': 30,
-    'juridical_name': 30,
+    'position': 50,
+    'juridical_name': 50,
     'inn': 15,
-    'name': 30,
-    'short_description': 1000,
-    'description': 10000,
-    'text': 5000
+    'name': 50,  # platform name
+    'short_description': 1000,  # short platform description
+    'description': 10000,  # platform description
+    'text': 10000  # comment length
 }
 
 
