@@ -1,3 +1,51 @@
 body {
     color: #fefefe;
 }
+
+h2 {
+    font-family: 'Cera Pro Black';
+    
+}
+h4 {
+    font-family: 'Cera Pro Bold';
+}
+
+.cat {
+    display: flex;
+    margin-top: 2%;
+    margin-left: 9%;
+    align-items: center;
+}
+
+.cat p{
+    margin-left: 1.5%;
+    margin-bottom: 0px;
+}
+
+#filter, #catalog-page {
+    backdrop-filter: blur(100px);
+    border-radius: 7px;
+    width: 70%;
+}
+
+#filter {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
+    width: 70%;
+    background: rgba(249, 249, 249, 0.09);
+    margin-left: 10%;
+}
+
+#catalog-page {
+    justify-content: flex-start;
+    padding: 40px;
+    width: 60%;
+    background: rgba(171, 174, 255, 0.05);
+    margin-right: 10%;
+    margin-left: 2%;
+}
+
+.points {
+    margin-left: 8%;
+}

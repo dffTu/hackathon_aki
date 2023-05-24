@@ -8,9 +8,33 @@
 {% endblock %}
 
 {% block content %}
-<h1>Страница каталога {{ page_id }}</h1>
+
+<div class="cat">
+    <h2 class="name-of-page">Каталог</h2>
+    <p> страница {{ page_id }}</p>
+</div>
+
+
+<div class="row">
+    <div class="col" id="filter">
+        <h4>Фильтр</h4>
+
+        <div class="points">
+            <p>Lorem, ipsum.</p>
+        </div>
+    </div>
+
+    <div class="col-6" id="catalog-page">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, commodi ratione doloremque aperiam nesciunt voluptates quidem repellendus soluta dolor iure nam libero error consequuntur sequi delectus reiciendis magni rerum nulla.</p>
+    </div>
+    
+</div>
+
+
+
 <div class="container" style="margin-top: 50px">
         <div class="row justify-content-between" style="margin-top: 30px; margin-bottom: 20px;">
+
                 {% for platform in platforms %}
                     <div class="col">
                     <div class="card" style="width: 18rem;">
