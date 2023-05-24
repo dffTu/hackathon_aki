@@ -21,6 +21,8 @@ def show_client_profile(request, data):
         return redirect('home')
 
     if not hasattr(request.user, 'client'):
+        if not hasattr(request.user, 'organizer'):
+            return redirect('home')
         return redirect('show_organizer_profile')
 
     data['email'] = request.user.username

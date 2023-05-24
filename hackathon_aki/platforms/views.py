@@ -3,10 +3,8 @@ from .models import Platform, Comment
 from main.models import CommentAttachment
 from .forms import CommentFileAttachingForm, CommentLeavingForm
 from login_registrate_utils import process_post_forms_requests
-from utils import Day
+from utils import build_slots
 import datetime
-
-from random import randint
 
 
 @process_post_forms_requests
@@ -76,27 +74,8 @@ def leave_comment(request, data, platform_id):
 
 
 @process_post_forms_requests
-def calendar(request, data):
+def calendar(request, data, platform_id):
     today = datetime.date.today()
-    calendar = []
-
-    for week in range(5):
-        week_table = []
-        for weekday in range(7):
-            delta = weekday - today.weekday() + week * 7
-            if delta < 0:
-                state = 'previous'
-            elif delta == 0:
-                state = 'today'
-            else:
-                state = 'future'
-            tmp_date = datetime.date.today() + datetime.timedelta(delta)
-            week_table.append(Day(tmp_date, state))
-
-        for _ in range(2):
-            week_table[randint(0, 6)].state = "booked"
-        calendar.append(week_table)
-
-    data['calendar'] = calendar
-
+    slots = build_slots(today)
+    data['slots'] = slots
     return render(request, 'platforms/calendar.html', data)
