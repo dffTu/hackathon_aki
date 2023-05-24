@@ -1,0 +1,15 @@
+*{
+	color: #fff;
+}
+
+.main-str{
+	display: flex;
+	justify-content: center;
+	height: 50rem;
+	width: 80%;
+	margin: auto;
+	margin-top: 3%;
+	border-radius: 7px;
+	backdrop-filter: blur(100px);
+	background: rgba(171, 174, 255, 0.05);
+}
