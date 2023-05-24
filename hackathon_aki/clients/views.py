@@ -8,6 +8,8 @@ def redirect_to_client_profile(request, data):
         return redirect('home')
 
     if not hasattr(request.user, 'client'):
+        if not hasattr(request.user, 'organizer'):
+            return redirect('home')
         return redirect('show_organizer_profile')
 
     return redirect('show_client_profile')

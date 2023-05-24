@@ -1,0 +1,12 @@
+{% extends 'main/html_template.html' %}
+
+{% block title %}Создание свободного слота{% endblock %}
+
+{% block content %}
+    <form method="POST" action="">
+        {{ form.date }} <br>
+        {{ form.price }} <br>
+        {% csrf_token %}
+        <button type="submit">Создать</button>
+    </form>
+{% endblock %}

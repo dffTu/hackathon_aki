@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from main.models import PlatformAttachment
+from platforms.models import Platform
 from platforms.forms import PlatformCreatingForm, PlatformFileAttachingForm
+from .forms import FreeSlotAddingForm
 from login_registrate_utils import process_post_forms_requests
 
 
@@ -10,6 +12,8 @@ def redirect_to_organizer_profile(request, data):
         return redirect('home')
 
     if not hasattr(request.user, 'organizer'):
+        if not hasattr(request.user, 'client'):
+            return redirect('home')
         return redirect('show_client_profile')
 
     return redirect('show_organizer_profile')
@@ -43,6 +47,30 @@ def create_platform(request, data):
     data['attachment_form'] = PlatformFileAttachingForm()
 
     return render(request, 'platforms/create_platform.html', data)
+
+
+@process_post_forms_requests
+def add_free_slot(request, data, platform_id):
+    if not request.user.is_authenticated or not hasattr(request.user, 'organizer'):
+        return redirect('home')
+
+    platform = Platform.objects.filter(id=platform_id)
+    if not platform.exists():
+        return render(request, 'platforms/platform_not_found.html', data)
+    platform = platform.first()
+
+    if request.method == 'POST':
+        form = FreeSlotAddingForm(request.POST)
+        if form.is_valid():
+            free_slot = form.save(commit=False)
+            free_slot.platform = platform
+            free_slot.save()
+
+            return redirect('show_organizer_platforms')
+
+    data['form'] = FreeSlotAddingForm()
+
+    return render(request, 'organizers/add_free_slot.html', data)
 
 
 @process_post_forms_requests

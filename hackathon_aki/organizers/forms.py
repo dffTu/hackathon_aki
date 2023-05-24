@@ -1,5 +1,6 @@
 from django import forms
 from .models import Organizer
+from platforms.models import FreeSlot
 from main.models import EmailVerification
 from utils import validate_length, validate_charset
 
@@ -83,3 +84,19 @@ class ProfileOrganizerRegistrationForm(forms.ModelForm):
         is_valid = validate_length(self.length_validation_fields, self.data, error_log)
         is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
         return is_valid
+
+
+class FreeSlotAddingForm(forms.ModelForm):
+    class Meta:
+        model = FreeSlot
+        fields = ['date', 'price']
+
+        widgets = {
+            'date': forms.DateInput(attrs={
+                'class': 'form-control',
+            }),
+            'price': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Цена',
+            }),
+        }
