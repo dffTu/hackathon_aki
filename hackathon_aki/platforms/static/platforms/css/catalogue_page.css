@@ -13,7 +13,7 @@ h4 {
 .cat {
     display: flex;
     margin-top: 2%;
-    margin-left: 9%;
+    margin-left: 5%;
     align-items: center;
 }
 
@@ -80,12 +80,9 @@ h4 {
     justify-content: space-between;
 }
 
-.but-in-card {
-    margin-left: auto;
-}
-
 .but-in-card a{
     background: #E74362;
+    margin-left: auto;
     color: #fff;
     font-family: 'Cera Pro Bold';
 }
@@ -125,11 +122,6 @@ h4 {
 .top p{
     margin: 0;
     font-size: 0.7rem;
-}
-
-.img-plarforms {
-    overflow:hidden;
-    position:relative;
 }
 
 .comment {
