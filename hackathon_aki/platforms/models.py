@@ -5,7 +5,7 @@ class Platform(models.Model):
     organizer = models.ForeignKey('organizers.Organizer', on_delete=models.CASCADE)
 
     name = models.CharField('Имя', max_length=250, blank=True)
-    category = models.CharField('Категория', max_length=250, blank=True)
+    categories = models.CharField('Категории', max_length=250, blank=True)
     short_description = models.TextField('Краткое описание', blank=True)
     description = models.TextField('Описание площадки', blank=True)
     schedule = models.JSONField('Расписание', null=True)

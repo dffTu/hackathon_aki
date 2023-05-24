@@ -50,7 +50,9 @@ def leave_comment(request, data, platform_id):
         return render(request, 'platforms/platform_not_found.html', data)
     platform = platform.first()
 
-    errors = {'text': []}
+    errors = {'text': [],
+              'rating': []}
+
     if request.method == 'POST':
         comment_form = CommentLeavingForm(request.POST)
         attachment_form = CommentFileAttachingForm(request.POST, request.FILES)

@@ -4,8 +4,8 @@
 
 {% block content %}
     <form method="POST" action="">
-        {{ form.date }} <br>
-        {{ form.price }} <br>
+        {{ form.date }} <span class="text-white">{{ errors.date }}</span> <br>
+        {{ form.price }} <span class="text-white">{{ errors.price }}</span> <br>
         {% csrf_token %}
         <button type="submit">Создать</button>
     </form>

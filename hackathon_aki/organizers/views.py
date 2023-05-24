@@ -25,6 +25,7 @@ def create_platform(request, data):
         return redirect('home')
 
     errors = {'name': [],
+              'short_description': [],
               'description': []}
 
     if request.method == 'POST':
@@ -59,6 +60,9 @@ def add_free_slot(request, data, platform_id):
         return render(request, 'platforms/platform_not_found.html', data)
     platform = platform.first()
 
+    errors = {'date': [],
+              'price': []}
+
     if request.method == 'POST':
         form = FreeSlotAddingForm(request.POST)
         if form.is_valid():
@@ -69,6 +73,7 @@ def add_free_slot(request, data, platform_id):
             return redirect('show_organizer_platforms')
 
     data['form'] = FreeSlotAddingForm()
+    data['errors'] = errors
 
     return render(request, 'organizers/add_free_slot.html', data)
 

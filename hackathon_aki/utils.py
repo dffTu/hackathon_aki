@@ -69,12 +69,19 @@ class Day:
         self.state = state
 
 
-def validate_length(field_names: list[str], form_data, error_log: dict[str, list[str]]) -> bool:
+def validate_length(field_names: list[str], required_fields: list[str], form_data, error_log: dict[str, list[str]]) -> bool:
     is_valid = True
     for field_name in field_names:
+        if field_name not in form_data:
+            continue
+
         if len(form_data[field_name]) > MAX_LENGTH[field_name]:
             error_log[field_name].append(f'Превышено максимальное число символов {MAX_LENGTH[field_name]}')
             is_valid = False
+
+    for field_name in required_fields:
+        if field_name not in form_data or len(form_data[field_name]) == 0:
+            error_log[field_name].append(f'Поле не заполнено.')
 
     return is_valid
 
@@ -82,6 +89,9 @@ def validate_length(field_names: list[str], form_data, error_log: dict[str, list
 def validate_charset(field_names: list[str], form_data, error_log: dict[str, list[str]]) -> bool:
     is_valid = True
     for field_name in field_names:
+        if field_name not in form_data:
+            continue
+
         for char in form_data[field_name]:
             if True not in list(map(lambda x: x(char), CHARSET[field_name])):
                 error_log[field_name].append(f'Символ \'{char}\' запрещён для этого поля')
