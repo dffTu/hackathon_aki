@@ -1,6 +1,5 @@
 from django.core.mail import send_mail
 from hackathon_aki import config
-from platforms.models import FreeSlot
 import datetime
 
 MAX_LENGTH = {
@@ -60,7 +59,19 @@ CHARSET = {
     ],
 }
 
-weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+WEEKDAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+MONTHS = ['Январь',
+          'Февраль',
+          'Март',
+          'Апрель',
+          'Май',
+          'Июнь',
+          'Июль',
+          'Август',
+          'Сентябрь',
+          'Октябрь',
+          'Ноябрь',
+          'Декабрь']
 
 platform_categories = [
     ('film-studio', 'Киностудия'),
@@ -85,13 +96,12 @@ class Slot:
 
 
 class Month:
-    def __init__(self, today, free_slots, entries):
-        self.day = today.day
-        self.month = today.month
+    def __init__(self, tmp, today, free_slots, entries):
+        self.tmp = tmp
+        self.month = MONTHS[tmp.month]
         self.weeks = []
         for week_delta in range(-5, 6):
-            self.add_week(today + datetime.timedelta(weeks=week_delta), today, free_slots, entries)
-
+            self.add_week(self.tmp + datetime.timedelta(weeks=week_delta), today, free_slots, entries)
 
     @staticmethod
     def get_next_sunday(date):
