@@ -92,6 +92,6 @@ def leave_comment(request, data, platform_id):
 @process_post_forms_requests
 def calendar(request, data, platform_id):
     today = datetime.date.today()
-    slots = build_slots(today)
+    slots = build_slots(today, platform_id)
     data['slots'] = slots
     return render(request, 'platforms/calendar.html', data)

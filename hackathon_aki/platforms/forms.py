@@ -28,13 +28,13 @@ class PlatformFileAttachingForm(forms.Form):
 
 
 class PlatformCreatingForm(forms.ModelForm):
-    required_fields = ['name', 'short_description']
+    required_fields = ['name', 'categories', 'short_description']
     length_validation_fields = ['name', 'short_description', 'description']
     charset_validation_fields = ['name', 'short_description', 'description']
 
     class Meta:
         model = Platform
-        fields = ['name', 'short_description', 'description', 'agreement']
+        fields = ['name', 'short_description', 'categories', 'description', 'agreement']
 
         widgets = {
             'name': forms.TextInput(attrs={
@@ -44,6 +44,10 @@ class PlatformCreatingForm(forms.ModelForm):
             'short_description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Краткое описание',
+            }),
+            'categories': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Категория;категория',
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
@@ -55,7 +59,11 @@ class PlatformCreatingForm(forms.ModelForm):
         }
 
     def validate(self, error_log):
-        is_valid = validate_length(self.length_validation_fields, self.required_fields, self.data, error_log)
+        is_valid = self.is_valid()
+        if not is_valid:
+            error_log['incorrect_form'] = True
+
+        is_valid = validate_length(self.length_validation_fields, self.required_fields, self.data, error_log) and is_valid
         is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
         return is_valid
 
@@ -86,6 +94,10 @@ class CommentLeavingForm(forms.ModelForm):
         }
 
     def validate(self, error_log):
-        is_valid = validate_length(self.length_validation_fields, self.required_fields, self.data, error_log)
+        is_valid = self.is_valid()
+        if not is_valid:
+            error_log['incorrect_form'] = True
+
+        is_valid = validate_length(self.length_validation_fields, self.required_fields, self.data, error_log) and is_valid
         is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
         return is_valid

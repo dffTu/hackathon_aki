@@ -4,9 +4,14 @@
 
 {% block content %}
     <form method="POST" enctype="multipart/form-data" action="">
+        {% if errors.incorrect_form %}
+            <p class="text-white">Некорректные данные формы</p>
+        {% endif %}
+
         {{ creating_form.name }} <span class="text-white">{{ errors.name }}</span> <br>
-        {{ creating_form.short_description }} <span class="text-white">{{ errors.description }}</span> <br>
+        {{ creating_form.short_description }} <span class="text-white">{{ errors.short_description }}</span> <br>
         {{ creating_form.description }} <span class="text-white">{{ errors.description }}</span> <br>
+        {{ creating_form.categories }} <span class="text-white">{{ errors.categories }}</span> <br>
         {{ attachment_form.file_field }} <br>
         {{ creating_form.agreement }} <br>
         {% csrf_token %}

@@ -76,9 +76,10 @@ platform_categories = [
 
 
 class Slot:
-    def __init__(self, date, state):
+    def __init__(self, date, is_today, state):
         self.day = date.day
         self.weekday = date.weekday()
+        self.is_today = is_today
         self.state = state
 
 
@@ -99,8 +100,8 @@ def build_slots(today, platform_id):
             if not free_slots.filter(date=tmp_date).exists():
                 if state != 'previous':
                     state = 'booked'
-            week_slots.append(Slot(tmp_date, state))
-        slots.append(week_slots, platform_id)
+            week_slots.append(Slot(tmp_date, tmp_date == today, state))
+        slots.append(week_slots)
     return slots
 
 
@@ -116,7 +117,8 @@ def validate_length(field_names: list[str], required_fields: list[str], form_dat
 
     for field_name in required_fields:
         if field_name not in form_data or len(form_data[field_name]) == 0:
-            error_log[field_name].append(f'Поле не заполнено.')
+            error_log[field_name].append('Поле не заполнено.')
+            is_valid = False
 
     return is_valid
 

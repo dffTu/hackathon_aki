@@ -43,7 +43,7 @@ class UserOrganizerRegistrationForm(forms.ModelForm):
     def validate(self, error_log):
         is_valid = self.is_valid()
         if not is_valid:
-            error_log['email'].append('Некорректный адрес электронной почты.')
+            error_log['incorrect_form'] = True
 
         is_valid = validate_length(self.length_validation_fields, self.required_fields, self.data, error_log) and is_valid
         is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
@@ -83,7 +83,11 @@ class ProfileOrganizerRegistrationForm(forms.ModelForm):
         }
 
     def validate(self, error_log):
-        is_valid = validate_length(self.length_validation_fields, self.required_fields, self.data, error_log)
+        is_valid = self.is_valid()
+        if not is_valid:
+            error_log['incorrect_form'] = True
+
+        is_valid = validate_length(self.length_validation_fields, self.required_fields, self.data, error_log) and is_valid
         is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
         return is_valid
 
@@ -106,5 +110,9 @@ class FreeSlotAddingForm(forms.ModelForm):
         }
 
     def validate(self, error_log):
-        is_valid = validate_length([], self.required_fields, self.data, error_log)
+        is_valid = self.is_valid()
+        if not is_valid:
+            error_log['incorrect_form'] = True
+
+        is_valid = validate_length([], self.required_fields, self.data, error_log) and is_valid
         return is_valid
