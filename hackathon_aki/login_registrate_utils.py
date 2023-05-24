@@ -136,6 +136,8 @@ def search_platforms_by_name(request, data):
         return redirect('home')
 
     if request.method == 'GET':
+        if request.GET['search'] == '':
+            return None
         platform_names = [platform.name for platform in Platform.objects.all()]
         result_platforms = search_platforms(request.GET['search'], platform_names)
         data['platforms'] = []
