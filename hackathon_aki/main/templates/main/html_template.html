@@ -229,36 +229,6 @@
                             <div class="col" style="flex-direction: column;">
 
                                 <div class="form-group">
-                                    <label class="text-muted">Email</label>
-                                {{ user_organizer_registration_form.email }}
-                                {% for error in organizer_errors.email %}
-                                    <div class="form_alert">
-                                    {{ error }}
-                                    </div>
-                                {% endfor %}
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="text-muted">Пароль</label>
-                                    {{ user_organizer_registration_form.password }}
-                                    {% for error in organizer_errors.password %}
-                                        <div class="form_alert">
-                                        {{ error }}
-                                        </div>
-                                    {% endfor %}
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="text-muted">Повторите пароль</label>
-                                    {{ user_organizer_registration_form.repeat_password }}
-                                    {% for error in organizer_errors.repeat_password %}
-                                        <div class="form_alert">
-                                        {{ error }}
-                                        </div>
-                                    {% endfor %}
-                                </div>
-
-                                <div class="form-group">
                                     <label class="text-muted">Фамилия</label>
                                     {{ user_organizer_registration_form.last_name }}
                                     {% for error in organizer_errors.last_name %}
@@ -287,18 +257,50 @@
                                         </div>
                                     {% endfor %}
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="text-muted">Пароль</label>
+                                    {{ user_organizer_registration_form.password }}
+                                    {% for error in organizer_errors.password %}
+                                        <div class="form_alert">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-muted">Повторите пароль</label>
+                                    {{ user_organizer_registration_form.repeat_password }}
+                                    {% for error in organizer_errors.repeat_password %}
+                                        <div class="form_alert">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
                             </div>
 
 
                             <div class="col" style="flex-direction: column;">
+
                                 <div class="form-group">
-                                <label class="text-muted">Номер телефона</label>
-                                {{ profile_organizer_registration_form.phone_number }}
-                                {% for error in organizer_errors.phone_number %}
-                                    <div class="form_alert">
-                                    {{ error }}
-                                    </div>
-                                {% endfor %}
+                                    <label class="text-muted">Email</label>
+                                    {{ user_organizer_registration_form.email }}
+                                    {% for error in organizer_errors.email %}
+                                        <div class="form_alert">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-muted">Номер телефона</label>
+                                    {{ profile_organizer_registration_form.phone_number }}
+                                    {% for error in organizer_errors.phone_number %}
+                                        <div class="form_alert">
+                                        {{ error }}
+                                        </div>
+                                    {% endfor %}
                                 </div>
 
                                 <div class="form-group">

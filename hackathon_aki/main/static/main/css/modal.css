@@ -146,7 +146,7 @@
 
 .form_alert {
     position: relative;
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: 0.25rem;
     font-size: 14px;
@@ -156,6 +156,8 @@
 
 .col {
     flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
 }
 
 .register-window-organizer col{
