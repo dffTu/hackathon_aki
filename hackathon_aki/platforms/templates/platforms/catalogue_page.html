@@ -22,6 +22,7 @@
         <div class="points">
             <p>Lorem, ipsum.</p>
         </div>
+
         <form method="get" action="{% url 'show_page' page_id=1 %}">
             <textarea name="platform_categories" placeholder="Введите теги"></textarea>
             <button type="submit">Применить фильтр</button>
@@ -29,34 +30,32 @@
     </div>
 
     <div class="col-6" id="catalog-page">
-        <div class="container">
-            <div class="row justify-content-between">
+        <div class="container" id="catalog-pages">
+            {% for platform in platforms %}
+                <div class="col" id="cards">
+                    <div class="card" id="card">
 
-                    {% for platform in platforms %}
-                        <div class="col" id="cards">
-                            <div class="card" id="card">
+                        <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" class="card-img-top" alt="{{ platform.name }}">
 
-                                <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" class="card-img-top" alt="{{ platform.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ platform.name }}</h5>
+                            <h6>Тип: Дизайн</h6>
+                            <div class="top">
+                                <img src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
 
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ platform.name }}</h5>
-                                    <h6>Тип: Дизайн</h6>
-                                    <div class="top">
-                                        <img src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
-                                        <p>4,5</p>
-                                        <img class="comment" src="{% static 'main\img\comment.svg' %}">
-                                        <p>100</p>
-                                    </div>
-                                    <p class="card-text">{{ platform.description }}</p>
-
-                                </div>
-                                <div class="but-in-card">
-                                    <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn btn-primary">Подробнее</a>
-                                </div>
+                                <p>4,5</p>
+                                <img class="comment" src="{% static 'main\img\comment.svg' %}">
+                                <p>100</p>
                             </div>
+                            <p class="card-text">{{ platform.description }}</p>
+
                         </div>
-                    {% endfor %}
-            </div>
+                        <div class="but-in-card">
+                            <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
         {% endblock %}
     </div>
