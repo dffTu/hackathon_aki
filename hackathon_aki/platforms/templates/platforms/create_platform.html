@@ -4,6 +4,10 @@
 
 {% block content %}
     <form method="POST" enctype="multipart/form-data" action="">
+        {% if errors.incorrect_form %}
+            <p class="text-white">Некорректные данные формы</p>
+        {% endif %}
+
         {{ creating_form.name }} <span class="text-white">{{ errors.name }}</span> <br>
         {{ creating_form.short_description }} <span class="text-white">{{ errors.short_description }}</span> <br>
         {{ creating_form.description }} <span class="text-white">{{ errors.description }}</span> <br>
