@@ -98,7 +98,7 @@ class Slot:
 class Month:
     def __init__(self, tmp, today, free_slots, entries):
         self.tmp = tmp
-        self.month = MONTHS[tmp.month]
+        self.month = MONTHS[tmp.month - 1]
         self.weeks = []
         for week_delta in range(-5, 6):
             self.add_week(self.tmp + datetime.timedelta(weeks=week_delta), today, free_slots, entries)
@@ -114,14 +114,14 @@ class Month:
         return date + datetime.timedelta(days=-weekday)
 
     def add_week(self, date, today, free_slots, entries):
-        if self.get_next_sunday(date).month < today.month or self.get_prev_monday(date).month > today.month:
+        if self.get_next_sunday(date).month < self.tmp.month or self.get_prev_monday(date).month > self.tmp.month:
             return
 
         week_slots = []
 
         for weekday in range(7):
             delta = weekday - date.weekday()
-            tmp_date = datetime.date.today() + datetime.timedelta(delta)
+            tmp_date = date + datetime.timedelta(delta)
 
             if tmp_date < today:
                 time_comparison = 'less'

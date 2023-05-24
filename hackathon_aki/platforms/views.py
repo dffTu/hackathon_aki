@@ -99,11 +99,12 @@ def calendar(request, data, platform_id):
     months = []
     tmp = today
     for i in range(3):
+        months.append(Month(tmp, today, free_slots, entries))
         if tmp.month == 12:
             tmp = datetime.date(tmp.year + 1, 1, 1)
         else:
             tmp = datetime.date(tmp.year, tmp.month + 1, 1)
-        months.append(Month(tmp, today, free_slots, entries))
     data['months'] = months
+    print(months)
 
     return render(request, 'platforms/calendar.html', data)
