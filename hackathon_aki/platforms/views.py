@@ -7,7 +7,6 @@ from .search_utils import search_platforms
 from calendar_utils import Month, build_calendar
 
 
-
 @process_post_forms_requests
 def redirect_to_first_page(request, data):        # Redirects to first catalogue page
     return redirect('show_page', page_id=1)
@@ -37,7 +36,6 @@ def show_page(request, data, page_id):            # Shows catalogue page
             if len(data['platforms'][-1]) == 3:
                 data['platforms'].append([])
             data['platforms'][-1].append(platform)
-        data['filter_request'] = ''
     else:
         categories = request.GET['platform_categories'].split(';')
         data['platforms'] = [[]]
@@ -55,7 +53,6 @@ def show_page(request, data, page_id):            # Shows catalogue page
                 number_of_platforms += 1
 
         data['page_id'] = page_id
-        data['filter_request'] = request.GET['platform_categories']
 
     data['all_pages'] = list(range(1, (number_of_platforms + 14) // 15 + 1))
 

@@ -1,5 +1,6 @@
 {% load static %}
 {% load django_template_maths %}
+{% load jinja_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,10 +38,16 @@
                     <div class="col-6">
                         <form class="search" method="get" action="{% url 'show_page' page_id=1 %}">
                             <div class="bar">
-                                {% if filter_request %}
-                                    <input type="hidden" name="platform_categories" value="{{ filter_request }}"></input>
+                                {% if filters %}
+                                    {% for platform_filter_en in filters %}
+                                        <input type="hidden" name="{{ platform_filter_en}}" value="on">
+                                    {% endfor %}
                                 {% endif %}
-                                <input name="search" class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+                                {% if search %}
+                                    <input name="search" class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" value="{{search}}">
+                                {% else %}
+                                    <input name="search" class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+                                {% endif %}
                                 <!-- <input type="search" name="Поиск" placeholder="Поиск"> -->
                             </div>
                             <button class="button" type="submit">Поиск</button>

@@ -1,6 +1,7 @@
 from main.forms import LoginForm
 from clients.forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 from organizers.forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
+from utils import platform_categories
 
 
 def get_basic_arguments_for_html_pages(request):
@@ -11,6 +12,7 @@ def get_basic_arguments_for_html_pages(request):
         'user_organizer_registration_form': UserOrganizerRegistrationForm(),
         'profile_organizer_registration_form': ProfileOrganizerRegistrationForm(),
         'error_message': '',
+        'platform_categories': platform_categories,
         'url_path': request.path,
         'drop_localstorage': True,
     }

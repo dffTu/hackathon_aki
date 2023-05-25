@@ -57,17 +57,30 @@ CHARSET = {
     ],
 }
 
-platform_categories = [
-    ('film-studio', 'Киностудия'),
-    ('gallery', 'Галерея'),
-    ('publishing-house', 'Издательство'),
-    ('book-shop', 'Книжный магазин'),
-    ('design-studio', 'Дизайн студия'),
-    ('creative-space', 'Креативное пространство'),
-    ('cinema-theater', 'Кинотеатр'),
-    ('sound-recording-studio', 'Звукозаписывающая студия'),
-    ('AR-VR-studio', 'AR-VR-студия'),
-]
+platform_categories = {
+    'platform-type': {
+        'ru': 'Тип площадки',
+        'filters': [
+            ('film-studio', 'Киностудия'),
+            ('gallery', 'Галерея'),
+            ('publishing-house', 'Издательство'),
+            ('book-shop', 'Книжный магазин'),
+            ('design-studio', 'Дизайн студия'),
+            ('creative-space', 'Креативное пространство'),
+            ('cinema-theater', 'Кинотеатр'),
+            ('sound-recording-studio', 'Звукозаписывающая студия'),
+            ('AR-VR-studio', 'AR-VR-студия')
+        ]
+    },
+    'price': {
+        'ru': 'Цена',
+        'filters': [
+            ('big-price', 'Большая цена'),
+            ('medium-price', 'Средняя цена'),
+            ('small-price', 'Малая цена')
+        ]
+    },
+}
 
 
 def validate_length(field_names: list[str], required_fields: list[str], form_data,
