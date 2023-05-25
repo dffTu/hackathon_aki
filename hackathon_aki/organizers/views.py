@@ -27,7 +27,8 @@ def create_platform(request, data):
     errors = {'name': [],
               'short_description': [],
               'description': [],
-              'categories': []}
+              'categories': [],
+              'address': []}
 
     if request.method == 'POST':
         creating_form = PlatformCreatingForm(request.POST, request.FILES)
