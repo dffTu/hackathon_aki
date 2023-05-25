@@ -10,6 +10,12 @@ h4 {
     font-family: 'Cera Pro Bold';
 }
 
+button{
+    color: #fff;
+    background: #E74362;
+    font-family: 'Cera Pro Bold';
+}
+
 .cat {
     display: flex;
     margin-top: 2%;
@@ -43,12 +49,15 @@ h4 {
 
 .catalog-page {
     flex-direction: column;
-    padding: 40px;
+    padding: 0 auto;
+    padding-bottom: 2%;
     width: 70%;
     background: rgba(171, 174, 255, 0.05);
     margin-right: 5%;
     margin-left: 2%;
+    margin-bottom: 5%;
 }
+
 .catalog-pages {
     display: flex;
     padding: 0px;
@@ -60,14 +69,22 @@ h4 {
     --bs-gutter-x: 0;
 }
 
-.cards{
-    align-items: center;
-    padding: 0;
+.platform{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    width: 100%;
+    max-width: 1000px; /* Ширина grid-контейнера */
+    justify-content: center;
+    justify-items: center; /* Размещаем карточку по центру */
+    column-gap: 8rem; /* Отступ между колонками */
+    row-gap: 80px; /* Отступ между рядами */
+    margin: 0 auto;
 }
 
 .card {
     width: 17rem;
     height: 27rem;
+    margin-top: 20%;
     border-radius: 10px;
     padding: 10px;
     align-items: center;
@@ -142,4 +159,32 @@ h4 {
 
 .platform-row {
     display: flex;
+}
+
+.number-of-pages{
+    display: flex;
+    margin-top: 20px;
+}
+
+.number-of-pages button{
+    padding: 5px;
+    border-radius: 7px;
+    border: none;
+    margin: 10px;
+}
+
+.num-page{
+    font-family: 'Cera Pro Black';
+    background: none;
+}
+
+.pages a{
+    text-decoration: none;
+    color: #fff;
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+.pages a:hover{
+    color: orange;
 }

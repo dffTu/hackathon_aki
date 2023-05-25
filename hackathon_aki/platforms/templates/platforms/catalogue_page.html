@@ -34,9 +34,10 @@
         <div class="container catalog-pages">
             {% for row in platforms %}
                 {% if forloop.counter|sub:1|flr:5|add:1 == page_id %}
-                    <div class="platform-row">
+                    <div class="platform">
                         {% for platform in row %}
-                            <div class="col cards card">
+                            <div class="col card">
+
                                 <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
 
                                 <div class="card-body">
@@ -66,17 +67,30 @@
             <tbody>
                 {% for page_number in all_pages %}
                     <form method="get" action="{% url 'show_page' page_id=page_number %}">
-                        <tr>
+                        <div class="number-of-pages">
+                            <button>Предыдущая</button>
+
                             {% if filter_request %}
                                 <input type="hidden" name="platform_categories" value="{{ filter_request }}">
                             {% endif %}
                             {% if search %}
                                 <input type="hidden" name="search" value="{{ search }}">
                             {% endif %}
-                            <button type="submit">
-                                {{ page_number }}
+
+                            <button class="num-page" type="submit">
+                                <!-- {{ page_number }}  -->
+                                <div class="pages" style="display: flex; ">
+                                    <a href="#"> 1 </a>
+                                    <a href="#"> 2 </a>
+                                    <a href="#" style="margin-right: 0;"> 3 </a>
+                                </div>
+                                
                             </button>
-                        </tr>
+
+                            <button>Следующая</button>
+                            
+                        </div>
+                        
                     </form>
                 {% endfor %}
             </tbody>
