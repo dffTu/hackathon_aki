@@ -25,12 +25,16 @@ def show_page(request, data, page_id):            # Shows catalogue page
         result_platforms = search_platforms(request.GET['search'], platform_names)
         for platform_name in result_platforms:
             for platform in Platform.objects.filter(name=platform_name):
+                if platform in relevant_platforms_list:
+                    continue
                 relevant_platforms_list.append(platform)
         data['search'] = request.GET['search']
 
+    number_of_platforms = 0
     if 'platform_categories' not in request.GET or not request.GET['platform_categories']:
         data['page_id'] = page_id
         data['platforms'] = [[]]
+        number_of_platforms = len(relevant_platforms_list)
         for platform in relevant_platforms_list:
             if len(data['platforms'][-1]) == 3:
                 data['platforms'].append([])
@@ -50,11 +54,12 @@ def show_page(request, data, page_id):            # Shows catalogue page
                 if len(data['platforms'][-1]) == 3:
                     data['platforms'].append([])
                 data['platforms'][-1].append(platform)
+                number_of_platforms += 1
 
         data['page_id'] = page_id
         data['filter_request'] = request.GET['platform_categories']
 
-    data['all_pages'] = list(range(1, len(data['platforms']) + 1))
+    data['all_pages'] = list(range(1, (number_of_platforms + 14) // 15 + 1))
 
     return render(request, 'platforms/catalogue_page.html', data)
 

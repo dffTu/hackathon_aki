@@ -2,8 +2,11 @@ import re
 
 
 def levenshtein_distance(a: str, b: str) -> int:
+    print(a, b, "BBOOOOBIIIK")
     n = len(a)
     m = len(b)
+    if n == 0 or m == 0:
+        return n + m
     distance = [[0] * m for i in range(n)]
     for i in range(n):
         distance[i][0] = i
