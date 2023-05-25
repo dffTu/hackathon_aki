@@ -64,14 +64,13 @@ def show_page(request, data, page_id):            # Shows catalogue page
 
 @process_post_forms_requests
 def show_platform_description(request, data, platform_id):
-    data['platform_id'] = platform_id
-
     platform = Platform.objects.filter(id=platform_id)
     if not platform.exists():
         return render(request, 'platforms/platform_not_found.html', data)
-    platform = platform.first()
 
-    data['comments'] = Comment.objects.filter(platform=platform)
+    data['platform'] = platform.first()
+    data['comments'] = Comment.objects.filter(platform_id=platform_id)
+    data['comments_amount'] = len(data['comments'])
     data['months'] = build_calendar(platform_id)
 
     return render(request, 'platforms/platform_description.html', data)

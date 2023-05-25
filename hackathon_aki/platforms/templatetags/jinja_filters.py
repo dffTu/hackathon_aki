@@ -9,5 +9,10 @@ def get_key(value, arg):
 
 
 @register.filter(name="join")
-def join_with_divider(value, arg):
+def join(value, arg):
     return arg.join(value)
+
+
+@register.filter(name="split")
+def split(value, arg):
+    return value.split(arg)

@@ -1,6 +1,7 @@
 {% extends 'main/html_template.html' %}
 {% load static %}
-{% block title %}Описание площадки{% endblock %}
+{% load jinja_filters %}
+{% block title %} {{ platform.name }} {% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'platforms\css\platform_description.css' %}">
@@ -15,8 +16,8 @@
             </div>
 
             <div class="name-company">
-                <p class="p-name">Art Life</p>
-                <p class="p-type">Киностудия</p>
+                <p class="p-name">{{ platform.name }}</p>
+                <p class="p-type">{{ platform.categories|split:";"|join:",  "}}</p>
             </div>
         </div>
         
@@ -24,19 +25,23 @@
 
             <div class="info">
                 <h3>Описание</h3>
-                <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque quaerat praesentium nobis velit hic iusto excepturi asperiores incidunt, sit est quasi illo! Consectetur, animi temporibus iste tempore at distinctio dolorem, dolor alias voluptatibus magni ullam eos. Aperiam sed eaque voluptate praesentium earum. Accusamus rerum, possimus nostrum tenetur autem dolorem ullam expedita! Voluptatibus ipsa corporis aperiam nesciunt temporibus omnis at quidem laudantium officiis vel eligendi molestias nobis amet reiciendis ipsam, a fuga. Illum accusantium eum voluptatum, magnam esse id, provident vitae eos dignissimos odio, perferendis quasi autem assumenda unde placeat dicta dolorem! Beatae veritatis harum nemo ex quibusdam perspiciatis, accusantium saepe.</p>
+                <p style="white-space: pre-wrap">{{ platform.description }}</p>
             </div>
 
             <div class="tops">
-                <h3>Рейтинг и отзывы</h3>
+                <h3>Информация о площадке</h3>
 
                 <div class="rating">
+                    {% if comments %}
                     <img class="stars" src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
                     <p class="p1"> 4.3</p>
                     <p class="main-p">/5</p>
-
                     <img class="comment" src="{% static 'main\img\comment.svg' %}">
-                    <p class="amount-reviews">100 отзывов</p>
+                    <p class="amount-reviews">{{ comments|length }}</p>
+                    {% else %}
+                    <img class="stars" src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
+                    <p class="main-p">Отзывов пока нет</p>
+                    {% endif %}
                 </div>
                 
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
