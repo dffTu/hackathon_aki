@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import Platform, Comment, FreeSlot
+from .models import Platform, Comment
 from main.models import CommentAttachment
 from .forms import CommentFileAttachingForm, CommentLeavingForm
 from login_registrate_utils import process_post_forms_requests
-from organizers.models import Entry
 from .search_utils import search_platforms
-from utils import Month
-import datetime
+from calendar_utils import Month, build_calendar
 
 
 
@@ -74,6 +72,7 @@ def show_platform_description(request, data, platform_id):
     platform = platform.first()
 
     data['comments'] = Comment.objects.filter(platform=platform)
+    data['months'] = build_calendar(platform_id)
 
     return render(request, 'platforms/platform_description.html', data)
 
@@ -113,23 +112,3 @@ def leave_comment(request, data, platform_id):
     data['attachment_form'] = CommentFileAttachingForm()
 
     return render(request, 'platforms/leave_comment.html', data)
-
-
-@process_post_forms_requests
-def calendar(request, data, platform_id):
-    today = datetime.date.today()
-    free_slots = FreeSlot.objects.filter(platform_id=platform_id)
-    entries = Entry.objects.filter(platform_id=platform_id)
-
-    months = []
-    tmp = today
-    for i in range(3):
-        months.append(Month(tmp, today, free_slots, entries))
-        if tmp.month == 12:
-            tmp = datetime.date(tmp.year + 1, 1, 1)
-        else:
-            tmp = datetime.date(tmp.year, tmp.month + 1, 1)
-    data['months'] = months
-    print(months)
-
-    return render(request, 'platforms/calendar.html', data)
