@@ -1,6 +1,9 @@
 {% extends 'main/html_template.html' %}
 
 {% load static %}
+{% load jinja_filters %}
+{% load django_template_maths %} 
+
 
 {% block title %}Профиль арендодателя{% endblock %}
 
@@ -10,15 +13,49 @@
 
 {% block content %}
     <div class="main-str">
-        <h1 class="text-white">Профиль арендодателя</h1>
-        <span class="text-white">{{ email }}</span> <br>
-        <form action="{% url 'logout' %}">
-            <button class="btn btn-warning" type="submit">Выйти</button>
-        </form>
-        <form action="{% url 'create_platform' %}">
-            <button class="btn btn-info" type="submit">Создать площадку</button>
-        </form>
-      <h1>Вот здесь будут площадки</h1>
+        <div class="hat-of-cat-prof">
+            <h1 class="text-white">Мои площадки</h1>
+            <form class="btn-create" action="{% url 'create_platform' %}">
+                <button class="btn create-platform" type="submit">Создать площадку</button>
+            </form>
+        </div>
+
+
+        <div class="col-6 catalog-page">
+        <div class="container catalog-pages">
+            {% for row in platforms %}
+                {% if forloop.counter|sub:1|flr:5|add:1 == page_id %}
+                    <div class="platform">
+                        {% for platform in row %}
+                            <div class="col card">
+
+                                <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
+
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ platform.name }}</h5>
+                                    <h6>Тип: Дизайн</h6>
+                                    <div class="top">
+                                        <div class="img-platforms">
+                                            <img src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
+                                        </div>
+                                        <p>4,5</p>
+                                        <img class="comment" src="{% static 'main\img\comment.svg' %}">
+                                        <p>100</p>
+                                    </div>
+                                    <p class="card-text">{{ platform.description }}</p>
+
+                                </div>
+                                <div class="but-in-card">
+                                    <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
+      <h1>Вот здесь будут площадки</h1>
+</div>
     
 {% endblock %}
