@@ -59,12 +59,13 @@
                             
                             {% if user_fields %}
                                 {% if user_fields.client %}
-                                    <a href="{% url 'show_client_profile' %}" id="open-profile">
+                                    <!-- <a href="{% url 'show_client_profile' %}" id="open-profile"> -->
+
                                     <div class="three">
                                         <ul class="topmenu">
                                             <li><a href="#"><img src="{% static 'main\img\lk.svg' %}"><p>{{ user_fields.first_name }}</p></a>
                                                 <ul class="submenu">
-                                                    <li><a href="#">Личный кабинет</a></li>
+                                                    <li><a href="{% url 'show_client_profile' %}">Личный кабинет</a></li>
                                                     <li><a href="#">Мои записи</a></li>
                                                     <li><a href="/logout/">Выйти</a></li>
                                                 </ul>
@@ -79,7 +80,7 @@
                                             <ul class="topmenu">
                                                 <li><a href="#"><img src="{% static 'main\img\lk.svg' %}"><p>{{ user_fields.first_name }}</p></a>
                                                     <ul class="submenu">
-                                                        <li><a href="#">Личный кабинет</a></li>
+                                                        <li><a href="{% url 'show_client_profile' %}">Личный кабинет</a></li>
                                                         <li><a href="#">Мои площадки</a></li>
                                                         <li><a href="#">Расписание</a></li>
                                                         <li><a href="/logout/">Выйти</a></li>

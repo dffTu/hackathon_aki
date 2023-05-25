@@ -148,8 +148,6 @@ input[type="search"]{
 	flex-direction: column;
 	align-items: center;
 	margin-left: 50%;
-
-	margin-top: 10px;
 }
 
 .user img{
@@ -200,6 +198,12 @@ ul {
 	text-align: left;
 }
 
+.three {
+	display: flex;
+	justify-content: center;
+	height: 100%;
+}
+
 .three .submenu {
 	visibility: hidden;
 	opacity: 0;
@@ -228,12 +232,6 @@ ul {
 
 .submenu li{
 	margin-bottom: 8px;
-}
-
-.three {
-	display: flex;
-	justify-content: center;
-	height: 100%;
 }
 
 .submenu a{
