@@ -1,5 +1,4 @@
 import hashlib
-from platforms.search_utils import search_platforms
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.contrib import auth
@@ -8,6 +7,7 @@ from main.forms import LoginForm
 from clients.forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 from organizers.forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
 from utils import send_email_for_verify
+from utils import platform_categories
 from form_utils import get_basic_arguments_for_html_pages
 
 
@@ -130,6 +130,25 @@ def organizer_registration(request, data):
     return None
 
 
+def save_search_request(request, data):
+    if 'search' in request.GET and request.GET['search'] != '':
+        data['search'] = request.GET['search']
+
+
+def save_filters_request(request, data):
+    filters = []
+    for category in platform_categories:
+        for category_filter in platform_categories[category]['filters']:
+            if category_filter[0] in request.GET:
+                filters.append(category_filter[0])
+    data['filters'] = filters
+
+
+def save_get_request(request, data):
+    save_search_request(request, data)
+    save_filters_request(request, data)
+
+
 def process_post_forms_requests(f):
     def g(request, *args, **kwargs):
         data = get_basic_arguments_for_html_pages(request)
@@ -146,6 +165,8 @@ def process_post_forms_requests(f):
                 result = organizer_registration(request, data)
                 if not result is None:
                     return result
+        elif request.method == "GET":
+            save_get_request(request, data)
         return f(request, data, *args, **kwargs)
 
     return g

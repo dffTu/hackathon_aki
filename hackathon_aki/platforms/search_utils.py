@@ -2,7 +2,6 @@ import re
 
 
 def levenshtein_distance(a: str, b: str) -> int:
-    print(a, b, "BBOOOOBIIIK")
     n = len(a)
     m = len(b)
     if n == 0 or m == 0:

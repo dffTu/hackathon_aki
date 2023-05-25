@@ -1,6 +1,5 @@
 from django.core.mail import send_mail
 from hackathon_aki import config
-import datetime
 
 MAX_LENGTH = {
     'email': 50,
@@ -17,7 +16,6 @@ MAX_LENGTH = {
     'description': 10000,  # platform description
     'text': 10000  # comment length
 }
-
 
 CHARSET = {
     'password': [
@@ -59,93 +57,34 @@ CHARSET = {
     ],
 }
 
-WEEKDAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
-MONTHS = ['Январь',
-          'Февраль',
-          'Март',
-          'Апрель',
-          'Май',
-          'Июнь',
-          'Июль',
-          'Август',
-          'Сентябрь',
-          'Октябрь',
-          'Ноябрь',
-          'Декабрь']
-
-platform_categories = [
-    ('film-studio', 'Киностудия'),
-    ('gallery', 'Галерея'),
-    ('publishing-house', 'Издательство'),
-    ('book-shop', 'Книжный магазин'),
-    ('design-studio', 'Дизайн студия'),
-    ('creative-space', 'Креативное пространство'),
-    ('cinema-theater', 'Кинотеатр'),
-    ('sound-recording-studio', 'Звукозаписывающая студия'),
-    ('AR-VR-studio', 'AR-VR-студия'),
-]
-
-
-class Slot:
-    def __init__(self, date, time_comparison, is_free, is_booked):
-        self.day = date.day
-        self.weekday = date.weekday()
-        self.time_comparison = time_comparison
-        self.is_free = is_free
-        self.is_booked = is_booked
+platform_categories = {
+    'platform-type': {
+        'ru': 'Тип площадки',
+        'filters': [
+            ('film-studio', 'Киностудия'),
+            ('gallery', 'Галерея'),
+            ('publishing-house', 'Издательство'),
+            ('book-shop', 'Книжный магазин'),
+            ('design-studio', 'Дизайн студия'),
+            ('creative-space', 'Креативное пространство'),
+            ('cinema-theater', 'Кинотеатр'),
+            ('sound-recording-studio', 'Звукозаписывающая студия'),
+            ('AR-VR-studio', 'AR-VR-студия')
+        ]
+    },
+    'price': {
+        'ru': 'Цена',
+        'filters': [
+            ('big-price', 'Большая цена'),
+            ('medium-price', 'Средняя цена'),
+            ('small-price', 'Малая цена')
+        ]
+    },
+}
 
 
-class Month:
-    def __init__(self, tmp, today, free_slots, entries):
-        self.tmp = tmp
-        self.month = MONTHS[tmp.month - 1]
-        self.weeks = []
-        for week_delta in range(-5, 6):
-            self.add_week(self.tmp + datetime.timedelta(weeks=week_delta), today, free_slots, entries)
-
-    @staticmethod
-    def get_next_sunday(date):
-        weekday = date.weekday()
-        return date + datetime.timedelta(days=6 - weekday)
-
-    @staticmethod
-    def get_prev_monday(date):
-        weekday = date.weekday()
-        return date + datetime.timedelta(days=-weekday)
-
-    def add_week(self, date, today, free_slots, entries):
-        if self.get_next_sunday(date).month < self.tmp.month or self.get_prev_monday(date).month > self.tmp.month:
-            return
-
-        week_slots = []
-
-        for weekday in range(7):
-            delta = weekday - date.weekday()
-            tmp_date = date + datetime.timedelta(delta)
-
-            if tmp_date < today:
-                time_comparison = 'less'
-            elif tmp_date == today:
-                time_comparison = 'equal'
-            else:
-                time_comparison = 'more'
-
-            if free_slots.filter(date=tmp_date).exists():
-                is_free = True
-            else:
-                is_free = False
-
-            if entries.filter(date=tmp_date).exists():
-                is_booked = True
-            else:
-                is_booked = False
-
-            week_slots.append(Slot(tmp_date, time_comparison, is_free, is_booked))
-
-        self.weeks.append(week_slots)
-
-
-def validate_length(field_names: list[str], required_fields: list[str], form_data, error_log: dict[str, list[str]]) -> bool:
+def validate_length(field_names: list[str], required_fields: list[str], form_data,
+                    error_log: dict[str, list[str]]) -> bool:
     is_valid = True
     for field_name in field_names:
         if field_name not in form_data:

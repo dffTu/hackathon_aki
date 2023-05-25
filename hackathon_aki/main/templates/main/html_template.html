@@ -1,5 +1,6 @@
 {% load static %}
 {% load django_template_maths %}
+{% load jinja_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,28 +26,30 @@
     <div class="header">
         <div class="container-fluid">
             <div class="container text-center" id="hat">
-
                 <div class="row">
                     <div class="col" id="logo">
                         <a class="navbar-brand" href="{% url 'home' %}">
                         <img src="{% static 'main\img\aki.svg' %}" alt = "aki">
                         </a>
                     </div>
-                    
-                
                     <div class="col-6">
                         <form class="search" method="get" action="{% url 'show_page' page_id=1 %}">
                             <div class="bar">
-                                {% if filter_request %}
-                                    <input type="hidden" name="platform_categories" value="{{ filter_request }}"></input>
+                                {% if filters %}
+                                    {% for platform_filter_en in filters %}
+                                        <input type="hidden" name="{{ platform_filter_en}}" value="on">
+                                    {% endfor %}
                                 {% endif %}
-                                <input name="search" class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+                                {% if search %}
+                                    <input name="search" class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" value="{{search}}">
+                                {% else %}
+                                    <input name="search" class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+                                {% endif %}
                                 <!-- <input type="search" name="Поиск" placeholder="Поиск"> -->
                             </div>
                             <button class="button" type="submit">Поиск</button>
                         </form>
                     </div>
-                    
                     <div class="col" id="three">
                         <div class="icons">
                             <a href="{% url 'show_page' page_id=1 %}" id="open-catalog">
@@ -55,18 +58,35 @@
                                     <p>Каталог</p>
                                 </div>
                             </a>
-
                             {% if user_fields %}
                                 {% if user_fields.client %}
-                                    <a href="{% url 'show_client_profile' %}" id="open-profile">
+                                    <div class="three">
+                                        <ul class="topmenu">
+                                            <li><a href="#"><img src="{% static 'main\img\lk.svg' %}"><p>{{ user_fields.first_name }}</p></a>
+                                                <ul class="submenu">
+                                                    <li><a href="{% url 'show_client_profile' %}">Личный кабинет</a></li>
+                                                    <li><a href="{% url 'show_client_entries' %}">Мои записи</a></li>
+                                                    <li><a href="/logout/">Выйти</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 {% else %}
-                                    <a href="{% url 'show_organizer_profile' %}" id="open-profile">
-                                {% endif %}
-                                        <div class="user">
-                                            <img src="{% static 'main\img\lk.svg' %}">
-                                            <p>{{ user_fields.first_name }}</p>
+                                    <div>
+                                        <div class="three">
+                                            <ul class="topmenu">
+                                                <li><a href="#"><img src="{% static 'main\img\lk.svg' %}"><p>{{ user_fields.first_name }}</p></a>
+                                                    <ul class="submenu">
+                                                        <li><a href="{% url 'show_organizer_profile' %}">Личный кабинет</a></li>
+                                                        <li><a href="{% url 'show_organizer_platforms' %}">Мои площадки</a></li>
+                                                        <li><a href="{% url 'show_organizer_schedule' %}">Расписание</a></li>
+                                                        <li><a href="/logout/">Выйти</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </a>
+                                    </div>
+                                {% endif %}
                             {% else %}
                                 <a href="#" id="open-user">
                                     <div class="user">
@@ -75,12 +95,10 @@
                                     </div>
                                 </a>
                             {% endif %}
+                        </div>
                     </div>
-                    </div>
-                    
                 </div>
             </div>
-            
         </div>
     </div>
 
@@ -94,13 +112,9 @@
                     <button class="btn register" id="register">Зарегистрироваться</button>
                 </div>
             </div>
-
-
             <div class="log-in-content" id="log-in-content">
-
                 <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
                         <input name="__login_form" type="hidden">
-
                         <div class="form-group">
                             <label class="text-muted">Email</label>
                             {{ login_form.email }}
@@ -109,24 +123,17 @@
                             <label class="text-muted">Пароль</label>
                             {{ login_form.password }}
                         </div>
-
                         {% if error %}
                         <div class="form_alert">
                             {{ error }}
                         </div>
                         {% endif %}
-
                         <div class="form-group text-center">
                             {% csrf_token %}
-
                             <button type="submit" class="btn ">Войти</button>
                         </div>
-
-
                     </form>
-
             </div>
-
             <div class="register-content" id="register-content">
 
                 <div class="buttons_ar" id="buttons_ar">
@@ -357,10 +364,9 @@
                 </div>
 
             </div>
-
         </div>
-        
     </div>
+
     <script src="{% static 'main\js\script.js' %}"></script>
 
     {% block content %}

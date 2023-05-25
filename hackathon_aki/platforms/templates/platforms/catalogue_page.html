@@ -1,5 +1,6 @@
 {% extends 'main/html_template.html' %}
 {% load static %}
+{% load jinja_filters %}
 {% load django_template_maths %}
 
 {% block title %}Страница каталога{% endblock %}
@@ -25,7 +26,27 @@
         </div>
 
         <form method="get" action="{% url 'show_page' page_id=1 %}">
-            <textarea name="platform_categories" placeholder="Введите теги"></textarea>
+            {% for platform_category_name in platform_categories %}
+                <fieldset>
+                    {% with platform_categories|key:platform_category_name as platform_category %}
+                        <legend>{{ platform_category|key:"ru" }}</legend>
+                        {% with platform_category|key:"filters" as platform_filters%}
+                            {% for platform_filter_en, platform_filter_ru in platform_filters %}
+                                <div>
+                                    {% if platform_filter_en in filters %}
+                                        <input type="checkbox" id="{{platform_filter_en}}" name="{{platform_filter_en}}" checked>
+                                    {% else %}
+                                        <input type="checkbox" id="{{platform_filter_en}}" name="{{platform_filter_en}}">
+                                    {% endif %}
+                                    <label for="{{platform_filter_en}}">
+                                        {{ platform_filter_ru }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        {% endwith %}
+                    {% endwith %}
+                </fieldset>
+            {% endfor %}
             <button type="submit">Применить фильтр</button>
         </form>
     </div>
@@ -64,36 +85,70 @@
             {% endfor %}
         </div>
         <table>
-            <tbody>
-                {% for page_number in all_pages %}
-                    <form method="get" action="{% url 'show_page' page_id=page_number %}">
-                        <div class="number-of-pages">
-                            <button>Предыдущая</button>
+            {% if all_pages|length == 0 %}
+                <h3>Страниц не найдено.</h3>
+            {% else %}
+                <tbody>
+                    <div class="number-of-pages">
+                        {% if page_id != 1 %}
+                            <form method="get" action="{% url 'show_page' page_id=page_id|sub:1 %}">
+                                <button type="submit">Предыдущая</button>
+                                {% if filters %}
+                                    {% for platform_filter_en in filters %}
+                                        <input type="hidden" name="{{ platform_filter_en}}" value="on">
+                                    {% endfor %}
+                                {% endif %}
+                                {% if search %}
+                                    <input type="hidden" name="search" value="{{ search }}">
+                                {% endif %}
+                            </form>
+                        {% endif %}
+                        {% for page_number in all_pages %}
+                            {% if page_number >= page_id|sub:2 and page_number <= page_id|add:2 %}
+                                <form method="get" id="open_page{{page_number}}" action="{% url 'show_page' page_id=page_number %}">
+                                    {% if filters %}
+                                        {% for platform_filter_en in filters %}
+                                            <input type="hidden" name="{{ platform_filter_en}}" value="on">
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if search %}
+                                        <input type="hidden" name="search" value="{{ search }}">
+                                    {% endif %}
 
-                            {% if filter_request %}
-                                <input type="hidden" name="platform_categories" value="{{ filter_request }}">
+                                    <button class="num-page" type="submit">
+                                        <div class="pages" style="display: flex; ">
+                                            {% if page_number == all_pages|length or page_number == page_id|add:2 %}
+                                                <a href="#" onclick="submitForm{{page_number}}()" style="margin-right: 0;"> {{ page_number }} </a>
+                                            {% else %}
+                                                <a href="#" onclick="submitForm{{page_number}}()"> {{ page_number }} </a>
+                                            {% endif %}
+                                        </div>
+                                    </button>
+                                </form>
+                                <script>
+                                    function submitForm{{page_number}}() {
+                                        let form = document.getElementById("open_page{{page_number}}");
+                                        form.submit();
+                                    }
+                                </script>
                             {% endif %}
-                            {% if search %}
-                                <input type="hidden" name="search" value="{{ search }}">
-                            {% endif %}
-
-                            <button class="num-page" type="submit">
-                                <!-- {{ page_number }}  -->
-                                <div class="pages" style="display: flex; ">
-                                    <a href="#"> 1 </a>
-                                    <a href="#"> 2 </a>
-                                    <a href="#" style="margin-right: 0;"> 3 </a>
-                                </div>
-                                
-                            </button>
-
-                            <button>Следующая</button>
-                            
-                        </div>
-                        
-                    </form>
-                {% endfor %}
-            </tbody>
+                        {% endfor %}
+                        {% if page_id != all_pages|length %}
+                            <form method="get" action="{% url 'show_page' page_id=page_id|add:1 %}">
+                                <button type="submit">Следующая</button>
+                                {% if filters %}
+                                    {% for platform_filter_en in filters %}
+                                        <input type="hidden" name="{{ platform_filter_en}}" value="on">
+                                    {% endfor %}
+                                {% endif %}
+                                {% if search %}
+                                    <input type="hidden" name="search" value="{{ search }}">
+                                {% endif %}
+                            </form>
+                        {% endif %}
+                    </div>
+                </tbody>
+            {% endif %}
         </table>
     </div>
 </div>
