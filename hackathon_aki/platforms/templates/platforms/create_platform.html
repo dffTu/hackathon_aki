@@ -15,37 +15,36 @@
 {% block content %}
     <div class="ctr-form">
         <div class="form">
-            <form method="POST" enctype="multipart/form-data" action="">
+            <form method="POST" enctype="multipart/form-data" action="" id="platform_creating_form">
                 {% if errors.incorrect_form %}
                     <p class="text-white">Некорректные данные формы</p>
                 {% endif %}
 
-                {{ creating_form.name }} <span class="text-white">{{ errors.name }}</span> <br>
-                {{ creating_form.categories }} <span class="text-white">{{ errors.categories }}</span> <br>
-                {{ creating_form.short_description }} <span class="text-white">{{ errors.short_description }}</span> <br>
+                {{ creating_form.name }}
+                <span class="text-white">{{ errors.name }}</span> <br>
 
-                {{ creating_form.description }} <span class="text-white">{{ errors.description }}</span> <br>
+                {{ creating_form.categories }}
+                <span class="text-white">{{ errors.categories }}</span> <br>
+
+                {{ creating_form.short_description }}
+                <span class="text-white">{{ errors.short_description }}</span> <br>
+
+                {{ creating_form.description }}
+                <span class="text-white">{{ errors.description }}</span> <br>
 
                 {{ attachment_form.file_field }} <br>
                 {{ creating_form.agreement }} <br>
 
-                <div id="header">
-                    <input type="text" id="suggest" placeholder="Введите адрес" style="width: 600px;">
-                    <button id="button" type="button">Проверить</button>
-                    <span class="text-white">{{ errors.categories }}</span> <br>
-                </div>
-
-                <p id="notice" class="text-white" style="display: none">Адрес не найден</p>
+                {{ creating_form.address }}
+                <span class="text-white">{{ errors.categories }}</span> <br>
+                <button id="adders_check_button" type="button">Проверить</button>
 
                 <div id="map" style="width: 600px; height: 400px"></div>
 
-                <div class="bg-white" id="footer">
-                    <div id="messageHeader"></div>
-                    <div id="message"></div>
-                </div>
+                <p id="adders_check_result" class="text-white">Адрес не найден</p>
 
                 {% csrf_token %}
-                <button type="submit">Создать</button>
+                <button type="button" id="platform_creating_form_submit_button">Создать</button>
             </form>
         </div>
     </div>
