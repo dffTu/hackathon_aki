@@ -58,17 +58,19 @@
 
 .p-type {
 	font-size: 20px;
+	white-space: pre-wrap;
 }
 
 .cols-info{
 	display: flex;
 	flex-direction: row;
+	width: 90%;
 	margin: 30px;
 }
 
 .info{
 	width: 60%;
-	margin: 0% 5%;
+	margin: 0% 2%;
 }
 
 .tops {
