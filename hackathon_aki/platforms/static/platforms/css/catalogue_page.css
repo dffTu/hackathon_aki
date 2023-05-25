@@ -48,6 +48,7 @@ button{
 }
 
 .catalog-page {
+    display: block;
     flex-direction: column;
     padding: 0 auto;
     padding-bottom: 2%;
@@ -71,18 +72,19 @@ button{
 
 .platform{
     display: grid;
-    grid-template-columns: repeat(auto-fill, 200px);
+    grid-template-columns: repeat(auto-fill, 25%);
     width: 100%;
-    max-width: 1000px; /* Ширина grid-контейнера */
+    max-width: 100%; /* Ширина grid-контейнера */
     justify-content: center;
     justify-items: center; /* Размещаем карточку по центру */
-    column-gap: 8rem; /* Отступ между колонками */
-    row-gap: 80px; /* Отступ между рядами */
+    column-gap: 5rem; /* Отступ между колонками */
+    grid-column-gap: 8%;
+    grid-row-gap: 2%;
     margin: 0 auto;
 }
 
 .card {
-    width: 17rem;
+    width: 100%;
     height: 27rem;
     margin-top: 20%;
     border-radius: 10px;
@@ -119,6 +121,11 @@ button{
 
 .card-img-top, .card-body {
     height: 55%;
+}
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
 }
 
 .card-body {

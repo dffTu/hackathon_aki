@@ -1,0 +1,24 @@
+{% extends 'main/html_template.html' %}
+
+{% load static %}
+
+{% block title %}Профиль арендодателя{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'organizers\css\profile_platforms.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="main-str">
+        <h1 class="text-white">Профиль арендодателя</h1>
+        <span class="text-white">{{ email }}</span> <br>
+        <form action="{% url 'logout' %}">
+            <button class="btn btn-warning" type="submit">Выйти</button>
+        </form>
+        <form action="{% url 'create_platform' %}">
+            <button class="btn btn-info" type="submit">Создать площадку</button>
+        </form>
+      <h1>Вот здесь будут площадки</h1>
+    </div>
+    
+{% endblock %}

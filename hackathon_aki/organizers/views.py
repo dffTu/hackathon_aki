@@ -96,13 +96,27 @@ def show_organizer_profile(request, data):
 
 
 @process_post_forms_requests
+def show_organizer_schedule(request, data):
+    if not request.user.is_authenticated:
+        return redirect('home')
+
+    if not hasattr(request.user, 'organizer'):
+        return redirect('home')
+
+    data['email'] = request.user.username
+
+    return render(request, 'organizers/profile_schedule.html', data)
+
+
+@process_post_forms_requests
 def show_organizer_platforms(request, data):
     if not request.user.is_authenticated:
         return redirect('home')
 
     if not hasattr(request.user, 'organizer'):
-        return redirect('show_client_profile')
+        return redirect('home')
 
     data['email'] = request.user.username
 
-    return render(request, 'organizers/profile.html', data)
+    return render(request, 'organizers/profile_platforms.html', data)
+

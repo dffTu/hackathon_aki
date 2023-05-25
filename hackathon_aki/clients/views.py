@@ -28,3 +28,16 @@ def show_client_profile(request, data):
     data['email'] = request.user.username
 
     return render(request, 'clients/profile.html', data)
+
+
+@process_post_forms_requests
+def show_client_entries(request, data):
+    if not request.user.is_authenticated:
+        return redirect('home')
+
+    if not hasattr(request.user, 'client'):
+        return redirect('home')
+
+    data['email'] = request.user.username
+
+    return render(request, 'clients/profile_entries.html', data)

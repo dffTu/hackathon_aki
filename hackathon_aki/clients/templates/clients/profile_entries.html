@@ -3,7 +3,7 @@
 {% block title %}Профиль{% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'clients\css\profile.css' %}">
+    <link rel="stylesheet" href="{% static 'clients\css\profile_entries.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,4 +13,5 @@
         {% csrf_token %}
         <button class="btn btn-warning" type="submit">Выйти</button>
     </form>
+    <h1>Здесь будут мои записи</h1>
 {% endblock %}
