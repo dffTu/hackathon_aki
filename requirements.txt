@@ -6,3 +6,4 @@ typing_extensions==4.5.0
 mysqlclient==2.1.1
 django_extensions==3.2.1
 django-template-maths==0.2.0
+MarkupSafe==2.1.2

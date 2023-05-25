@@ -5,6 +5,7 @@ from .forms import CommentFileAttachingForm, CommentLeavingForm
 from login_registrate_utils import process_post_forms_requests
 from .search_utils import search_platforms
 from calendar_utils import Month, build_calendar
+from utils import platform_categories
 
 
 @process_post_forms_requests
@@ -28,23 +29,37 @@ def show_page(request, data, page_id):            # Shows catalogue page
         data['search'] = request.GET['search']
 
     number_of_platforms = 0
-    if 'platform_categories' not in request.GET or not request.GET['platform_categories']:
-        data['page_id'] = page_id
-        data['platforms'] = [[]]
+    data['platforms'] = [[]]
+
+    filters = []
+    selected_category = {}
+    for category_type in platform_categories:
+        selected_category[category_type] = False
+        for category_filter in platform_categories[category_type]['filters']:
+            if category_filter[0] in request.GET:
+                filters.append(category_filter[0])
+                selected_category[category_type] = True
+
+    if not filters:
         number_of_platforms = len(relevant_platforms_list)
         for platform in relevant_platforms_list:
             if len(data['platforms'][-1]) == 3:
                 data['platforms'].append([])
             data['platforms'][-1].append(platform)
     else:
-        categories = request.GET['platform_categories'].split(';')
-        data['platforms'] = [[]]
         for platform in relevant_platforms_list:
-            current_platform_categories = platform.categories.split(';')
-            should_add = False
-            for current_platform_category in current_platform_categories:
-                if current_platform_category in categories:
-                    should_add = True
+            should_add = True
+            for category_type in platform_categories:
+                print(category_type, selected_category[category_type])
+                if not selected_category[category_type]:
+                    continue
+                found_tag = False
+                for category_filter in platform_categories[category_type]['filters']:
+                    if category_filter[0] in platform.categories.split(';') and category_filter[0] in filters:
+                        found_tag = True
+                        break
+                if not found_tag:
+                    should_add = False
                     break
             if should_add:
                 if len(data['platforms'][-1]) == 3:
@@ -52,8 +67,7 @@ def show_page(request, data, page_id):            # Shows catalogue page
                 data['platforms'][-1].append(platform)
                 number_of_platforms += 1
 
-        data['page_id'] = page_id
-
+    data['page_id'] = page_id
     data['all_pages'] = list(range(1, (number_of_platforms + 14) // 15 + 1))
 
     return render(request, 'platforms/catalogue_page.html', data)
