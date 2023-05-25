@@ -1,19 +1,46 @@
 {% extends 'main/html_template.html' %}
 
+{% load static %}
+
 {% block title %}Создание площадки{% endblock %}
 
 {% block content %}
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=0c302373-1600-40fe-8920-973e5e09b5e0" type="text/javascript"></script>
+    <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+    <script src="{% static 'platforms\js\new_platform_address_validation.js' %}"></script>
+
     <form method="POST" enctype="multipart/form-data" action="">
         {% if errors.incorrect_form %}
             <p class="text-white">Некорректные данные формы</p>
         {% endif %}
 
         {{ creating_form.name }} <span class="text-white">{{ errors.name }}</span> <br>
+
         {{ creating_form.short_description }} <span class="text-white">{{ errors.short_description }}</span> <br>
+
         {{ creating_form.description }} <span class="text-white">{{ errors.description }}</span> <br>
+
         {{ creating_form.categories }} <span class="text-white">{{ errors.categories }}</span> <br>
+
         {{ attachment_form.file_field }} <br>
+
         {{ creating_form.agreement }} <br>
+
+        <div id="header">
+            <input type="text" id="suggest" placeholder="Введите адрес" style="width: 600px;">
+            <button id="button">Проверить</button>
+            <span class="text-white">{{ errors.categories }}</span> <br>
+        </div>
+
+        <p id="notice" class="text-white" style="display: none">Адрес не найден</p>
+
+        <div id="map" style="width: 600px; height: 400px"></div>
+
+        <div class="bg-white" id="footer">
+            <div id="messageHeader"></div>
+            <div id="message"></div>
+        </div>
+
         {% csrf_token %}
         <button type="submit">Создать</button>
     </form>
