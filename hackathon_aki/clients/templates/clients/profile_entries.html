@@ -1,0 +1,13 @@
+{% extends 'main/html_template.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+    <h1 class="text-white">Профиль арендатора</h1>
+    <span class="text-white">{{ email }}</span> <br>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="btn btn-warning" type="submit">Выйти</button>
+    </form>
+    <h1>Здесь будут мои записи</h1>
+{% endblock %}
