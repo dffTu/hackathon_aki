@@ -28,9 +28,15 @@ class PlatformFileAttachingForm(forms.Form):
 
 
 class PlatformCreatingForm(forms.ModelForm):
-    required_fields = ['name', 'categories', 'short_description']
+    required_fields = ['address', 'name', 'categories', 'short_description']
     length_validation_fields = ['name', 'short_description', 'description']
     charset_validation_fields = ['name', 'short_description', 'description']
+
+    address = forms.CharField(max_length=250, required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'type': 'password',
+        'placeholder': '123456',
+    }))
 
     class Meta:
         model = Platform

@@ -95,11 +95,11 @@
                 </div>
             </div>
 
-
             <div class="log-in-content" id="log-in-content">
 
                 <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
                         <input name="__login_form" type="hidden">
+
                         <div class="form-group">
                             <label class="text-muted">Email</label>
                             {{ login_form.email }}
@@ -137,6 +137,13 @@
                     <div class="forms_cl">
                         <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
                             <input name="__client_register" type="hidden">
+
+                            {% if client_errors.incorrect_form %}
+                                <div class="form_alert">
+                                    <p>Некорректные данные формы</p>
+                                </div>
+                            {% endif %}
+
                             <div class="form-group">
                                 <label class="text-muted">Email</label>
                                 {{ user_client_registration_form.email }}
@@ -221,6 +228,12 @@
                     
                     <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
                         <input name="__organizer_register" type="hidden">
+
+                        {% if organizer_errors.incorrect_form %}
+                            <div class="form_alert">
+                                <p>Некорректные данные формы</p>
+                            </div>
+                        {% endif %}
 
                         <div class="row">
 
@@ -345,8 +358,8 @@
             </div>
 
         </div>
-        
     </div>
+
     <script src="{% static 'main\js\script.js' %}"></script>
 
     {% block content %}

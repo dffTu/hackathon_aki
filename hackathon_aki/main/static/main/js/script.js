@@ -1,21 +1,21 @@
-var modal = document.getElementById("authorize-window");
+let modal = document.getElementById("authorize-window");
 
-var authorize_window = document.getElementById("authorize-content");
-var register_window = document.getElementById("register-content");
-var log_in_window = document.getElementById("log-in-content");
+let authorize_window = document.getElementById("authorize-content");
+let register_window = document.getElementById("register-content");
+let log_in_window = document.getElementById("log-in-content");
 
-var open_user_button = document.getElementById("open-user");
+let open_user_button = document.getElementById("open-user");
 
-var register_button = document.getElementById("register");
-var log_in_button = document.getElementById("log-in");
+let register_button = document.getElementById("register");
+let log_in_button = document.getElementById("log-in");
 
-var organizer_client_buttons = document.getElementById("buttons_ar");
+let organizer_client_buttons = document.getElementById("buttons_ar");
 
-var register_client_button = document.getElementById("register-client");
-var register_organizer_button = document.getElementById("register-organizer");
+let register_client_button = document.getElementById("register-client");
+let register_organizer_button = document.getElementById("register-organizer");
 
-var register_client_window = document.getElementById("register-window-client");
-var register_organizer_window = document.getElementById("register-window-organizer");
+let register_client_window = document.getElementById("register-window-client");
+let register_organizer_window = document.getElementById("register-window-organizer");
 
 function setDefaultValues() {
     localStorage.setItem("modal_style_display", "none");
@@ -138,7 +138,7 @@ log_in_button.onclick = function () {
 }
 
 window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target === modal) {
         setDefaultValues();
     }
 }

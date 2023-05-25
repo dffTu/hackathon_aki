@@ -54,5 +54,73 @@
     </div>
 </div>
 
+{% for month in months %}
+    {% if forloop.counter == 1 %}
+    <div id="month_table_{{ forloop.counter }}" style="display: block">
+    {% else %}
+    <div id="month_table_{{ forloop.counter }}" style="display: none">
+    {% endif %}
+    <h1 class="text-white">{{ month.month }}</h1>
+   <table class="table table-black table-bordered">
+      <thead>
+      <tr>
+        <th scope="col">M</th>
+        <th scope="col">T</th>
+        <th scope="col">W</th>
+        <th scope="col">T</th>
+        <th scope="col">F</th>
+        <th scope="col">S</th>
+        <th scope="col">S</th>
+      </tr>
+      </thead>
+
+     <tbody>
+         {% for week in month.weeks %}
+            <tr>
+            {% for event in week %}
+                {% if event.time_comparison == "less" %}
+                    <td class="text-wrap bg-secondary">
+                        <button onclick="timetable_button_click(this)"
+                                event_day = {{ event.day }}
+                                event_month = {{ event.month }}
+                                event_status = "old_event"
+                                event_price = {{ event.price }}
+                                style="background: #E74362">{{ event.day }} {% if event.time_comparison == "equal" %} TODAY {% endif %}</button>
+                    </td>
+                {% elif event.is_booked %}
+                    <td class="text-wrap bg-danger">
+                        <button onclick="timetable_button_click(this)"
+                                event_day = {{ event.day }}
+                                event_month = {{ event.month }}
+                                event_status = "booked_event";
+                                event_price = {{ event.price }}
+                                style="background: #E74362">{{ event.day }} {% if event.time_comparison == "equal" %} TODAY {% endif %}</button>
+                    </td>
+                {% else %}
+                    <td class="text-wrap bg-warning">
+                        <button onclick="timetable_button_click(this)"
+                                event_day = {{ event.day }}
+                                event_month = {{ event.month }}
+                                event_status = "free_event"
+                                event_price = {{ event.price }}
+                                style="background: #E74362">{{ event.day }} {% if event.time_comparison == "equal" %} TODAY {% endif %}</button>
+                    </td>
+                {% endif %}
+            {% endfor %}
+            </tr>
+         {% endfor %}
+     </tbody>
+    </table>
+    </div>
+    {% endfor %}
+
+    <button id="button_prev_month" type="button" class="btn btn-danger">Посмотреть предыдущий месяц</button>
+    <button id="button_next_month" type="button" class="btn btn-danger">Посмотреть следующий месяц</button>
+
+<div id="calendar-window" class="authorize-window">
+
+</div>
+
+<script src="{% static 'platforms\js\platform_description.js' %}"></script>
     
 {% endblock %}
