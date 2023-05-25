@@ -2,6 +2,10 @@
 
 {% block title %}Профиль{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'clients\css\profile.css' %}">
+{% endblock %}
+
 {% block content %}
     <h1 class="text-white">Профиль арендатора</h1>
     <span class="text-white">{{ email }}</span> <br>
