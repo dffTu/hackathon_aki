@@ -1,0 +1,27 @@
+
+.ctr-form {
+	display: flex;
+	justify-content: center;
+	height: 50rem;
+	width: 80%;
+	margin: auto;
+	margin-top: 3%;
+	border-radius: 7px;
+	backdrop-filter: blur(50px);
+	background: rgba(171, 174, 255, 0.05);
+}
+
+.form {
+	display: block;
+	justify-content: center;
+	align-items: center;
+	margin: 5%;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #eeecec;
+    margin: 10% auto;
+    padding: 20px;
+    border: 3px solid #888;
+    border-radius: 7px;
+    width: 60%;
+}

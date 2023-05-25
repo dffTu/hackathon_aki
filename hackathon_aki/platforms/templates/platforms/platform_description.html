@@ -1,14 +1,58 @@
 {% extends 'main/html_template.html' %}
-
+{% load static %}
 {% block title %}Описание площадки{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'platforms\css\platform_description.css' %}">
+{% endblock %}
+
 {% block content %}
-    <p class="text-white">Описание площадки номер {{ platform_id }}</p>
-    {% for comment in comments %}
-        <div>
-            <span class="text-white">{{ comment.text }}</span> <br>
-            <span class="text-white">{{ comment.rating }}</span> <br>
-            <img src="{{ comment.commentattachment_set.first.file.url }}" class="card-img-top">
+<div class="main-str">
+    <div class="str">
+        <div class="mypage">
+            <div class="photo">
+                <!-- место для фоток -->
+            </div>
+
+            <div class="name-company">
+                <p class="p-name">Art Life</p>
+                <p class="p-type">Киностудия</p>
+            </div>
         </div>
-    {% endfor %}
+        
+        <div class="cols-info">
+
+            <div class="info">
+                <h3>Описание</h3>
+                <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque quaerat praesentium nobis velit hic iusto excepturi asperiores incidunt, sit est quasi illo! Consectetur, animi temporibus iste tempore at distinctio dolorem, dolor alias voluptatibus magni ullam eos. Aperiam sed eaque voluptate praesentium earum. Accusamus rerum, possimus nostrum tenetur autem dolorem ullam expedita! Voluptatibus ipsa corporis aperiam nesciunt temporibus omnis at quidem laudantium officiis vel eligendi molestias nobis amet reiciendis ipsam, a fuga. Illum accusantium eum voluptatum, magnam esse id, provident vitae eos dignissimos odio, perferendis quasi autem assumenda unde placeat dicta dolorem! Beatae veritatis harum nemo ex quibusdam perspiciatis, accusantium saepe.</p>
+            </div>
+
+            <div class="tops">
+                <h3>Рейтинг и отзывы</h3>
+
+                <div class="rating">
+                    <img class="stars" src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
+                    <p class="p1"> 4.3</p>
+                    <p class="main-p">/5</p>
+
+                    <img class="comment" src="{% static 'main\img\comment.svg' %}">
+                    <p class="amount-reviews">100 отзывов</p>
+                </div>
+                
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+            </div>
+        </div>
+
+        {% for comment in comments %}
+            <div>
+                <span class="text-white">{{ comment.text }}</span> <br>
+                <span class="text-white">{{ comment.rating }}</span> <br>
+                <img src="{{ comment.commentattachment_set.first.file.url }}" class="card-img-top">
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+    
 {% endblock %}

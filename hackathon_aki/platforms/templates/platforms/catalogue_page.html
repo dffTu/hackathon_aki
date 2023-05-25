@@ -1,5 +1,6 @@
 {% extends 'main/html_template.html' %}
 {% load static %}
+{% load django_template_maths %}
 
 {% block title %}Страница каталога{% endblock %}
 
@@ -29,37 +30,74 @@
         </form>
     </div>
 
-    <div class="col-6" id="catalog-page">
-        <div class="container" id="catalog-pages">
-            {% for platform in platforms %}
-                <div class="col" id="cards">
-                    <div class="card" id="card">
+    <div class="col-6 catalog-page">
+        <div class="container catalog-pages">
+            {% for row in platforms %}
+                {% if forloop.counter|sub:1|flr:5|add:1 == page_id %}
+                    <div class="platform">
+                        {% for platform in row %}
+                            <div class="col card">
 
-                        <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" class="card-img-top" alt="{{ platform.name }}">
+                                <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
 
-                        <div class="card-body">
-                            <h5 class="card-title">{{ platform.name }}</h5>
-                            <h6>Тип: Дизайн</h6>
-                            <div class="top">
-                                <img src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ platform.name }}</h5>
+                                    <h6>Тип: Дизайн</h6>
+                                    <div class="top">
+                                        <div class="img-platforms">
+                                            <img src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
+                                        </div>
+                                        <p>4,5</p>
+                                        <img class="comment" src="{% static 'main\img\comment.svg' %}">
+                                        <p>100</p>
+                                    </div>
+                                    <p class="card-text">{{ platform.description }}</p>
 
-                                <p>4,5</p>
-                                <img class="comment" src="{% static 'main\img\comment.svg' %}">
-                                <p>100</p>
+                                </div>
+                                <div class="but-in-card">
+                                    <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
+                                </div>
                             </div>
-                            <p class="card-text">{{ platform.description }}</p>
-
-                        </div>
-                        <div class="but-in-card">
-                            <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
-                        </div>
+                        {% endfor %}
                     </div>
-                </div>
+                {% endif %}
             {% endfor %}
         </div>
-        {% endblock %}
+        <table>
+            <tbody>
+                {% for page_number in all_pages %}
+                    <form method="get" action="{% url 'show_page' page_id=page_number %}">
+                        <div class="number-of-pages">
+                            <button>Предыдущая</button>
+
+                            {% if filter_request %}
+                                <input type="hidden" name="platform_categories" value="{{ filter_request }}">
+                            {% endif %}
+                            {% if search %}
+                                <input type="hidden" name="search" value="{{ search }}">
+                            {% endif %}
+
+                            <button class="num-page" type="submit">
+                                <!-- {{ page_number }}  -->
+                                <div class="pages" style="display: flex; ">
+                                    <a href="#"> 1 </a>
+                                    <a href="#"> 2 </a>
+                                    <a href="#" style="margin-right: 0;"> 3 </a>
+                                </div>
+                                
+                            </button>
+
+                            <button>Следующая</button>
+                            
+                        </div>
+                        
+                    </form>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
+{% endblock %}
 
 
 
