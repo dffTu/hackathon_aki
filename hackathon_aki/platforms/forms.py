@@ -28,14 +28,14 @@ class PlatformFileAttachingForm(forms.Form):
 
 
 class PlatformCreatingForm(forms.ModelForm):
-    required_fields = ['address', 'name', 'categories', 'short_description']
+    required_fields = ['name', 'categories', 'short_description']
     length_validation_fields = ['name', 'short_description', 'description']
     charset_validation_fields = ['name', 'short_description', 'description']
 
     address = forms.CharField(max_length=250, required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
-        'type': 'password',
-        'placeholder': '123456',
+        'placeholder': 'Введите адрес',
+        'id': "address_suggest_form",
     }))
 
     class Meta:
@@ -51,13 +51,13 @@ class PlatformCreatingForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Краткое описание',
             }),
-            'categories': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Категория;категория',
-            }),
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Описание',
+            }),
+            'categories': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Категория;категория',
             }),
             'agreement': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
