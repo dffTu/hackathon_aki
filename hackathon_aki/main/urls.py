@@ -6,5 +6,4 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('logout/', views.logout, name='logout'),
     path('email_verification/<str:verification_code>/', views.email_verification, name='email_verification'),
-    path('show_map/', views.show_map),
 ]

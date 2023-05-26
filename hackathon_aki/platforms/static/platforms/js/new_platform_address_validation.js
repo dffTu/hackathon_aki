@@ -120,7 +120,9 @@ function init() {
             obj.properties.get('boundedBy'),
             [map_container.width(), map_container.height()]
         );
-        map.panTo(obj.geometry.getCoordinates(), map_state.zoom);
+        let center = obj.geometry.getCoordinates();
+
+        map.panTo(center, map_state.zoom);
 
         let address = [obj.getCountry(), obj.getAddressLine()].join(', ');
 
@@ -133,8 +135,14 @@ function init() {
 
         if (error) {
             $('#adders_check_result').text(error + ` (найдено: ${address})`);
+            document.getElementById("address_text_form").value = '';
+            document.getElementById("address_latitude_form").value = null;
+            document.getElementById("address_longitude_form").value = null;
         } else {
             $('#adders_check_result').text("Адрес вашей площадки: " + address);
+            document.getElementById("address_text_form").value = address;
+            document.getElementById("address_latitude_form").value = center[0];
+            document.getElementById("address_longitude_form").value = center[1];
         }
     }
 
@@ -158,47 +166,3 @@ function init() {
         });
     }
 }
-
-
-//<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU&amp;onload=onLoad"></script>
-//<script>
-//    function onLoad (ymaps) {
-//        var suggestView = new ymaps.SuggestView('suggest', {
-//            boundedBy: [[48.215401, 43.823443], [49.032926, 45.196734]],
-//            provider: {
-//                suggest: (function(request, options) {
-//                    request = "Россия, Волгоградская область, " + request;
-//                    return (suggestView.state.get('open') ? ymaps.suggest(request) : ymaps.vow.resolve([])).then(function (res) {
-//                        suggestView.events.fire('requestsuccess', {
-//                            target: suggestView,
-//                        });
-//                        return res;
-//                    })
-//                })
-//            }
-//        });
-//        suggestView.state.set('open', true);
-//        suggestView.events.add('select', function (e) {
-//            var value = e.get('item').value;
-//            var streets = [
-//                'Россия, Волгоградская область, ',
-//                'Россия, Волгоград, '
-//            ];
-//            for (var i = 0; i < streets.length; i++) {
-//                value = value.replace(streets[i], '');
-//            }
-//            var house = value.substring(value.indexOf(", ") + 2);
-//            var firstLetter = parseInt(house[0]);
-//            suggestView.state.set({open: false});
-//            if(!_.isNaN(firstLetter) && _.isNumber(firstLetter)) {
-//                $('[data-js-basket-form-house]').val(house);
-//                $('[data-js-basket-form-street]').val(value.replace(', ' + house, ''));
-//            } else {
-//                $('[data-js-basket-form-street]').val(value);
-//            }
-//            suggestView.events.once('requestsuccess', function () {
-//                suggestView.state.set('open', true);
-//            });
-//        });
-//    }
-//</script>

@@ -36,12 +36,18 @@
                 {{ creating_form.agreement }} <br>
 
                 {{ creating_form.address }}
-                <span class="text-white">{{ errors.categories }}</span> <br>
+                <span class="text-white">{{ errors.address }}</span> <br>
                 <button id="adders_check_button" type="button">Проверить</button>
 
                 <div id="map" style="width: 600px; height: 400px"></div>
 
-                <p id="adders_check_result" class="text-white">Адрес не найден</p>
+                <p id="adders_check_result" class="text-white">Введите или выберите на карте адрес площадки.</p>
+
+                <div style="display: none">
+                    <input name="address_text" id="address_text_form"> <br>
+                    <input name="address_latitude" id="address_latitude_form"> <br>
+                    <input name="address_longitude" id="address_longitude_form"> <br>
+                </div>
 
                 {% csrf_token %}
                 <button type="button" id="platform_creating_form_submit_button">Создать</button>
