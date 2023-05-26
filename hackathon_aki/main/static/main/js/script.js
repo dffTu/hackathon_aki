@@ -91,7 +91,7 @@ window.onload = function() {
     }
 }
 
-open_user_button.onclick = function () {
+function open_user_button_onclick_func() {
     modal.style.display = "flex";
     authorize_window.style.display = "inline-block";
     log_in_window.style.display = "flex";
@@ -100,6 +100,8 @@ open_user_button.onclick = function () {
     localStorage.setItem("authorize_window_style_display", "inline-block");
     localStorage.setItem("log_in_window_style_display", "flex");
 }
+
+open_user_button.onclick = open_user_button_onclick_func;
 
 register_button.onclick = function () {
     organizer_client_buttons.style.display = "flex";

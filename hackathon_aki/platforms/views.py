@@ -42,6 +42,8 @@ def show_page(request, data, page_id):            # Shows catalogue page
                 filters.append(category_filter[0])
                 selected_category[category_type] = True
 
+    data['platforms'] = []
+
     if not filters:
         number_of_platforms = len(relevant_platforms_list)
         for platform in relevant_platforms_list:

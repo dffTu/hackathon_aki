@@ -136,6 +136,8 @@
                                 event_day = {{ event.day }}
                                 event_month = {{ event.month }}
                                 event_status = "old_event"
+                                disabled
+                                title="На этот слот уже нельзя записаться"
                                 event_price = {{ event.price }}
                                 style="background: #E74362">{{ event.day }} {% if event.time_comparison == "equal" %} TODAY {% endif %}</button>
                     </td>
@@ -144,7 +146,9 @@
                         <button onclick="timetable_button_click(this)"
                                 event_day = {{ event.day }}
                                 event_month = {{ event.month }}
-                                event_status = "booked_event";
+                                event_status = "booked_event"
+                                disabled
+                                title="Этот слот уже занят"
                                 event_price = {{ event.price }}
                                 style="background: #E74362">{{ event.day }} {% if event.time_comparison == "equal" %} TODAY {% endif %}</button>
                     </td>
@@ -175,10 +179,26 @@
         <h2 id="price-paragraph-calendar-window-form"></h2>
         <h2 id="status-paragraph-calendar-window-form"></h2>
         <a href="#" id="file-paragraph-calendar-window-form" download>Скачать оферту</a>
+
+        {% if user_fields.client %}
         <form method="post" action="{{ url_path }}">
+            <input name="__calendar_entry_request" type="hidden">
             {% csrf_token %}
             <button type="submit">Забронировать</button>
         </form>
+        {% elif user_fields.organizer %}
+        <form method="post">
+            <input name="__calendar_entry_request" type="hidden">
+            {% csrf_token %}
+            <button disabled type="submit">Арендодатель не может бронировать слоты</button>
+        </form>
+        {% else %}
+        <form method="post">
+            <input name="__calendar_entry_request" type="hidden">
+            {% csrf_token %}
+            <button id="login_calendar_registrate_button" type="button">Войти</button>
+        </form>
+        {% endif %}
     </div>
 </div>
 
