@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from main.forms import LoginForm
 from clients.forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 from organizers.forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
+from organizers.models import Entry
 from utils import send_email_for_verify
 from utils import platform_categories
 from form_utils import get_basic_arguments_for_html_pages
@@ -134,7 +135,6 @@ def save_search_request(request, data):
     if 'search' in request.GET and request.GET['search'] != '':
         data['filters']['search'] = request.GET['search']
 
-
 def save_filters_request(request, data):
     for category in platform_categories:
         for category_filter in platform_categories[category]['filters']:
@@ -155,6 +155,12 @@ def save_get_request(request, data):
     save_prices_request(request, data)
 
 
+def calendar_entry_request(request, data):
+    if not request.user.is_authenticated:
+        return redirect('show_page', page_id=1)
+    entry = Entry(client)
+
+
 def process_post_forms_requests(f):
     def g(request, *args, **kwargs):
         data = get_basic_arguments_for_html_pages(request)
@@ -171,11 +177,16 @@ def process_post_forms_requests(f):
                 result = organizer_registration(request, data)
                 if not result is None:
                     return result
+            if '__calendar_entry_request' in request.POST:
+                result = calendar_entry_request(request, data)
+                if not result is None:
+                    return result
         elif request.method == "GET":
-            print(request.GET)
             if "__search_form" in request.GET or "__filter_form" in request.GET:
-                print('OKOKOKOKKOOKOKOK')
-                save_get_request(request, data)
+                result = save_get_request(request, data)
+                if not result is None:
+                    return result
+
 
         return f(request, data, *args, **kwargs)
 

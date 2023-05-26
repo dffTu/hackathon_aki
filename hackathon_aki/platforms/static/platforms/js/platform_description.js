@@ -7,6 +7,8 @@ let month1 = document.getElementById("month_table_1");
 let month2 = document.getElementById("month_table_2");
 let month3 = document.getElementById("month_table_3");
 
+let login_calendar_registrate_button = document.getElementById("login_calendar_registrate_button");
+
 function timetable_button_click(clicked_button) {
     document.getElementById('date-paragraph-calendar-window-form').textContent ="Дата: " +
         clicked_button.getAttribute("event_day") + " " + clicked_button.getAttribute("event_month");
@@ -55,3 +57,8 @@ window.onclick = function (event) {
         calendar_window.style.display = "none";
     }
 }
+
+login_calendar_registrate_button.onclick = function () {
+    calendar_window.style.display = "none";
+    open_user_button_onclick_func();
+};
