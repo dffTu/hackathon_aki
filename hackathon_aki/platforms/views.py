@@ -16,7 +16,7 @@ def redirect_to_first_page(request, data):        # Redirects to first catalogue
 @process_post_forms_requests
 def show_page(request, data, page_id):            # Shows catalogue page
     relevant_platforms_list = Platform.objects.all()
-    data['search'] = ''
+    data['filters']['search'] = ''
     if 'search' in request.GET and request.GET['search'] != '':
         relevant_platforms_list = []
         platform_names = [platform.name for platform in Platform.objects.all()]
@@ -26,7 +26,7 @@ def show_page(request, data, page_id):            # Shows catalogue page
                 if platform in relevant_platforms_list:
                     continue
                 relevant_platforms_list.append(platform)
-        data['search'] = request.GET['search']
+        data['filters']['search'] = request.GET['search']
 
     number_of_platforms = 0
     data['platforms'] = [[]]
