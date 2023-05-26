@@ -49,9 +49,9 @@ def show_client_profile(request, data):
             request.user.save()
 
             user_profile = profile_form.save(commit=False)
-            request.user.organizer.middle_name = user_profile.middle_name
-            request.user.organizer.phone_number = user_profile.phone_number
-            request.user.organizer.save()
+            request.user.client.middle_name = user_profile.middle_name
+            request.user.client.phone_number = user_profile.phone_number
+            request.user.client.save()
 
             return redirect('show_client_profile')
 
@@ -61,7 +61,7 @@ def show_client_profile(request, data):
         data['user_client_registration_form'] = UserClientChangingForm(model_to_dict(request.user))
         data['profile_client_registration_form'] = ProfileClientRegistrationForm(model_to_dict(request.user.client))
 
-    return render(request, 'organizers/profile.html', data)
+    return render(request, 'clients/profile.html', data)
 
 
 @process_post_forms_requests
