@@ -1,104 +1,105 @@
-*{
-	color: #fff;
+* {
+    color: #fff;
 }
 
-
-.main-str{
-	display: flex;
-	justify-content: center;
-	height: 50rem;
-	width: 80%;
-	margin: auto;
-	margin-top: 3%;
-	border-radius: 7px;
-	backdrop-filter: blur(100px);
-	background: rgba(171, 174, 255, 0.05);
+.main-str {
+    display: flex;
+    justify-content: center;
+    height: 50rem;
+    width: 80%;
+    margin: auto;
+    margin-top: 3%;
+    border-radius: 7px;
+    backdrop-filter: blur(100px);
+    background: rgba(171, 174, 255, 0.05);
 }
 
-.str{
-	width: 100%;
-	display: flex;
+.str {
+    width: 100%;
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.mypage{
-	border-radius: 7px;
-	width: 95%;
-	height: 90%;
-	margin-top: 2%;
+.mypage {
+    border-radius: 7px;
+    width: 95%;
+    height: 90%;
+    margin-top: 2%;
 }
 
 .photo {
-	background: #000;
-	width: 100%;
-	height: 100%;
-	border-top-left-radius: 7px;
-	border-top-right-radius: 7px;
+    background: #000;
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
 
 .name-company {
-	backdrop-filter: blur(100px);
-	display: flex;
-	justify-content: center;
+    backdrop-filter: blur(100px);
+    display: flex;
+    justify-content: center;
     align-items: center;
     position: relative;
     flex-direction: column;
     top: -100px;
 }
 
-.name-company p{
-	margin-bottom: 2px;
+.name-company p {
+    margin-bottom: 2px;
 }
 
-.p-name{
-	font-family: 'Cera Pro Bold';
-	font-size: 40px;
+.p-name {
+    font-family: 'Cera Pro Bold';
+    font-size: 40px;
 }
 
 .p-type {
-	font-size: 20px;
-	white-space: pre-wrap;
+    font-size: 20px;
+    white-space: pre-wrap;
 }
 
-.cols-info{
-	display: flex;
-	flex-direction: row;
-	width: 90%;
-	margin: 30px;
+.cols-info {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin: 30px;
 }
 
-.info{
-	width: 60%;
-	margin: 0% 2%;
+.info {
+    width: 60%;
+    margin: 0% 2%;
 }
 
 .tops {
-	width: 30%;
-	margin: 0% 5%;
-}
-.rating{
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+    width: 30%;
+    margin: 0% 5%;
 }
 
-.rating p{
-	margin-bottom: 0;
+.rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.rating p {
+    margin-bottom: 0;
 }
 
 .p1 {
-	font-size: 30px;
-	font-family: 'Cera Pro Bold';
+    font-size: 30px;
+    font-family: 'Cera Pro Bold';
 }
 
 .stars {
-	margin-right: 5px;
+    margin-right: 5px;
 }
 
-.comment{
-	margin-left: 15%;
+.comment {
+    margin-left: 15%;
 }
+
 .amount-reviews {
-	margin-left: 1%;
+    margin-left: 1%;
 }

@@ -1,123 +1,126 @@
-*, *:befor, *:after{
-	background-size: border-box;
-}
-* {
-	margin: 0;
-	padding: 0;
+*, *:befor, *:after {
+    background-size: border-box;
 }
 
-@font-face{
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
     font-family: "Cera Pro Medium";
     font-style: normal;
     font-weight: medium;
     src: url("../fonts/CeraPro-Medium.ttf");
 }
-@font-face{
+
+@font-face {
     font-family: "Cera Pro Bold";
     font-style: normal;
     font-weight: medium;
     src: url("../fonts/CeraPro-Bold.ttf");
 }
-@font-face{
+
+@font-face {
     font-family: "Cera Pro Black";
     font-style: normal;
     font-weight: medium;
     src: url("../fonts/CeraPro-Black.ttf");
 }
 
-.icons a{
-	text-decoration: none;
-	color: #fff;
+.icons a {
+    text-decoration: none;
+    color: #fff;
 }
 
 /*фон*/
 body {
-	background: linear-gradient(to right, #192E43, #0D151D);
-	opacity: 0.83;
-	font-family: 'Cera Pro Medium';
-	color: #fff;
+    background: linear-gradient(to right, #192E43, #0D151D);
+    opacity: 0.83;
+    font-family: 'Cera Pro Medium';
+    color: #fff;
 }
 
-.header{
+.header {
     font-family: "Cera Pro Medium";
-	width: 100%;
-	height: 17%;
-	padding-left: 0%;
-	padding-right: 0%;
-	background: linear-gradient(to right, #364F6D, #1B1E23);
+    width: 100%;
+    height: 17%;
+    padding-left: 0%;
+    padding-right: 0%;
+    background: linear-gradient(to right, #364F6D, #1B1E23);
 }
 
 #hat {
     display: block;
-	padding-top: 1%;
-	padding-bottom: 1%;
-	width: 90%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 90%;
 }
 
-.header-inner{
-	width: 100%;
-	display: flex;
+.header-inner {
+    width: 100%;
+    display: flex;
 }
 
 #logo {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .search {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	margin-left: 5%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 5%;
 }
 
 .bar {
-	display: flex;
-	width: 100%;
+    display: flex;
+    width: 100%;
 }
 
 .search p {
-	font-size: 18px;
+    font-size: 18px;
 }
 
-input[type="search"]{
-	display: flex;
-   	background: #E0E0E0; 
-   	outline: none; 
-   	border: 0;
-   	border-bottom:1px solid #eee;
-   	height: 46px; 
-   	border-radius: 7px;
-	width: 100%;
-	font-size: 18px;
-	padding: 20px;
+input[type="search"] {
+    display: flex;
+    background: #E0E0E0;
+    outline: none;
+    border: 0;
+    border-bottom: 1px solid #eee;
+    height: 46px;
+    border-radius: 7px;
+    width: 100%;
+    font-size: 18px;
+    padding: 20px;
 }
 
 .button {
-	background: #E74362;
-	color: #fff;
-	font-size: 18px;
-	cursor: pointer;
-	height: 48px;
-	border: 0;
-	padding: 10px;
-	border-radius: 7px;
-	margin-left: 3%;
-	font-family: 'Cera Pro Bold';
+    background: #E74362;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    height: 48px;
+    border: 0;
+    padding: 10px;
+    border-radius: 7px;
+    margin-left: 3%;
+    font-family: 'Cera Pro Bold';
 }
 
 .col {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .col-6 {
-	display: flex;
-	align-items: center;
-	justify-content: center;	
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #three {
@@ -125,126 +128,151 @@ input[type="search"]{
 }
 
 .icons {
-	padding-top: 1%;
-	display: flex;
+    padding-top: 1%;
+    display: flex;
 }
 
 .catalog {
-	display: flex;
-	width: 77px;
-	height: 71px;
-	padding-top: 4px;
-	flex-direction: column;
+    display: flex;
+    width: 77px;
+    height: 71px;
+    padding-top: 4px;
+    flex-direction: column;
     align-items: center;
 }
 
-.catalog img{
-	margin-top: 3px;
+.catalog img {
+    margin-top: 3px;
 }
 
 .user {
-	width: 70%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-left: 50%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 50%;
 }
 
-.user img{
-	margin-bottom: 1px;
+.user img {
+    margin-bottom: 1px;
 }
 
-.icons p{
-	margin: 1px;
+.icons p {
+    margin: 1px;
 }
 
-.catalog p{
-	margin-top: 9px;
+.catalog p {
+    margin-top: 9px;
 }
 
 
+img + ul {
+    display: none
+}
 
-
-img + ul {display:none}
-img:hover + ul {display:block}
+img:hover + ul {
+    display: block
+}
 
 a {
-	display: block;
-	text-decoration: none;
-	outline: none;
-	transition: .1s linear;
+    display: block;
+    text-decoration: none;
+    outline: none;
+    transition: .1s linear;
 }
 
 .topmenu > li {
-	display: inline-block;
-	margin-right: 20px;
-	position: relative;
+    display: inline-block;
+    margin-right: 20px;
+    position: relative;
 }
 
 .topmenu > li:last-child {
-	margin-right: 0;
+    margin-right: 0;
 }
 
 ul {
-	list-style: none; 
-	margin: 0!important;
-	padding: 0;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0;
 }
 
 
 .submenu ul a {
-	color: #000!important;
-	font-size: 16px;
-	text-align: left;
+    color: #000 !important;
+    font-size: 16px;
+    text-align: left;
 }
 
 .three {
-	display: flex;
-	justify-content: center;
-	height: 100%;
+    display: flex;
+    justify-content: center;
+    height: 100%;
 }
 
 .three .submenu {
-	visibility: hidden;
-	opacity: 0;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .three ul li:hover .submenu {
-	visibility: visible;
-	opacity: 1;
-	background: #D9D9D9;
-	border-radius: 7px;
+    visibility: visible;
+    opacity: 1;
+    background: #D9D9D9;
+    border-radius: 7px;
 }
 
 .submenu {
-	color: #000;
-	padding: 10px;
-	position: absolute;
-	top: 100%;
-	height: 9rem;
-	width: 10rem;
-	z-index: 10;
-	-webkit-transition: 0.3s ease-in-out;
-	-moz-transition: 0.3s ease-in-out;
-	-o-transition: 0.3s ease-in-out;
-	transition: 0.3s ease-in-out;
+    color: #000;
+    padding: 10px;
+    position: absolute;
+    top: 100%;
+    height: 9rem;
+    width: 10rem;
+    z-index: 10;
+    -webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    -o-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
-.submenu li{
-	margin-bottom: 8px;
+.submenu li {
+    margin-bottom: 8px;
 }
 
-.submenu a{
-	color: #000;
-	text-align: left;
-	padding-left: 2px;
+.submenu a {
+    color: #000;
+    text-align: left;
+    padding-left: 2px;
 }
 
-.submenu a:hover{
-	background: #E74362;
-	color: #fff;
-	border-radius: 7px;
-	padding-left: 5px;
-
+.submenu a:hover {
+    background: #E74362;
+    color: #fff;
+    border-radius: 7px;
+    padding-left: 5px;
 }
 
+/* Position child elements relative to this element */
+.aspect-ratio-box {
+    position: relative;
+}
+
+/* Create a pseudo element that uses padding-bottom to take up space */
+.aspect-ratio-box::after {
+    display: block;
+    content: '';
+    /* 16:9 aspect ratio */
+    padding-bottom: 56.25%;
+}
+
+/* Image is positioned absolutely relative to the parent element */
+.aspect-ratio-box img {
+    /* Image should match parent box size */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
