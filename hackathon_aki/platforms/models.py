@@ -8,8 +8,9 @@ class Platform(models.Model):
     categories = models.CharField('Категории', max_length=250, blank=True)
     short_description = models.TextField('Краткое описание', blank=True)
     description = models.TextField('Описание площадки', blank=True)
-    schedule = models.JSONField('Расписание', null=True, blank=True)
     rating = models.FloatField('Рейтинг', blank=True)
+    schedule = models.JSONField('Расписание', null=True, blank=True)
+    address = models.JSONField('Адрес', null=True, blank=True)
 
     agreement = models.FileField('Соглашение', null=True, blank=True)
 

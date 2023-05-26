@@ -31,12 +31,23 @@ def create_platform(request, data):
               'address': []}
 
     if request.method == 'POST':
+        is_valid = True
+        if request.POST['address_text'] == '':
+            errors['address'].append('Введён не корректный адрес.')
+            is_valid = False
+
         creating_form = PlatformCreatingForm(request.POST, request.FILES)
         attachment_form = PlatformFileAttachingForm(request.POST, request.FILES)
-        if creating_form.validate(errors) and attachment_form.is_valid():
+
+        is_valid = creating_form.validate(errors) and is_valid
+        if is_valid and attachment_form.is_valid():
             platform = creating_form.save(commit=False)
             platform.organizer = request.user.organizer
             platform.rating = 5
+            platform.address = {
+                'address_text':  request.POST['address_text'],
+                'address_coords': [request.POST['address_latitude'], request.POST['address_longitude']],
+            }
             platform.save()
 
             for file_description in attachment_form.cleaned_data['file_field']:
