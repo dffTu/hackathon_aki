@@ -61,23 +61,16 @@ platform_categories = {
     'platform-type': {
         'ru': 'Тип площадки',
         'filters': [
-            ('film-studio', 'Киностудия'),
-            ('gallery', 'Галерея'),
-            ('publishing-house', 'Издательство'),
-            ('book-shop', 'Книжный магазин'),
-            ('design-studio', 'Дизайн студия'),
-            ('creative-space', 'Креативное пространство'),
-            ('cinema-theater', 'Кинотеатр'),
-            ('sound-recording-studio', 'Звукозаписывающая студия'),
-            ('AR-VR-studio', 'AR-VR-студия')
-        ]
-    },
-    'price': {
-        'ru': 'Цена',
-        'filters': [
-            ('big-price', 'Большая цена'),
-            ('medium-price', 'Средняя цена'),
-            ('small-price', 'Малая цена')
+            ('art', 'Арт', '4AB5F5'),
+            ('architecture', 'Архитектура', '61DB29'),
+            ('software', 'Видеоигры и ПО', '5230E6'),
+            ('design', 'Дизайн', 'FC3B9E'),
+            ('publishing', 'Издательское дело и новые медиа', 'FCE833'),
+            ('performing-arts', 'Исполнительские искусства', '05C9B0'),
+            ('film-and-animation', 'Кино и анимация', 'ED850A'),
+            ('fashion', 'Мода', 'F23829'),
+            ('music', 'Музыка', '0F8F3D'),
+            ('advertising', 'Реклама', 'B521C7')
         ]
     },
 }

@@ -28,7 +28,7 @@ class PlatformFileAttachingForm(forms.Form):
 
 
 class PlatformCreatingForm(forms.ModelForm):
-    required_fields = ['name', 'categories', 'short_description']
+    required_fields = ['name', 'short_description']
     length_validation_fields = ['name', 'short_description', 'description']
     charset_validation_fields = ['name', 'short_description', 'description']
 
@@ -40,7 +40,7 @@ class PlatformCreatingForm(forms.ModelForm):
 
     class Meta:
         model = Platform
-        fields = ['name', 'short_description', 'categories', 'description', 'agreement']
+        fields = ['name', 'short_description', 'description', 'agreement']
 
         widgets = {
             'name': forms.TextInput(attrs={
@@ -54,10 +54,6 @@ class PlatformCreatingForm(forms.ModelForm):
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Описание',
-            }),
-            'categories': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Категория;категория',
             }),
             'agreement': forms.ClearableFileInput(attrs={
                 'class': 'form-control',

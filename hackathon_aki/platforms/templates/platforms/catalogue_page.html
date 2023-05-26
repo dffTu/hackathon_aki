@@ -21,29 +21,28 @@
 <div class="row">
     <div class="col" id="filter">
         <h4>Фильтр</h4>
-
-        <div class="points">
-            <p>Lorem, ipsum.</p>
-        </div>
-
-        <form method="get" action="{% url 'show_page' page_id=1 %}">
-            <input name="__filter_form" type="hidden">
+        <div class="form-points">
+            <form method="get" action="{% url 'show_page' page_id=1 %}">
             {% for platform_category_name in platform_categories %}
                 <fieldset>
                     {% with platform_categories|key:platform_category_name as platform_category %}
                         <legend>{{ platform_category|key:"ru" }}</legend>
                         {% with platform_category|key:"filters" as platform_filters%}
-                            {% for platform_filter_en, platform_filter_ru in platform_filters %}
-                                <div>
-                                    {% if platform_filter_en in filters %}
-                                        <input type="checkbox" id="{{platform_filter_en}}" name="{{platform_filter_en}}" checked>
-                                    {% else %}
-                                        <input type="checkbox" id="{{platform_filter_en}}" name="{{platform_filter_en}}">
-                                    {% endif %}
-                                    <label for="{{platform_filter_en}}">
-                                        {{ platform_filter_ru }}
-                                    </label>
-                                </div>
+                            {% for filter in platform_filters %}
+                                {% with filter|key:0 as platform_filter_en %}
+                                    {% with filter|key:1 as platform_filter_ru %}
+                                        <div>
+                                            {% if platform_filter_en in filters %}
+                                                <input type="checkbox" id="{{platform_filter_en}}" name="{{platform_filter_en}}" checked>
+                                            {% else %}
+                                                <input type="checkbox" id="{{platform_filter_en}}" name="{{platform_filter_en}}">
+                                            {% endif %}
+                                            <label for="{{platform_filter_en}}">
+                                                {{ platform_filter_ru }}
+                                            </label>
+                                        </div>
+                                    {% endwith %}
+                                {% endwith %}
                             {% endfor %}
                         {% endwith %}
                     {% endwith %}
@@ -93,6 +92,8 @@
 
             <button type="submit">Применить фильтр</button>
         </form>
+        </div>
+        
     </div>
 
     <div class="col-6 catalog-page">

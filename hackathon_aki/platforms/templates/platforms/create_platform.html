@@ -1,6 +1,7 @@
 {% extends 'main/html_template.html' %}
 
 {% load static %}
+{% load jinja_filters %}
 
 {% block title %}Создание площадки{% endblock %}
 
@@ -23,8 +24,12 @@
                 {{ creating_form.name }}
                 <span class="text-white">{{ errors.name }}</span> <br>
 
-                {{ creating_form.categories }}
-                <span class="text-white">{{ errors.categories }}</span> <br>
+                <label for="platform_category_select">Категория платформы: </label>
+                <select name="platform_category" id="platform_category_select">
+                    {% for category in platform_categories %}
+                        <option value='{{ category|key:0 }}'>{{ category|key:1 }}</option>
+                    {% endfor %}
+                </select>
 
                 {{ creating_form.short_description }}
                 <span class="text-white">{{ errors.short_description }}</span> <br>
