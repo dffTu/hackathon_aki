@@ -32,7 +32,7 @@
                             {% for filter in platform_filters %}
                                 {% with filter|key:0 as platform_filter_en %}
                                     {% with filter|key:1 as platform_filter_ru %}
-                                        <div>
+                                        <div class="points">
                                             {% if platform_filter_en in filters %}
                                                 <input type="checkbox" id="{{platform_filter_en}}" name="{{platform_filter_en}}" checked>
                                             {% else %}
@@ -53,7 +53,7 @@
             <!--  Начало ползунка цен    -->
             <div class="wrapper">
               <header>
-                <h2>Цена</h2>
+                <h4>Цена</h4>
               </header>
               <div class="price-input">
                 <div class="field">
@@ -90,8 +90,10 @@
             </div>
             <script src="{% static 'platforms\js\price_slider.js' %}"></script>
             <!--  Конец ползунка цен    -->
-
-            <button type="submit">Применить фильтр</button>
+            <br>
+            <div class="but-filter">
+                <button class="btn apply-a-filter" type="submit">Применить фильтр</button>
+            </div>
         </form>
         </div>
         
@@ -99,10 +101,9 @@
 
     <div class="col-6 catalog-page">
         <div class="container catalog-pages">
-            {% for row in platforms %}
+            {% for platform in platforms %}
                 {% if forloop.counter|sub:1|flr:5|add:1 == page_id %}
                     <div class="platform">
-                        {% for platform in row %}
                             <div class="col card">
 
                                 <div class="aspect-ratio-box-catalogue card-img-top">
@@ -127,7 +128,6 @@
                                     <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
                                 </div>
                             </div>
-                        {% endfor %}
                     </div>
                 {% endif %}
             {% endfor %}
