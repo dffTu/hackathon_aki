@@ -8,26 +8,42 @@
 
 {% block content %}
 <div class="main-str">
+    {% if has_errors %}
+        <div style="display: none" id="form_has_errors">
+        </div>
+    {% endif %}
+
     <h1 class="text-white hat-of-profile">Мой профиль</h1>
     <br>
 
-    <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
-        <input name="__organizer_register" type="hidden">
-
-        {% if organizer_errors.incorrect_form %}
+    <form method="POST" enctype='multipart/form-data' action="" id="profile_changing_form">
+        {% if client_errors.incorrect_form %}
             <div class="form_alert">
                 <p>Некорректные данные формы</p>
             </div>
         {% endif %}
 
         <div class="main-form">
-            <label class="text-muted">Email</label>
-            <input class="email" type="" readonly name="Email" value="{{ email }}">
+            <div class="form-group">
+                <label class="text-muted">Email</label>
+                {{ user_client_registration_form.email }}
+                {% for error in client_errors.email %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
 
             <div class="form-group">
                 <label class="text-muted">Фамилия</label>
                 <input class="email" type="" readonly name="Email" value="{{ user_organizer_registration_form.last_name }}">
                 {% for error in organizer_errors.last_name %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+                {{ user_client_registration_form.last_name }}
+                {% for error in client_errors.last_name %}
                     <div class="form_alert">
                     {{ error }}
                     </div>

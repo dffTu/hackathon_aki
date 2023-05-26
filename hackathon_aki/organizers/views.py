@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
 from main.models import PlatformAttachment
 from platforms.models import Platform
@@ -107,8 +106,6 @@ def show_organizer_profile(request, data):
         return redirect('show_client_profile')
 
     errors = {'email': [],
-              'password': [],
-              'repeat_password': [],
               'first_name': [],
               'last_name': [],
               'middle_name': [],
