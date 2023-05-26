@@ -42,14 +42,20 @@
   background: #eee;
   border-right: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
-  padding: 6px;
   cursor: pointer;
   transition: background .3s;
   -webkit-transition:background .3s;
 }
 
-.calendar td:hover:not(.last_month_cell){
+.weeks button{
+  border: none;
+}
+
+.calendar button:hover:not(.last_month_cell){
   background: #ddd;
+}
+.last_month_cell button{
+  background: #c0c1c2;
 }
 
 .calendar .lastmonth,.calendar .nextmonth,.calendar .nextmonth ~ *{
@@ -57,10 +63,9 @@
   color: #999;
 }
 
-.calendar .current{
-  background: #E74362;
+.today_cell button{
+  border: 6px solid #E74362;
   font-weight: 700;
-  color: #fff;
   text-shadow: 0 0 10px rgba(0,0,0,.5);
 }
 
@@ -70,3 +75,8 @@
 
 .calendar tr:last-of-type td:first-of-type{border-radius:0 0 0 5px;}
 .calendar tr:last-of-type td:last-of-type{border-radius:0 0 5px 0;}
+
+.weeks button{
+  height: 100%;
+  width: 100%;
+}
