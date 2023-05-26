@@ -26,9 +26,11 @@
 
                 <label for="platform_category_select">Категория платформы: </label>
                 <select name="platform_category" id="platform_category_select">
-                    {% for category in platform_categories %}
-                        <option value='{{ category|key:0 }}'>{{ category|key:1 }}</option>
-                    {% endfor %}
+                    {% with platform_categories|key:"platform-type"|key:"filters" as filters %}
+                        {% for category in filters %}
+                            <option value='{{ category }}'>{{ filters|key:category|key:0 }}</option>
+                        {% endfor %}
+                    {% endwith %}
                 </select>
 
                 {{ creating_form.short_description }}

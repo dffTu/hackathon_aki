@@ -60,20 +60,24 @@ CHARSET = {
 platform_categories = {
     'platform-type': {
         'ru': 'Тип площадки',
-        'filters': [
-            ('art', 'Арт', '4AB5F5'),
-            ('architecture', 'Архитектура', '61DB29'),
-            ('software', 'Видеоигры и ПО', '5230E6'),
-            ('design', 'Дизайн', 'FC3B9E'),
-            ('publishing', 'Издательское дело и новые медиа', 'FCE833'),
-            ('performing-arts', 'Исполнительские искусства', '05C9B0'),
-            ('film-and-animation', 'Кино и анимация', 'ED850A'),
-            ('fashion', 'Мода', 'F23829'),
-            ('music', 'Музыка', '0F8F3D'),
-            ('advertising', 'Реклама', 'B521C7')
-        ]
+        'filters': {
+            'art': ('Арт', '4AB5F5'),
+            'architecture': ('Архитектура', '61DB29'),
+            'software': ('Видеоигры и ПО', '5230E6'),
+            'design': ('Дизайн', 'FC3B9E'),
+            'publishing': ('Издательское дело и новые медиа', 'FCE833'),
+            'performing-arts': ('Исполнительские искусства', '05C9B0'),
+            'film-and-animation': ('Кино и анимация', 'ED850A'),
+            'fashion': ('Мода', 'F23829'),
+            'music': ('Музыка', '0F8F3D'),
+            'advertising': ('Реклама', 'B521C7')
+        }
     },
 }
+
+
+DEFAULT_SLOT_PRICE = 1000
+SLOTS_COUNT_FOR_PLATFORM = 90
 
 
 def validate_length(field_names: list[str], required_fields: list[str], form_data,
