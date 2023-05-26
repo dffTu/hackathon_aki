@@ -1,8 +1,7 @@
-* {
-    color: #fff;
-}
+
 
 .main-str {
+    color: #fff;
     display: flex;
     justify-content: center;
     height: 50rem;
@@ -106,6 +105,16 @@
     margin-left: 1%;
 }
 
+/*календарь*/
+
+
+.weeks button{
+    border: none;
+}
+
+
+
+
 .calendar-window-form {
     z-index: 1;
     position: fixed;
@@ -114,4 +123,8 @@
     background: blue;
     width: 40%;
     height: 30%;
+}
+
+#calendar {
+    margin-top: 50px;
 }

@@ -7,7 +7,7 @@ from login_registrate_utils import process_post_forms_requests
 
 @process_post_forms_requests
 def index(request, data):
-    return render(request, 'platforms/calendar.html', data)
+    return render(request, 'main/index.html', data)
 
 
 @process_post_forms_requests
