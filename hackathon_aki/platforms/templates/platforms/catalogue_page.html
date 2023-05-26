@@ -60,7 +60,7 @@
                             <div class="col card">
 
                                 <div class="aspect-ratio-box-catalogue card-img-top">
-                                    <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
+                                    <img src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
                                 </div>
 
                                 <div class="card-body">
@@ -74,7 +74,7 @@
                                         <img class="comment" src="{% static 'main\img\comment.svg' %}">
                                         <p>100</p>
                                     </div>
-                                    <p class="card-text">{{ platform.description }}</p>
+                                    <p class="card-text">{{ platform.description|shorten_text:65 }}</p>
 
                                 </div>
                                 <div class="but-in-card">

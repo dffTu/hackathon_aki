@@ -16,3 +16,10 @@ def join(value, arg):
 @register.filter(name="split")
 def split(value, arg):
     return value.split(arg)
+
+
+@register.filter(name='shorten_text')
+def shorten_text(value, arg):
+    if len(value) <= arg:
+        return value
+    return value[:max(0, arg - 3)] + '...'
