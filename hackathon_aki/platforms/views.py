@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, redirect
 from .models import Platform, Comment
 from main.models import CommentAttachment
@@ -33,6 +34,22 @@ def show_page(request, data, page_id):            # Shows catalogue page
     if 'max_price' in request.GET and request.GET['max_price'].isdecimal():
         maximal_price = int(request.GET['max_price'])
 
+    data['platforms'] = []
+
+    relevant_platforms_list_temp = [platform for platform in relevant_platforms_list]
+    relevant_platforms_list = []
+
+    for platform in relevant_platforms_list_temp:
+        should_add = False
+        for slot in platform.freeslot_set.all():
+            if datetime.date.today() > slot.date:
+                continue
+            if minimal_price <= slot.price <= maximal_price:
+                should_add = True
+                break
+        if should_add:
+            relevant_platforms_list.append(platform)
+
     filters = []
     selected_category = {}
     for category_type in platform_categories:
@@ -44,6 +61,7 @@ def show_page(request, data, page_id):            # Shows catalogue page
 
     data['platforms'] = []
 
+    number_of_platforms = 0
     if not filters:
         number_of_platforms = len(relevant_platforms_list)
         for platform in relevant_platforms_list:
