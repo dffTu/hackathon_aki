@@ -147,6 +147,7 @@ def save_search_request(request, data):
     if 'search' in request.GET and request.GET['search'] != '':
         data['filters']['search'] = request.GET['search']
 
+
 def save_filters_request(request, data):
     for category in platform_categories:
         for category_filter in platform_categories[category]['filters']:
@@ -168,9 +169,18 @@ def save_get_request(request, data):
 
 
 def calendar_entry_request(request, data):
+    print(request.POST)
     if not request.user.is_authenticated:
         return redirect('show_page', page_id=1)
-    entry = Entry(client)
+    if hasattr(request.user, 'organizer'):
+        return redirect(request.path)
+    platform_id = int(request.POST['__platform_id'])
+    day = int(request.POST['__day'])
+    month = int(request.POST['__month'])
+    year = int(request.POST['__year'])
+    date = datetime.date(year, month, day)
+    entry = Entry(client=request.user.client, platform_id=platform_id, date=date)
+    entry.save()
 
 
 def show_catalogue_page(request, data, page_id, relevant_platforms_list):
