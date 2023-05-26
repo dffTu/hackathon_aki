@@ -1,11 +1,11 @@
+import datetime
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
 from main.models import PlatformAttachment
-from platforms.models import Platform
+from platforms.models import Platform, FreeSlot
 from platforms.forms import PlatformCreatingForm, PlatformFileAttachingForm
 from .forms import FreeSlotAddingForm, UserOrganizerChangingForm, ProfileOrganizerRegistrationForm
-from utils import platform_categories
+from utils import platform_categories, DEFAULT_SLOT_PRICE, SLOTS_COUNT_FOR_PLATFORM
 from login_registrate_utils import process_post_forms_requests
 
 
@@ -58,10 +58,16 @@ def create_platform(request, data):
                 file = PlatformAttachment(platform=platform, file=file_description)
                 file.save()
 
+            current_date = datetime.date.today()
+
+            for i in range(SLOTS_COUNT_FOR_PLATFORM + 1):
+                new_slot = FreeSlot(platform=platform, date=current_date + datetime.timedelta(days=i),
+                                    price=DEFAULT_SLOT_PRICE)
+                new_slot.save()
+
             return redirect('show_organizer_platforms')
 
     data['errors'] = errors
-    data['platform_categories'] = platform_categories['platform-type']['filters']
     data['creating_form'] = PlatformCreatingForm()
     data['attachment_form'] = PlatformFileAttachingForm()
 
@@ -107,8 +113,6 @@ def show_organizer_profile(request, data):
         return redirect('show_client_profile')
 
     errors = {'email': [],
-              'password': [],
-              'repeat_password': [],
               'first_name': [],
               'last_name': [],
               'middle_name': [],

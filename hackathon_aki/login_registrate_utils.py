@@ -68,7 +68,13 @@ def client_registration(request, data):
             user_profile.email_verification = email_verify
             user_profile.save()
 
-            send_email_for_verify(request, email_verify.email, email_verify.verification_code)
+            try:
+                send_email_for_verify(request, email_verify.email, email_verify.verification_code)
+            except:
+                errors['email'].append('Введён некорректный E-mail.')
+                email_verify.delete()
+                user_profile.delete()
+
             return render(request, 'main/email_verification_sent.html', data)
 
         data['user_client_registration_form'] = user_form
@@ -120,7 +126,13 @@ def organizer_registration(request, data):
             user_profile.email_verification = email_verify
             user_profile.save()
 
-            send_email_for_verify(request, email_verify.email, email_verify.verification_code)
+            try:
+                send_email_for_verify(request, email_verify.email, email_verify.verification_code)
+            except:
+                errors['email'].append('Введён некорректный E-mail.')
+                email_verify.delete()
+                user_profile.delete()
+
             return render(request, 'main/email_verification_sent.html', data)
 
         data['user_organizer_registration_form'] = user_form
