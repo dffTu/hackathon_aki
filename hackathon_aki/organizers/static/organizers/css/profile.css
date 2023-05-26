@@ -68,3 +68,7 @@
 .form-control:disabled, .form-control[readonly]{
     background-color: #cacaca;
 }
+
+.form_alert {
+    color: #E74362;
+}
