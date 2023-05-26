@@ -4,6 +4,7 @@ from django.db import models
 class Platform(models.Model):
     organizer = models.ForeignKey('organizers.Organizer', on_delete=models.CASCADE)
 
+    verified = models.BooleanField('Подтверждена', default=False)
     name = models.CharField('Имя', max_length=250, blank=True)
     categories = models.CharField('Категории', max_length=250, blank=True)
     short_description = models.TextField('Краткое описание', blank=True)
