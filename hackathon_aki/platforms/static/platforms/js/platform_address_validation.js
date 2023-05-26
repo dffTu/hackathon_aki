@@ -54,6 +54,13 @@ function init() {
             placemark.events.add('dragend', function () {
                 update_map_from_placemark_event(placemark.geometry.getCoordinates());
             });
+
+            let form_value = $('#address_suggest_form').val();
+            if (form_value != '') {
+                ymaps.geocode(form_value).then(update_map_from_geocode, function (e) {
+                    console.log(e)
+                });
+            }
         } else {
             map.remove(placemark);
             map.setCenter([55.76, 37.64]);

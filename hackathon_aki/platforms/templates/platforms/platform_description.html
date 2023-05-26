@@ -5,6 +5,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'platforms\css\platform_description.css' %}">
+<link rel="stylesheet" href="{% static 'platforms\css\calendar.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,7 +14,6 @@
     <div class="str">
         <div class="mypage">
             <div class="photo">
-
                     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
 
                         <div class="carousel-indicators">
@@ -67,7 +67,7 @@
             </div>
 
         </div>
-        
+
         <div class="cols-info">
 
             <div class="info">
@@ -90,7 +90,7 @@
                     <p class="main-p">Отзывов пока нет</p>
                     {% endif %}
                 </div>
-                
+
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
             </div>
@@ -108,76 +108,101 @@
 
 {% for month in months %}
     {% if forloop.counter == 1 %}
-    <div id="month_table_{{ forloop.counter }}" style="display: block">
+    <div id="month_table_{{ forloop.counter }}" class="calendar" style="display: block">
     {% else %}
-    <div id="month_table_{{ forloop.counter }}" style="display: none">
+    <div id="month_table_{{ forloop.counter }}" class="calendar" style="display: none">
     {% endif %}
-    <h1 class="text-white">{{ month.month }}</h1>
-   <table class="table table-black table-bordered">
-      <thead>
-      <tr>
-        <th scope="col">M</th>
-        <th scope="col">T</th>
-        <th scope="col">W</th>
-        <th scope="col">T</th>
-        <th scope="col">F</th>
-        <th scope="col">S</th>
-        <th scope="col">S</th>
-      </tr>
-      </thead>
+    <h1>{{ month.month }}</h1>
+    <table>
+        <thead>
+          <tr>
+            <th scope="col">M</th>
+            <th scope="col">T</th>
+            <th scope="col">W</th>
+            <th scope="col">T</th>
+            <th scope="col">F</th>
+            <th scope="col">S</th>
+            <th scope="col">S</th>
+          </tr>
+        </thead>
+    <tbody class="weeks">
+        {% for week in month.weeks %}
+                <tr>
+                {% for event in week %}
+                    {% if event.time_comparison == "less" %}
+                        <td class="last_month_cell">
+                            <button onclick="timetable_button_click(this)"
+                                    event_day = {{ event.day }}
+                                    event_month = {{ event.month }}
+                                    event_month_text = {{ event.month_text }}
+                                    event_status = "old_event"
+                                    event_year = {{ event.year }}
+                                    disabled
+                                    title="На этот слот уже нельзя записаться"
+                                    event_price = {{ event.price }}
+                                    >{{ event.day }}</button>
+                        </td>
+                    {% elif event.is_booked %}
+                        <td class="cell_is_busy">
+                            <button onclick="timetable_button_click(this)"
+                                    event_day = {{ event.day }}
+                                    event_month = {{ event.month }}
+                                    event_month_text = {{ event.month_text }}
+                                    event_status = "booked_event"
+                                    event_year = {{ event.year }}
+                                    disabled
+                                    title="Этот слот уже занят"
+                                    event_price = {{ event.price }}
+                                    >{{ event.day }}</button>
+                        </td>
+                    {% elif event.time_comparison == "equal" %}
+                        <td class="today_cell">
+                            <button onclick="timetable_button_click(this)"
+                                    event_day = {{ event.day }}
+                                    event_month = {{ event.month }}
+                                    event_month_text = {{ event.month_text }}
+                                    event_year = {{ event.year }}
+                                    event_status = "free_event"
+                                    event_price = {{ event.price }}
+                                    >{{ event.day }}</button>
+                        </td>
+                    {% else %}
+                        <td class="future_cell">
+                            <button onclick="timetable_button_click(this)"
+                                    event_day = {{ event.day }}
+                                    event_month = {{ event.month }}
+                                    event_month_text = {{ event.month_text }}
+                                    event_year = {{ event.year }}
+                                    event_status = "free_event"
+                                    event_price = {{ event.price }}
+                                    >{{ event.day }}</button>
+                        </td>
+                    {% endif %}
+                {% endfor %}
+                </tr>
+        {% endfor %}
+    </tbody>
+    </table> 
+</div>
+{% endfor %}
 
-     <tbody>
-         {% for week in month.weeks %}
-            <tr>
-            {% for event in week %}
-                {% if event.time_comparison == "less" %}
-                    <td class="text-wrap bg-secondary">
-                        <button onclick="timetable_button_click(this)"
-                                event_day = {{ event.day }}
-                                event_month = {{ event.month }}
-                                event_month_text = {{ event.month_text }}
-                                event_status = "old_event"
-                                event_year = {{ event.year }}
-                                disabled
-                                title="На этот слот уже нельзя записаться"
-                                event_price = {{ event.price }}
-                                style="background: #E74362">{{ event.day }} {% if event.time_comparison == "equal" %} TODAY {% endif %}</button>
-                    </td>
-                {% elif event.is_booked %}
-                    <td class="text-wrap bg-danger">
-                        <button onclick="timetable_button_click(this)"
-                                event_day = {{ event.day }}
-                                event_month = {{ event.month }}
-                                event_month_text = {{ event.month_text }}
-                                event_status = "booked_event"
-                                event_year = {{ event.year }}
-                                disabled
-                                title="Этот слот уже занят"
-                                event_price = {{ event.price }}
-                                style="background: #E74362">{{ event.day }} {% if event.time_comparison == "equal" %} TODAY {% endif %}</button>
-                    </td>
-                {% else %}
-                    <td class="text-wrap bg-warning">
-                        <button onclick="timetable_button_click(this)"
-                                event_day = {{ event.day }}
-                                event_month = {{ event.month }}
-                                event_month_text = {{ event.month_text }}
-                                event_year = {{ event.year }}
-                                event_status = "free_event"
-                                event_price = {{ event.price }}
-                                style="background: #E74362">{{ event.day }} {% if event.time_comparison == "equal" %} TODAY {% endif %}</button>
-                    </td>
-                {% endif %}
-            {% endfor %}
-            </tr>
-         {% endfor %}
-     </tbody>
-    </table>
-    </div>
-    {% endfor %}
+<button id="button_prev_month" type="button" class="btn btn-danger">Посмотреть предыдущий месяц</button>
+<button id="button_next_month" type="button" class="btn btn-danger">Посмотреть следующий месяц</button>
 
-    <button id="button_prev_month" type="button" class="btn btn-danger">Посмотреть предыдущий месяц</button>
-    <button id="button_next_month" type="button" class="btn btn-danger">Посмотреть следующий месяц</button>
+{% if user_fields and user_fields.is_staff %}
+    {% if platform.verified %}
+        <form action="{% url 'unverify_platform' platform_id=platform.id %}">
+            <button class="btn btn-secondary" type="submit">Отправить на рассмотрение</button>
+        </form>
+    {% else %}
+        <form action="{% url 'verify_platform' platform_id=platform.id %}">
+            <button class="btn btn-success" type="submit">Принять площадку</button>
+        </form>
+        <form action="{% url 'delete_platform' platform_id=platform.id %}">
+            <button class="btn btn-danger" type="submit">Удалить площадку</button>
+        </form>
+    {% endif %}
+{% endif %}
 
 <div id="calendar-window" class="authorize-window">
     <div id="calendar-window-form" class="calendar-window-form">
@@ -235,7 +260,9 @@
         {% endif %}
     </div>
 </div>
-
+    
+</div>
+    
 <script src="{% static 'platforms\js\platform_description.js' %}"></script>
     
 {% endblock %}

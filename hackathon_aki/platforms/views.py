@@ -14,6 +14,7 @@ def redirect_to_first_page(request, data):        # Redirects to first catalogue
 @process_post_forms_requests
 def show_page(request, data, page_id):            # Shows catalogue page
     relevant_platforms_list = Platform.objects.filter(verified=True)
+    data['catalogue_type'] = 'show_page'
     return show_catalogue_page(request, data, page_id, relevant_platforms_list)
 
 
@@ -21,6 +22,8 @@ def show_page(request, data, page_id):            # Shows catalogue page
 def show_platform_description(request, data, platform_id):
     platform = Platform.objects.filter(id=platform_id)
     if not platform.exists():
+        return render(request, 'platforms/platform_not_found.html', data)
+    if not request.user.is_staff and (not platform.first().verified and platform.first().organizer != request.user):
         return render(request, 'platforms/platform_not_found.html', data)
 
     platform = platform.first()
@@ -45,7 +48,7 @@ def leave_comment(request, data, platform_id):
     data['platform_id'] = platform_id
 
     platform = Platform.objects.filter(id=platform_id)
-    if not platform.exists():
+    if not platform.exists() or not platform.verified:
         return render(request, 'platforms/platform_not_found.html', data)
     platform = platform.first()
 
@@ -72,3 +75,51 @@ def leave_comment(request, data, platform_id):
     data['attachment_form'] = CommentFileAttachingForm()
 
     return render(request, 'platforms/leave_comment.html', data)
+
+
+@process_post_forms_requests
+def delete_platform(request, data, platform_id):
+    if not request.user.is_authenticated:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    if request.user.is_staff:
+        platform = Platform.objects.filter(id=platform_id)
+        if not platform.exists():
+            return render(request, 'platforms/platform_not_found.html', data)
+        platform.first().delete()
+        return redirect('show_unverified_page', page_id=1)
+    else:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+
+@process_post_forms_requests
+def verify_platform(request, data, platform_id):
+    if not request.user.is_authenticated:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    if request.user.is_staff:
+        platform = Platform.objects.filter(id=platform_id)
+        if not platform.exists():
+            return render(request, 'platforms/platform_not_found.html', data)
+
+        this_platform = platform.first()
+        this_platform.verified = True
+        this_platform.save()
+        return redirect('show_unverified_page', page_id=1)
+    else:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+
+@process_post_forms_requests
+def unverify_platform(request, data, platform_id):
+    if not request.user.is_authenticated or not request.user.is_staff:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    platform = Platform.objects.filter(id=platform_id)
+    if not platform.exists():
+        return render(request, 'platforms/platform_not_found.html', data)
+
+    this_platform = platform.first()
+    this_platform.verified = False
+    this_platform.save()
+    return redirect('show_page', page_id=1)

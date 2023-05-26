@@ -13,6 +13,7 @@ def get_basic_arguments_for_html_pages(request):
         'profile_organizer_registration_form': ProfileOrganizerRegistrationForm(),
         'error_message': '',
         'filters': {},
+        'catalogue_type': 'show_page',
         'platform_categories': platform_categories,
         'url_path': request.path,
         'drop_localstorage': True,

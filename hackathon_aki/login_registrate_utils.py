@@ -7,6 +7,8 @@ from main.forms import LoginForm
 from clients.forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 from organizers.forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
 from organizers.models import Entry
+from platforms.search_utils import search_platforms
+from platforms.models import Platform
 from utils import send_email_for_verify
 from utils import platform_categories
 from form_utils import get_basic_arguments_for_html_pages
@@ -151,8 +153,9 @@ def save_search_request(request, data):
 def save_filters_request(request, data):
     for category in platform_categories:
         for category_filter in platform_categories[category]['filters']:
-            if category_filter[0] in request.GET:
-                data['filters'][category_filter[0]] = 'on'
+            if category_filter in request.GET:
+                print(category_filter)
+                data['filters'][category_filter] = 'on'
 
 
 def save_prices_request(request, data):
@@ -185,9 +188,9 @@ def calendar_entry_request(request, data):
 
 def show_catalogue_page(request, data, page_id, relevant_platforms_list):
     if 'search' in request.GET and request.GET['search'] != '':
-        relevant_platforms_list = []
-        platform_names = [platform.name for platform in Platform.objects.all()]
+        platform_names = [platform.name for platform in relevant_platforms_list]
         result_platforms = search_platforms(request.GET['search'], platform_names)
+        relevant_platforms_list = []
         for platform_name in result_platforms:
             for platform in Platform.objects.filter(name=platform_name):
                 if platform in relevant_platforms_list:
@@ -222,8 +225,8 @@ def show_catalogue_page(request, data, page_id, relevant_platforms_list):
     for category_type in platform_categories:
         selected_category[category_type] = False
         for category_filter in platform_categories[category_type]['filters']:
-            if category_filter[0] in request.GET:
-                filters.append(category_filter[0])
+            if category_filter in request.GET:
+                filters.append(category_filter)
                 selected_category[category_type] = True
 
     data['platforms'] = []
@@ -241,7 +244,7 @@ def show_catalogue_page(request, data, page_id, relevant_platforms_list):
                     continue
                 found_tag = False
                 for category_filter in platform_categories[category_type]['filters']:
-                    if category_filter[0] in platform.categories.split(';') and category_filter[0] in filters:
+                    if category_filter in platform.categories.split(';') and category_filter in filters:
                         found_tag = True
                         break
                 if not found_tag:

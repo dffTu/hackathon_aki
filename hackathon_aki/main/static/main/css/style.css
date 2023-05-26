@@ -69,6 +69,7 @@ body {
     justify-content: center;
 }
 
+/*поисковая строка*/
 .search {
     width: 100%;
     display: flex;
@@ -123,6 +124,9 @@ input[type="search"] {
     justify-content: center;
 }
 
+/*Иконки*/
+
+/*иконка каталога*/
 #three {
     align-items: center;
 }
@@ -145,6 +149,11 @@ input[type="search"] {
     margin-top: 3px;
 }
 
+.href-catalog:hover{
+    color: #0d6efd;
+}
+
+/*иконка личного кабинета*/
 .user {
     width: 70%;
     display: flex;
@@ -165,7 +174,6 @@ input[type="search"] {
     margin-top: 9px;
 }
 
-
 img + ul {
     display: none
 }
@@ -180,6 +188,7 @@ a {
     outline: none;
     transition: .1s linear;
 }
+
 
 .topmenu > li {
     display: inline-block;
