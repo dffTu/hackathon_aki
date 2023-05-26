@@ -10,12 +10,15 @@
 
 {% block content %}
 <div class="main-str">
+    {% if has_errors %}
+        <div style="display: none" id="form_has_errors">
+        </div>
+    {% endif %}
+
     <h1 class="text-white hat-of-profile">Мой профиль</h1>
     <br>
 
-    <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
-        <input name="__organizer_register" type="hidden">
-
+    <form method="POST" enctype='multipart/form-data' action="" id="profile_changing_form">
         {% if organizer_errors.incorrect_form %}
             <div class="form_alert">
                 <p>Некорректные данные формы</p>
@@ -103,10 +106,11 @@
                 {% endfor %}
             </div>
 
-            <button class="btn change-profile">Изменить профиль</button>
+            {% csrf_token %}
+            <button type="button" class="btn change-profile" id="change_profile_button">Изменить профиль</button>
         </div>
-
     </form>
+    <script src="{% static 'organizers\js\profile.js' %}"></script>
 </div>
-    
+
 {% endblock %}

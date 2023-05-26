@@ -16,7 +16,6 @@ def redirect_to_first_page(request, data):        # Redirects to first catalogue
 @process_post_forms_requests
 def show_page(request, data, page_id):            # Shows catalogue page
     relevant_platforms_list = Platform.objects.all()
-    data['filters']['search'] = ''
     if 'search' in request.GET and request.GET['search'] != '':
         relevant_platforms_list = []
         platform_names = [platform.name for platform in Platform.objects.all()]
@@ -26,10 +25,13 @@ def show_page(request, data, page_id):            # Shows catalogue page
                 if platform in relevant_platforms_list:
                     continue
                 relevant_platforms_list.append(platform)
-        data['filters']['search'] = request.GET['search']
 
-    number_of_platforms = 0
-    data['platforms'] = [[]]
+    minimal_price = 0
+    maximal_price = 1000000
+    if 'min_price' in request.GET and request.GET['min_price'].isdecimal():
+        minimal_price = int(request.GET['min_price'])
+    if 'max_price' in request.GET and request.GET['max_price'].isdecimal():
+        maximal_price = int(request.GET['max_price'])
 
     filters = []
     selected_category = {}
@@ -40,17 +42,16 @@ def show_page(request, data, page_id):            # Shows catalogue page
                 filters.append(category_filter[0])
                 selected_category[category_type] = True
 
+    data['platforms'] = []
+
     if not filters:
         number_of_platforms = len(relevant_platforms_list)
         for platform in relevant_platforms_list:
-            if len(data['platforms'][-1]) == 3:
-                data['platforms'].append([])
-            data['platforms'][-1].append(platform)
+            data['platforms'].append(platform)
     else:
         for platform in relevant_platforms_list:
             should_add = True
             for category_type in platform_categories:
-                print(category_type, selected_category[category_type])
                 if not selected_category[category_type]:
                     continue
                 found_tag = False
@@ -62,9 +63,7 @@ def show_page(request, data, page_id):            # Shows catalogue page
                     should_add = False
                     break
             if should_add:
-                if len(data['platforms'][-1]) == 3:
-                    data['platforms'].append([])
-                data['platforms'][-1].append(platform)
+                data['platforms'].append(platform)
                 number_of_platforms += 1
 
     data['page_id'] = page_id

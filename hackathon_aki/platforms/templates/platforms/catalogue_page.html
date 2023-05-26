@@ -32,7 +32,7 @@
                             {% for filter in platform_filters %}
                                 {% with filter|key:0 as platform_filter_en %}
                                     {% with filter|key:1 as platform_filter_ru %}
-                                        <div>
+                                        <div class="points">
                                             {% if platform_filter_en in filters %}
                                                 <input type="checkbox" id="{{platform_filter_en}}" name="{{platform_filter_en}}" checked>
                                             {% else %}
@@ -53,7 +53,7 @@
             <!--  Начало ползунка цен    -->
             <div class="wrapper">
               <header>
-                <h2>Цена</h2>
+                <h4>Цена</h4>
               </header>
               <div class="price-input">
                 <div class="field">
@@ -90,47 +90,50 @@
             </div>
             <script src="{% static 'platforms\js\price_slider.js' %}"></script>
             <!--  Конец ползунка цен    -->
-
-            <button type="submit">Применить фильтр</button>
+            <br>
+            <div class="but-filter">
+                <button class="btn apply-a-filter" type="submit">Применить фильтр</button>
+            </div>
         </form>
         </div>
         
     </div>
 
     <div class="col-6 catalog-page">
-        <div class="container catalog-pages">
-            {% for row in platforms %}
-                {% if forloop.counter|sub:1|flr:5|add:1 == page_id %}
-                    <div class="platform">
-                        {% for platform in row %}
-                            <div class="col card">
+        <div class="catalog-pages">
+            <div class="platform">
+                {% for platform in platforms %}
+                {% if forloop.counter|sub:1|flr:15|add:1 == page_id %}
+                    <div class="col card">
+                        <div class="aspect-ratio-box-catalogue card-img-top">
+                            <img src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
+                        </div>
 
-                                <div class="aspect-ratio-box-catalogue card-img-top">
-                                    <img src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ platform.name }}</h5>
+                            <h6>Тип: Дизайн</h6>
+                            <div class="top">
+                                <div class="img-platforms">
+                                    <img src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
                                 </div>
-
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ platform.name }}</h5>
-                                    <h6>Тип: Дизайн</h6>
-                                    <div class="top">
-                                        <div class="img-platforms">
-                                            <img src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
-                                        </div>
-                                        <p>4,5</p>
-                                        <img class="comment" src="{% static 'main\img\comment.svg' %}">
-                                        <p>100</p>
-                                    </div>
-                                    <p class="card-text">{{ platform.description|shorten_text:65 }}</p>
-
-                                </div>
-                                <div class="but-in-card">
-                                    <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
-                                </div>
+                                <p>4,5</p>
+                                <img class="comment" src="{% static 'main\img\comment.svg' %}">
+                                <p>100</p>
                             </div>
-                        {% endfor %}
+                            <div class="card-text">
+                                <p>{{ platform.short_description }}</p>
+                            </div>
+                            
+
+                        </div>
+                        <div class="but-in-card">
+                            <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
+                        </div>
                     </div>
                 {% endif %}
             {% endfor %}
+            </div>
+            
         </div>
         <table>
             {% if all_pages|length == 0 %}
