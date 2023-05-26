@@ -172,7 +172,11 @@ def process_post_forms_requests(f):
                 if not result is None:
                     return result
         elif request.method == "GET":
-            save_get_request(request, data)
+            print(request.GET)
+            if "__search_form" in request.GET or "__filter_form" in request.GET:
+                print('OKOKOKOKKOOKOKOK')
+                save_get_request(request, data)
+
         return f(request, data, *args, **kwargs)
 
     return g
