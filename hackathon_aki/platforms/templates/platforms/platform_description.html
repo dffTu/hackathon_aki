@@ -42,13 +42,13 @@
                             {% for file in platform.platformattachment_set.all %}
                                 {% if forloop.counter0 == 0 %}
                                     <div class="carousel-item active">
-                                        <div class="aspect-ratio-box">
+                                        <div class="aspect-ratio-box-carousel">
                                             <img src="{{ file.file.url }}" class="d-block w-100">
                                         </div>
                                     </div>
                                 {% else %}
                                     <div class="carousel-item">
-                                        <div class="aspect-ratio-box">
+                                        <div class="aspect-ratio-box-carousel">
                                             <img src="{{ file.file.url }}" class="d-block w-100">
                                         </div>
                                     </div>

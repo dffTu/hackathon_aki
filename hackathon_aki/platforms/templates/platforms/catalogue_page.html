@@ -59,7 +59,9 @@
                         {% for platform in row %}
                             <div class="col card">
 
-                                <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
+                                <div class="aspect-ratio-box-catalogue card-img-top">
+                                    <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
+                                </div>
 
                                 <div class="card-body">
                                     <h5 class="card-title">{{ platform.name }}</h5>

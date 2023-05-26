@@ -254,12 +254,36 @@ ul {
 }
 
 /* Position child elements relative to this element */
-.aspect-ratio-box {
+.aspect-ratio-box-catalogue {
     position: relative;
 }
 
 /* Create a pseudo element that uses padding-bottom to take up space */
-.aspect-ratio-box::after {
+.aspect-ratio-box-catalogue::after {
+    display: block;
+    content: '';
+    /* 16:9 aspect ratio */
+    padding-bottom: 40%;
+}
+
+/* Image is positioned absolutely relative to the parent element */
+.aspect-ratio-box-catalogue img {
+    /* Image should match parent box size */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Position child elements relative to this element */
+.aspect-ratio-box-carousel {
+    position: relative;
+}
+
+/* Create a pseudo element that uses padding-bottom to take up space */
+.aspect-ratio-box-carousel::after {
     display: block;
     content: '';
     /* 16:9 aspect ratio */
@@ -267,7 +291,7 @@ ul {
 }
 
 /* Image is positioned absolutely relative to the parent element */
-.aspect-ratio-box img {
+.aspect-ratio-box-carousel img {
     /* Image should match parent box size */
     position: absolute;
     left: 0;
