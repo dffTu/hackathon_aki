@@ -151,8 +151,9 @@ def save_search_request(request, data):
 def save_filters_request(request, data):
     for category in platform_categories:
         for category_filter in platform_categories[category]['filters']:
-            if category_filter[0] in request.GET:
-                data['filters'][category_filter[0]] = 'on'
+            if category_filter in request.GET:
+                print(category_filter)
+                data['filters'][category_filter] = 'on'
 
 
 def save_prices_request(request, data):
