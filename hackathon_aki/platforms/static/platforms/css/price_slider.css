@@ -11,14 +11,16 @@ header h2{
   font-size: 24px;
   font-weight: 600;
 }
+
 header p{
   margin-top: 5px;
   font-size: 16px;
 }
+
 .price-input{
   width: 100%;
   display: flex;
-  margin: 30px 0 35px;
+  margin: 10% 0%;
 }
 .price-input .field{
   display: flex;

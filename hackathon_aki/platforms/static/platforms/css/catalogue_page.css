@@ -37,11 +37,13 @@ button {
 }
 
 #filter {
+    height: max-content;
     align-items: flex-start;
     padding: 20px;
     width: 70%;
     background: rgba(249, 249, 249, 0.09);
     margin-left: 5%;
+    padding-bottom: 3%;
 }
 
 .form-points, .points{
@@ -93,7 +95,8 @@ button {
     display: flex;
     padding: 0px;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    padding: 1%;
 }
 
 .row {
@@ -102,21 +105,19 @@ button {
 
 .platform {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 25%);
+    /* Автоматически заполняем на всю ширину grid-контейнера */
+    grid-template-columns: repeat(auto-fill, 280px);
     width: 100%;
-    max-width: 100%; /* Ширина grid-контейнера */
     justify-content: center;
     justify-items: center; /* Размещаем карточку по центру */
-    column-gap: 5rem; /* Отступ между колонками */
-    grid-column-gap: 8%;
-    grid-row-gap: 2%;
+    column-gap: 30px; /* Отступ между колонками */
     margin: 0 auto;
 }
 
 .card {
     width: 100%;
     height: 27rem;
-    margin-top: 20%;
+    margin-top: 10%;
     border-radius: 10px;
     padding: 10px;
     align-items: center;
@@ -128,15 +129,15 @@ button {
 }
 
 .card-body {
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+    overflow: hidden; 
 }
 
-.but-in-card {
-    margin-left: auto;
+.card-text p{
+    word-wrap: break-all;
 }
 
 .but-in-card a {
@@ -149,6 +150,10 @@ button {
     margin: auto;
     width: 95%;
     margin-top: 2%;
+}
+.but-in-card {
+    margin-left: auto;
+    margin-top: 5%;
 }
 
 .card-img-top, .card-body {
