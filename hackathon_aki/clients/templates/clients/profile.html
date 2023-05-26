@@ -7,10 +7,67 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="text-white">Профиль арендатора</h1>
-    <span class="text-white">{{ email }}</span> <br>
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button class="btn btn-warning" type="submit">Выйти</button>
+<div class="main-str">
+    <h1 class="text-white hat-of-profile">Мой профиль</h1>
+    <br>
+
+    <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
+        <input name="__organizer_register" type="hidden">
+
+        {% if organizer_errors.incorrect_form %}
+            <div class="form_alert">
+                <p>Некорректные данные формы</p>
+            </div>
+        {% endif %}
+
+        <div class="main-form">
+            <label class="text-muted">Email</label>
+            <input class="email" type="" readonly name="Email" value="{{ email }}">
+
+            <div class="form-group">
+                <label class="text-muted">Фамилия</label>
+                <input class="email" type="" readonly name="Email" value="{{ user_organizer_registration_form.last_name }}">
+                {% for error in organizer_errors.last_name %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label class="text-muted">Имя</label>
+                <input class="email" type="" readonly name="Name" value="{{ user_organizer_registration_form.first_name }}">
+                {% for error in organizer_errors.first_name %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+
+             <div class="form-group">
+                <label class="text-muted">Отчество</label>
+                <input class="email" type="" readonly name="Middle_name" value="{{ profile_organizer_registration_form.middle_name }}">
+                {% for error in organizer_errors.middle_name %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label class="text-muted">Номер телефона</label>
+                <input class="email" type="" readonly name="Phone_number" value="{{ profile_organizer_registration_form.phone_number }}">
+                {% for error in organizer_errors.phone_number %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button class="btn change-profile">Изменить профиль</button>
+        </div>
+
     </form>
+</div>
+
 {% endblock %}

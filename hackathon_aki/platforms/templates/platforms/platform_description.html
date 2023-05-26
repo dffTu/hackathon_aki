@@ -9,23 +9,13 @@
 
 {% block content %}
 
-
-
-<!--            <div class="name-company">-->
-<!--                <p class="p-name">{{ platform.name }}</p>-->
-<!--                <p class="p-type">{{ platform.categories|split:";"|join:",  "}}</p>-->
-<!--            </div>-->
-
-
-
-
-
 <div class="main-str">
     <div class="str">
         <div class="mypage">
             <div class="photo">
 
                     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+
                         <div class="carousel-indicators">
                             {% for file in platform.platformattachment_set.all %}
                                 {% if forloop.counter0 == 0 %}
@@ -41,13 +31,13 @@
                         <div class="carousel-inner">
                             {% for file in platform.platformattachment_set.all %}
                                 {% if forloop.counter0 == 0 %}
-                                    <div class="carousel-item active">
+                                    <div class="carousel-item active" data-bs-interval="5000">
                                         <div class="aspect-ratio-box-carousel">
                                             <img src="{{ file.file.url }}" class="d-block w-100">
                                         </div>
                                     </div>
                                 {% else %}
-                                    <div class="carousel-item">
+                                    <div class="carousel-item" data-bs-interval="8000">
                                         <div class="aspect-ratio-box-carousel">
                                             <img src="{{ file.file.url }}" class="d-block w-100">
                                         </div>
@@ -66,6 +56,11 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
+                    </div>
+
+                    <div class="name-company">
+                        <p class="p-name">{{ platform.name }}</p>
+                        <p class="p-type">{{ platform.categories|split:";"|join:",  "}}</p>
                     </div>
 
 
