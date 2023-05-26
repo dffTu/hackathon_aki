@@ -33,7 +33,9 @@ HUMANIZED_MONTHS = ['Января',
 class Slot:
     def __init__(self, date, price, time_comparison, is_booked):
         self.day = date.day
-        self.month = HUMANIZED_MONTHS[date.month - 1]
+        self.year = date.year
+        self.month = date.month
+        self.month_text = HUMANIZED_MONTHS[date.month - 1]
         self.price = price
         self.weekday = date.weekday()
         self.time_comparison = time_comparison

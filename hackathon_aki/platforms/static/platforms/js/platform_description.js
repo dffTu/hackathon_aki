@@ -11,13 +11,18 @@ let login_calendar_registrate_button = document.getElementById("login_calendar_r
 
 function timetable_button_click(clicked_button) {
     document.getElementById('date-paragraph-calendar-window-form').textContent ="Дата: " +
-        clicked_button.getAttribute("event_day") + " " + clicked_button.getAttribute("event_month");
+        clicked_button.getAttribute("event_day") + " " + clicked_button.getAttribute("event_month_text");
     document.getElementById('price-paragraph-calendar-window-form').textContent = "Цена: " +
         clicked_button.getAttribute("event_price");
     document.getElementById('status-paragraph-calendar-window-form').textContent = "Статус: " +
         clicked_button.getAttribute("event_status");
     document.getElementById('file-paragraph-calendar-window-form').textContent = "Скачать оферту";
     calendar_window.style.display = "flex";
+
+    if (document.getElementById("user-client-register-form") === null) return;
+    document.getElementById("__day").value = clicked_button.getAttribute("event_day");
+    document.getElementById("__month").value = clicked_button.getAttribute("event_month");
+    document.getElementById("__year").value = clicked_button.getAttribute("event_year");
 }
 
 button_prev_month.onclick = function () {
