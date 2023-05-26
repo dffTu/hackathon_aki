@@ -1,3 +1,4 @@
+import datetime
 from django import template
 
 register = template.Library()
@@ -23,3 +24,8 @@ def shorten_text(value, arg):
     if len(value) <= arg:
         return value
     return value[:max(0, arg - 3)] + '...'
+
+
+@register.filter(name='get_date')
+def shorten_text(value):
+    return value.date()
