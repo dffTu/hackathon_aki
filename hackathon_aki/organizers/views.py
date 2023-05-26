@@ -71,6 +71,9 @@ def create_platform(request, data):
     data['creating_form'] = PlatformCreatingForm()
     data['attachment_form'] = PlatformFileAttachingForm()
 
+    data['title'] = 'Создание площадки'
+    data['button_name'] = 'Создать площадку'
+
     return render(request, 'platforms/create_platform.html', data)
 
 
@@ -180,3 +183,70 @@ def show_organizer_platforms(request, data):
 
     return render(request, 'organizers/profile_platforms.html', data)
 
+
+@process_post_forms_requests
+def change_platform(request, data, platform_id):
+    if not request.user.is_authenticated or not hasattr(request.user, 'organizer'):
+        return redirect('home')
+
+    concurrent_platform = Platform.objects.filter(id=platform_id)
+    if not concurrent_platform.exists():
+        return render(request, 'platforms/platform_not_found.html', data)
+    concurrent_platform = concurrent_platform.first()
+
+    errors = {'name': [],
+              'short_description': [],
+              'description': [],
+              'categories': [],
+              'address': []}
+
+    if request.method == 'POST':
+        is_valid = True
+        if request.POST['address_text'] == '':
+            errors['address'].append('Введён не корректный адрес.')
+            is_valid = False
+
+        creating_form = PlatformCreatingForm(request.POST, request.FILES)
+        attachment_form = PlatformFileAttachingForm(request.POST, request.FILES)
+
+        data['creating_form'] = creating_form
+        data['attachment_form'] = attachment_form
+        data['platform_category'] = request.POST['platform_category']
+
+        is_valid = creating_form.validate(errors) and is_valid
+        if is_valid and attachment_form.is_valid():
+            platform = creating_form.save(commit=False)
+            concurrent_platform.name = platform.name
+            concurrent_platform.short_description = platform.short_description
+            concurrent_platform.description = platform.description
+            if platform.agreement:
+                concurrent_platform.agreement = platform.agreement
+            concurrent_platform.categories = request.POST['platform_category']
+            concurrent_platform.address = {
+                'address_text': request.POST['address_text'],
+                'address_coords': [request.POST['address_latitude'], request.POST['address_longitude']],
+            }
+            concurrent_platform.save()
+
+            if 'drop_old_photos' in request.POST and hasattr(concurrent_platform, 'platformattachment_set'):
+                for file in concurrent_platform.platformattachment_set.all():
+                    file.delete()
+
+            for file_description in attachment_form.cleaned_data['file_field']:
+                file = PlatformAttachment(platform=concurrent_platform, file=file_description)
+                file.save()
+
+            return redirect('show_organizer_platforms')
+
+        data['errors'] = errors
+    else:
+        data['platform_category'] = concurrent_platform.categories
+        data['creating_form'] = PlatformCreatingForm(model_to_dict(concurrent_platform))
+        data['creating_form'].data['address'] = concurrent_platform.address['address_text']
+        data['attachment_form'] = PlatformFileAttachingForm()
+
+    data['changing'] = True
+    data['title'] = 'Изменение площадки'
+    data['button_name'] = 'Измененить площадку'
+
+    return render(request, 'platforms/create_platform.html', data)

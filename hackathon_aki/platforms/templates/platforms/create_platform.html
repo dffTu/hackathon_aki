@@ -3,47 +3,108 @@
 {% load static %}
 {% load jinja_filters %}
 
-{% block title %}Создание площадки{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'platforms\css\create_platform.css' %}">
+    <link rel="stylesheet" href="{% static 'organizers\css\profile.css' %}">
 
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=0c302373-1600-40fe-8920-973e5e09b5e0" type="text/javascript"></script>
     <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
-    <script src="{% static 'platforms\js\new_platform_address_validation.js' %}"></script>
+    <script src="{% static 'platforms\js\platform_address_validation.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-    <div class="ctr-form">
-        <div class="form">
-            <form method="POST" enctype="multipart/form-data" action="" id="platform_creating_form">
-                {% if errors.incorrect_form %}
-                    <p class="text-white">Некорректные данные формы</p>
+    <div class="main-str">
+        <h1 class="text-white hat-of-profile">{{ title }}</h1>
+        <br>
+        <form method="POST" enctype='multipart/form-data' action="" id="platform_creating_form">
+            {% if organizer_errors.incorrect_form %}
+                <div class="form_alert">
+                    <p>Некорректные данные формы</p>
+                </div>
+            {% endif %}
+
+            <div class="main-form">
+                <div class="form-group">
+                    <label class="text-muted">Название</label>
+                    {{ creating_form.name }}
+                    {% for error in errors.name %}
+                        <div class="form_alert">
+                        {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label class="text-muted" for="platform_category_select">Категория площадки: </label>
+                    <select class="form-control" name="platform_category" id="platform_category_select">
+                        {% with platform_categories|key:"platform-type"|key:"filters" as filters %}
+                            {% for category in filters %}
+                                {% if category == platform_category %}
+                                    <option selected="selected" value='{{ category }}'>{{ filters|key:category|key:0 }}</option>
+                                {% else %}
+                                    <option value='{{ category }}'>{{ filters|key:category|key:0 }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% endwith %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="text-muted">Краткое описание</label>
+                    {{ creating_form.short_description }}
+                    {% for error in errors.short_description %}
+                        <div class="form_alert">
+                        {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label class="text-muted">Описание</label>
+                    {{ creating_form.description }}
+                    {% for error in errors.description %}
+                        <div class="form_alert">
+                        {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if changing %}
+                    <div class="form-group">
+                        <label class="text-muted">Сбросить существующие фотографии</label>
+                        <input type="checkbox" name="drop_old_photos">
+                    </div>
                 {% endif %}
 
-                {{ creating_form.name }}
-                <span class="text-white">{{ errors.name }}</span> <br>
+                <div class="form-group">
+                    {% if changing %}
+                        <label class="text-muted">Добавить фотографии</label>
+                    {% else %}
+                        <label class="text-muted">Фотографии</label>
+                    {% endif %}
+                    {{ attachment_form.file_field }}
+                </div>
 
-                <label for="platform_category_select">Категория платформы: </label>
-                <select name="platform_category" id="platform_category_select">
-                    {% with platform_categories|key:"platform-type"|key:"filters" as filters %}
-                        {% for category in filters %}
-                            <option value='{{ category }}'>{{ filters|key:category|key:0 }}</option>
-                        {% endfor %}
-                    {% endwith %}
-                </select>
+                <div class="form-group">
+                    {% if changing %}
+                        <label class="text-muted">Соглашение (старое, если не заполненно)</label>
+                    {% else %}
+                        <label class="text-muted">Соглашение</label>
+                    {% endif %}
+                    {{ creating_form.agreement }}
+                </div>
 
-                {{ creating_form.short_description }}
-                <span class="text-white">{{ errors.short_description }}</span> <br>
+                <div class="form-group">
+                    <label class="text-muted">Адрес</label>
+                    {{ creating_form.address }}
+                    {% for error in errors.address %}
+                        <div class="form_alert">
+                        {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
 
-                {{ creating_form.description }}
-                <span class="text-white">{{ errors.description }}</span> <br>
-
-                {{ attachment_form.file_field }} <br>
-                {{ creating_form.agreement }} <br>
-
-                {{ creating_form.address }}
-                <span class="text-white">{{ errors.address }}</span> <br>
                 <button id="adders_check_button" type="button">Проверить</button>
 
                 <div id="map" style="width: 600px; height: 400px"></div>
@@ -57,8 +118,8 @@
                 </div>
 
                 {% csrf_token %}
-                <button type="button" id="platform_creating_form_submit_button">Создать</button>
-            </form>
-        </div>
+                <button type="button" class="btn change-profile" id="platform_creating_form_submit_button">{{ button_name }}</button>
+            </div>
+        </form>
     </div>
 {% endblock %}
