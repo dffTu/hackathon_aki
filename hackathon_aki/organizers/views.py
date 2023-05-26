@@ -3,6 +3,7 @@ from main.models import PlatformAttachment
 from platforms.models import Platform
 from platforms.forms import PlatformCreatingForm, PlatformFileAttachingForm
 from .forms import FreeSlotAddingForm
+from utils import platform_categories
 from login_registrate_utils import process_post_forms_requests
 
 
@@ -42,6 +43,7 @@ def create_platform(request, data):
         is_valid = creating_form.validate(errors) and is_valid
         if is_valid and attachment_form.is_valid():
             platform = creating_form.save(commit=False)
+            platform.categories = request.POST['platform_category']
             platform.organizer = request.user.organizer
             platform.rating = 5
             platform.address = {
@@ -57,6 +59,7 @@ def create_platform(request, data):
             return redirect('show_organizer_platforms')
 
     data['errors'] = errors
+    data['platform_categories'] = platform_categories['platform-type']['filters']
     data['creating_form'] = PlatformCreatingForm()
     data['attachment_form'] = PlatformFileAttachingForm()
 
