@@ -7,6 +7,7 @@ from platforms.forms import PlatformCreatingForm, PlatformFileAttachingForm
 from .forms import FreeSlotAddingForm, UserOrganizerChangingForm, ProfileOrganizerRegistrationForm
 from utils import platform_categories, DEFAULT_SLOT_PRICE, SLOTS_COUNT_FOR_PLATFORM
 from login_registrate_utils import process_post_forms_requests
+from platforms.search_utils import search_platforms
 
 
 @process_post_forms_requests
@@ -65,7 +66,7 @@ def create_platform(request, data):
                                     price=DEFAULT_SLOT_PRICE)
                 new_slot.save()
 
-            return redirect('show_organizer_platforms')
+            return redirect('show_organizer_platforms', page_id=1)
 
     data['errors'] = errors
     data['creating_form'] = PlatformCreatingForm()
@@ -172,14 +173,34 @@ def show_organizer_schedule(request, data):
 
 
 @process_post_forms_requests
-def show_organizer_platforms(request, data):
-    if not request.user.is_authenticated:
+def redirect_to_first_page_of_organizer_platforms(request, data):
+    return redirect('show_organizer_platforms', page_id=1)
+
+
+@process_post_forms_requests
+def show_organizer_platforms(request, data, page_id):
+    if not request.user.is_authenticated or not hasattr(request.user, 'organizer'):
         return redirect('home')
 
-    if not hasattr(request.user, 'organizer'):
-        return redirect('home')
+    relevant_platforms_list = Platform.objects.filter(organizer=request.user.organizer)
+    data['platforms'] = []
 
-    data['email'] = request.user.username
+    if 'search' in request.GET and request.GET['search'] != '':
+        platform_names = [platform.name for platform in relevant_platforms_list]
+        result_platforms = search_platforms(request.GET['search'], platform_names)
+        relevant_platforms_list = []
+        for platform_name in result_platforms:
+            for platform in Platform.objects.filter(name=platform_name):
+                if platform in relevant_platforms_list:
+                    continue
+                relevant_platforms_list.append(platform)
+
+    number_of_platforms = len(relevant_platforms_list)
+    for platform in relevant_platforms_list:
+        data['platforms'].append(platform)
+
+    data['page_id'] = page_id
+    data['all_pages'] = list(range(1, (number_of_platforms + 14) // 15 + 1))
 
     return render(request, 'organizers/profile_platforms.html', data)
 
