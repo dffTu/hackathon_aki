@@ -1,33 +1,46 @@
 {% extends 'main/html_template.html' %}
 
+{% load static %}
+
 {% block title %}Профиль{% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'clients\css\profile.css' %}">
+    <script src="{% static 'clients\js\profile.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 <div class="main-str">
+    {% if has_errors %}
+        <div style="display: none" id="form_has_errors">
+        </div>
+    {% endif %}
+
     <h1 class="text-white hat-of-profile">Мой профиль</h1>
     <br>
 
-    <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
-        <input name="__organizer_register" type="hidden">
-
-        {% if organizer_errors.incorrect_form %}
+    <form method="POST" enctype='multipart/form-data' action="" id="profile_changing_form">
+        {% if client_errors.incorrect_form %}
             <div class="form_alert">
                 <p>Некорректные данные формы</p>
             </div>
         {% endif %}
 
         <div class="main-form">
-            <label class="text-muted">Email</label>
-            <input class="email" type="" readonly name="Email" value="{{ email }}">
+            <div class="form-group">
+                <label class="text-muted">Email</label>
+                {{ user_client_registration_form.email }}
+                {% for error in client_errors.email %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
 
             <div class="form-group">
                 <label class="text-muted">Фамилия</label>
-                <input class="email" type="" readonly name="Email" value="{{ user_organizer_registration_form.last_name }}">
-                {% for error in organizer_errors.last_name %}
+                {{ user_client_registration_form.last_name }}
+                {% for error in client_errors.last_name %}
                     <div class="form_alert">
                     {{ error }}
                     </div>
@@ -36,8 +49,8 @@
 
             <div class="form-group">
                 <label class="text-muted">Имя</label>
-                <input class="email" type="" readonly name="Name" value="{{ user_organizer_registration_form.first_name }}">
-                {% for error in organizer_errors.first_name %}
+                {{ user_client_registration_form.first_name }}
+                {% for error in client_errors.first_name %}
                     <div class="form_alert">
                     {{ error }}
                     </div>
@@ -46,8 +59,8 @@
 
              <div class="form-group">
                 <label class="text-muted">Отчество</label>
-                <input class="email" type="" readonly name="Middle_name" value="{{ profile_organizer_registration_form.middle_name }}">
-                {% for error in organizer_errors.middle_name %}
+                {{ profile_client_registration_form.middle_name }}
+                {% for error in client_errors.middle_name %}
                     <div class="form_alert">
                     {{ error }}
                     </div>
@@ -56,17 +69,17 @@
 
             <div class="form-group">
                 <label class="text-muted">Номер телефона</label>
-                <input class="email" type="" readonly name="Phone_number" value="{{ profile_organizer_registration_form.phone_number }}">
-                {% for error in organizer_errors.phone_number %}
+                {{ profile_client_registration_form.phone_number }}
+                {% for error in client_errors.phone_number %}
                     <div class="form_alert">
                     {{ error }}
                     </div>
                 {% endfor %}
             </div>
 
-            <button class="btn change-profile">Изменить профиль</button>
+            {% csrf_token %}
+            <button type="button" class="btn change-profile" id="change_profile_button">Изменить профиль</button>
         </div>
-
     </form>
 </div>
 

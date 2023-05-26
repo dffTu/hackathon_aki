@@ -61,14 +61,20 @@ def client_registration(request, data):
             email_verify = user_form.save(commit=False)
             email_verify.password = auth.hashers.make_password(email_verify.password)
             email_verify.save()
-            email_verify.verification_code = hashlib.sha512((str(email_verify.id) + "-|-" + str(datetime.now().date()) + "-|-" + str(datetime.now().time())).encode('ascii')).hexdigest()
+            email_verify.verification_code = hashlib.sha512((str(email_verify.id) + "-|-" + str(datetime.datetime.now().date()) + "-|-" + str(datetime.datetime.now().time())).encode('ascii')).hexdigest()
             email_verify.save()
 
             user_profile = profile_form.save(commit=False)
             user_profile.email_verification = email_verify
             user_profile.save()
 
-            send_email_for_verify(request, email_verify.email, email_verify.verification_code)
+            try:
+                send_email_for_verify(request, email_verify.email, email_verify.verification_code)
+            except:
+                errors['email'].append('Введён некорректный E-mail.')
+                email_verify.delete()
+                user_profile.delete()
+
             return render(request, 'main/email_verification_sent.html', data)
 
         data['user_client_registration_form'] = user_form
@@ -113,14 +119,20 @@ def organizer_registration(request, data):
             email_verify = user_form.save(commit=False)
             email_verify.password = auth.hashers.make_password(email_verify.password)
             email_verify.save()
-            email_verify.verification_code = hashlib.sha512((str(email_verify.id) + "-|-" + str(datetime.now().date()) + "-|-" + str(datetime.now().time())).encode('ascii')).hexdigest()
+            email_verify.verification_code = hashlib.sha512((str(email_verify.id) + "-|-" + str(datetime.datetime.now().date()) + "-|-" + str(datetime.datetime.now().time())).encode('ascii')).hexdigest()
             email_verify.save()
 
             user_profile = profile_form.save(commit=False)
             user_profile.email_verification = email_verify
             user_profile.save()
 
-            send_email_for_verify(request, email_verify.email, email_verify.verification_code)
+            try:
+                send_email_for_verify(request, email_verify.email, email_verify.verification_code)
+            except:
+                errors['email'].append('Введён некорректный E-mail.')
+                email_verify.delete()
+                user_profile.delete()
+
             return render(request, 'main/email_verification_sent.html', data)
 
         data['user_organizer_registration_form'] = user_form
@@ -169,6 +181,80 @@ def calendar_entry_request(request, data):
     date = datetime.date(year, month, day)
     entry = Entry(client=request.user.client, platform_id=platform_id, date=date)
     entry.save()
+
+
+def show_catalogue_page(request, data, page_id, relevant_platforms_list):
+    if 'search' in request.GET and request.GET['search'] != '':
+        relevant_platforms_list = []
+        platform_names = [platform.name for platform in Platform.objects.all()]
+        result_platforms = search_platforms(request.GET['search'], platform_names)
+        for platform_name in result_platforms:
+            for platform in Platform.objects.filter(name=platform_name):
+                if platform in relevant_platforms_list:
+                    continue
+                relevant_platforms_list.append(platform)
+
+    minimal_price = 0
+    maximal_price = 1000000
+    if 'min_price' in request.GET and request.GET['min_price'].isdecimal():
+        minimal_price = int(request.GET['min_price'])
+    if 'max_price' in request.GET and request.GET['max_price'].isdecimal():
+        maximal_price = int(request.GET['max_price'])
+
+    data['platforms'] = []
+
+    relevant_platforms_list_temp = [platform for platform in relevant_platforms_list]
+    relevant_platforms_list = []
+
+    for platform in relevant_platforms_list_temp:
+        should_add = False
+        for slot in platform.freeslot_set.all():
+            if datetime.date.today() > slot.date:
+                continue
+            if minimal_price <= slot.price <= maximal_price:
+                should_add = True
+                break
+        if should_add:
+            relevant_platforms_list.append(platform)
+
+    filters = []
+    selected_category = {}
+    for category_type in platform_categories:
+        selected_category[category_type] = False
+        for category_filter in platform_categories[category_type]['filters']:
+            if category_filter[0] in request.GET:
+                filters.append(category_filter[0])
+                selected_category[category_type] = True
+
+    data['platforms'] = []
+
+    number_of_platforms = 0
+    if not filters:
+        number_of_platforms = len(relevant_platforms_list)
+        for platform in relevant_platforms_list:
+            data['platforms'].append(platform)
+    else:
+        for platform in relevant_platforms_list:
+            should_add = True
+            for category_type in platform_categories:
+                if not selected_category[category_type]:
+                    continue
+                found_tag = False
+                for category_filter in platform_categories[category_type]['filters']:
+                    if category_filter[0] in platform.categories.split(';') and category_filter[0] in filters:
+                        found_tag = True
+                        break
+                if not found_tag:
+                    should_add = False
+                    break
+            if should_add:
+                data['platforms'].append(platform)
+                number_of_platforms += 1
+
+    data['page_id'] = page_id
+    data['all_pages'] = list(range(1, (number_of_platforms + 14) // 15 + 1))
+
+    return render(request, 'platforms/catalogue_page.html', data)
 
 
 def process_post_forms_requests(f):

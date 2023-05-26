@@ -30,19 +30,17 @@
                         <legend>{{ platform_category|key:"ru" }}</legend>
                         {% with platform_category|key:"filters" as platform_filters%}
                             {% for filter in platform_filters %}
-                                {% with filter|key:0 as platform_filter_en %}
-                                    {% with filter|key:1 as platform_filter_ru %}
-                                        <div class="points">
-                                            {% if platform_filter_en in filters %}
-                                                <input type="checkbox" id="{{platform_filter_en}}" name="{{platform_filter_en}}" checked>
-                                            {% else %}
-                                                <input type="checkbox" id="{{platform_filter_en}}" name="{{platform_filter_en}}">
-                                            {% endif %}
-                                            <label for="{{platform_filter_en}}">
-                                                {{ platform_filter_ru }}
-                                            </label>
-                                        </div>
-                                    {% endwith %}
+                                {% with platform_filters|key:filter|key:0 as filter_ru %}
+                                    <div class="points">
+                                        {% if filter in filters %}
+                                            <input type="checkbox" id="{{ filter }}" name="{{ filter }}" checked>
+                                        {% else %}
+                                            <input type="checkbox" id="{{ filter }}" name="{{ filter }}">
+                                        {% endif %}
+                                        <label for="{{ filter }}">
+                                            {{ filter_ru }}
+                                        </label>
+                                    </div>
                                 {% endwith %}
                             {% endfor %}
                         {% endwith %}
@@ -104,7 +102,7 @@
             <div class="platform">
                 {% for platform in platforms %}
                 {% if forloop.counter|sub:1|flr:15|add:1 == page_id %}
-                    <div class="col card">
+                    <div class="col card" style="border: solid ;">
                         <div class="aspect-ratio-box-catalogue card-img-top">
                             <img src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
                         </div>

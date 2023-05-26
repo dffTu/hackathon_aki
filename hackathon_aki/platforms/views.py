@@ -2,10 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Platform, Comment
 from main.models import CommentAttachment
 from .forms import CommentFileAttachingForm, CommentLeavingForm
-from login_registrate_utils import process_post_forms_requests
-from .search_utils import search_platforms
+from login_registrate_utils import process_post_forms_requests, show_catalogue_page
 from calendar_utils import Month, build_calendar
-from utils import platform_categories
 
 
 @process_post_forms_requests
@@ -16,60 +14,7 @@ def redirect_to_first_page(request, data):        # Redirects to first catalogue
 @process_post_forms_requests
 def show_page(request, data, page_id):            # Shows catalogue page
     relevant_platforms_list = Platform.objects.all()
-    if 'search' in request.GET and request.GET['search'] != '':
-        relevant_platforms_list = []
-        platform_names = [platform.name for platform in Platform.objects.all()]
-        result_platforms = search_platforms(request.GET['search'], platform_names)
-        for platform_name in result_platforms:
-            for platform in Platform.objects.filter(name=platform_name):
-                if platform in relevant_platforms_list:
-                    continue
-                relevant_platforms_list.append(platform)
-
-    minimal_price = 0
-    maximal_price = 1000000
-    if 'min_price' in request.GET and request.GET['min_price'].isdecimal():
-        minimal_price = int(request.GET['min_price'])
-    if 'max_price' in request.GET and request.GET['max_price'].isdecimal():
-        maximal_price = int(request.GET['max_price'])
-
-    filters = []
-    selected_category = {}
-    for category_type in platform_categories:
-        selected_category[category_type] = False
-        for category_filter in platform_categories[category_type]['filters']:
-            if category_filter[0] in request.GET:
-                filters.append(category_filter[0])
-                selected_category[category_type] = True
-
-    data['platforms'] = []
-
-    if not filters:
-        number_of_platforms = len(relevant_platforms_list)
-        for platform in relevant_platforms_list:
-            data['platforms'].append(platform)
-    else:
-        for platform in relevant_platforms_list:
-            should_add = True
-            for category_type in platform_categories:
-                if not selected_category[category_type]:
-                    continue
-                found_tag = False
-                for category_filter in platform_categories[category_type]['filters']:
-                    if category_filter[0] in platform.categories.split(';') and category_filter[0] in filters:
-                        found_tag = True
-                        break
-                if not found_tag:
-                    should_add = False
-                    break
-            if should_add:
-                data['platforms'].append(platform)
-                number_of_platforms += 1
-
-    data['page_id'] = page_id
-    data['all_pages'] = list(range(1, (number_of_platforms + 14) // 15 + 1))
-
-    return render(request, 'platforms/catalogue_page.html', data)
+    return show_catalogue_page(request, data, page_id, relevant_platforms_list)
 
 
 @process_post_forms_requests
