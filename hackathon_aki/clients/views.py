@@ -66,12 +66,10 @@ def show_client_profile(request, data):
 
 @process_post_forms_requests
 def show_client_entries(request, data):
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated or not hasattr(request.user, 'client'):
         return redirect('home')
 
-    if not hasattr(request.user, 'client'):
-        return redirect('home')
-
-    data['email'] = request.user.username
+    data['entries'] = list(request.user.client.entry_set.all())
+    data['entries'].sort(key=lambda x: x.date)
 
     return render(request, 'clients/profile_entries.html', data)
