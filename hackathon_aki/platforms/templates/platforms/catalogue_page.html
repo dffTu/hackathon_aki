@@ -22,7 +22,7 @@
     <div class="col" id="filter">
         <h4>Фильтр</h4>
         <div class="form-points">
-            <form method="get" action="{% url 'show_page' page_id=1 %}">
+            <form method="get" action="{% url catalogue_type page_id=1 %}">
             <input name="__filter_form" type="hidden">
             {% for platform_category_name in platform_categories %}
                 <fieldset>
@@ -140,7 +140,7 @@
         {% else %}
             <div class="number-of-pages">
                 {% if page_id != 1 %}
-                    <form method="get" action="{% url 'show_page' page_id=page_id|sub:1 %}">
+                    <form method="get" action="{% url catalogue_type page_id=page_id|sub:1 %}">
                         <input name="__filter_form" type="hidden">
                         <button type="submit">Предыдущая</button>
                         {% for filter in filters %}
@@ -150,7 +150,7 @@
                 {% endif %}
                 {% for page_number in all_pages %}
                     {% if page_number >= page_id|sub:2 and page_number <= page_id|add:2 %}
-                        <form method="get" id="open_page{{page_number}}" action="{% url 'show_page' page_id=page_number %}">
+                        <form method="get" id="open_page{{page_number}}" action="{% url catalogue_type page_id=page_number %}">
                             <input name="__filter_form" type="hidden">
                             {% for filter in filters %}
                                 <input type="hidden" name="{{ filter }}" value="{{ filters|key:filter }}">
@@ -175,7 +175,7 @@
                     {% endif %}
                 {% endfor %}
                 {% if page_id != all_pages|length %}
-                    <form method="get" action="{% url 'show_page' page_id=page_id|add:1 %}">
+                    <form method="get" action="{% url catalogue_type page_id=page_id|add:1 %}">
                         <input name="__filter_form" type="hidden">
                         <button type="submit">Следующая</button>
                         {% for filter in filters %}
