@@ -7,6 +7,8 @@ let month1 = document.getElementById("month_table_1");
 let month2 = document.getElementById("month_table_2");
 let month3 = document.getElementById("month_table_3");
 
+let update_price_button = document.getElementById("update_price_button");
+
 let login_calendar_registrate_button = document.getElementById("login_calendar_registrate_button");
 
 function timetable_button_click(clicked_button) {
@@ -19,10 +21,15 @@ function timetable_button_click(clicked_button) {
     document.getElementById('file-paragraph-calendar-window-form').textContent = "Скачать оферту";
     calendar_window.style.display = "flex";
 
-    if (document.getElementById("user-client-register-form") === null) return;
+    if (document.getElementById("user-organizer-register-form") != null) return;
+
     document.getElementById("__day").value = clicked_button.getAttribute("event_day");
     document.getElementById("__month").value = clicked_button.getAttribute("event_month");
     document.getElementById("__year").value = clicked_button.getAttribute("event_year");
+
+    if (document.getElementById("own-platform-form")) {
+        document.getElementById("form_price_field").value = clicked_button.getAttribute("event_price");
+    }
 }
 
 button_prev_month.onclick = function () {
@@ -31,6 +38,15 @@ button_prev_month.onclick = function () {
         set_data(month1, month2);
     } else {
         set_data(month2, month3);
+    }
+}
+
+update_price_button.onclick = function() {
+    document.getElementById("form_price_field").readOnly = false;
+    if (update_price_button.textContent === "Сохранить") {
+        update_price_button.type = "submit";
+    } else {
+        update_price_button.textContent = "Сохранить";
     }
 }
 

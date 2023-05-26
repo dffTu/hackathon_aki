@@ -179,4 +179,3 @@ def show_organizer_platforms(request, data):
     data['email'] = request.user.username
 
     return render(request, 'organizers/profile_platforms.html', data)
-
