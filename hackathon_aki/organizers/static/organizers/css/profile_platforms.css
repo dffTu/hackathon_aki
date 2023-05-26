@@ -32,3 +32,239 @@
     font-family: 'Cera Pro Bold';
     padding: 1.5%;
 }
+
+body {
+    color: #fefefe;
+}
+
+h2 {
+    font-family: 'Cera Pro Black';
+
+}
+
+h4 {
+    font-family: 'Cera Pro Bold';
+}
+
+button {
+    color: #fff;
+    background: #E74362;
+    font-family: 'Cera Pro Bold';
+}
+
+.cat {
+    display: flex;
+    margin-top: 2%;
+    margin-left: 9%;
+    align-items: center;
+}
+
+.cat p {
+    margin-left: 1.5%;
+    margin-bottom: 0px;
+}
+
+#filter, .catalog-page {
+    justify-content: flex-start;
+    backdrop-filter: blur(100px);
+    border-radius: 7px;
+    width: 70%;
+}
+
+#filter {
+    height: max-content;
+    align-items: flex-start;
+    padding: 20px;
+    width: 70%;
+    background: rgba(249, 249, 249, 0.09);
+    margin-left: 5%;
+    padding-bottom: 3%;
+}
+
+.form-points, .points{
+    margin-left: 5%;
+}
+
+.wrapper {
+    margin-top: 5%;
+    padding: 0!important;
+}
+
+.wrapper h4{
+    font-family: 'Cera Pro Medium';
+}
+
+.field input{
+    padding: 2%;
+    margin: 0;
+}
+
+.but-filter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15%;
+}
+.apply-a-filter{
+    padding: 3% 10%;
+    background: #E74362;
+    color: #fff;
+    font-family: 'Cera Pro Bold';
+    border: none;
+    border-radius: 7px;
+}
+
+.catalog-page {
+    display: block;
+    flex-direction: column;
+    padding: 0 auto;
+    padding-bottom: 2%;
+    width: 70%;
+    background: rgba(171, 174, 255, 0.05);
+    margin-right: 5%;
+    margin-left: 2%;
+    margin-bottom: 5%;
+}
+
+.catalog-pages {
+    display: flex;
+    padding: 0px;
+    flex-direction: column;
+    align-items: center;
+    padding: 1%;
+}
+
+.row {
+    --bs-gutter-x: 0;
+}
+
+.platform {
+    display: grid;
+    /* Автоматически заполняем на всю ширину grid-контейнера */
+    grid-template-columns: repeat(auto-fill, 280px);
+    width: 100%;
+    justify-content: center;
+    justify-items: center; /* Размещаем карточку по центру */
+    column-gap: 30px; /* Отступ между колонками */
+    margin: 0 auto;
+}
+
+.card {
+    width: 100%;
+    height: 27rem;
+    margin-top: 10%;
+    border-radius: 10px;
+    padding: 10px;
+    align-items: center;
+    background: linear-gradient(201.41deg, rgba(15, 33, 68, 0.8) 3.33%, rgba(38, 64, 116, 0.6) 95.63%);
+}
+
+.card h5, .card h6 {
+    margin-bottom: 3px;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.card-text p{
+    word-wrap: break-all;
+}
+
+.but-in-card a {
+    background: #E74362;
+    color: #fff;
+    font-family: 'Cera Pro Bold';
+}
+
+.card-img-top, .card-body, .but-in-card {
+    margin: auto;
+    width: 95%;
+    margin-top: 2%;
+}
+.but-in-card {
+    margin-left: auto;
+    margin-top: 5%;
+}
+
+.card-img-top, .card-body {
+    height: 55%;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+.card-body {
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 0;
+}
+
+.card-body h5 {
+    font-family: "Cera Pro Bold";
+}
+
+.card-body img {
+    width: 20px;
+    height: 17px;
+}
+
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 3px;
+}
+
+.top p {
+    margin: 0;
+    font-size: 0.7rem;
+}
+
+.img-platforms {
+    overflow: hidden;
+    position: relative;
+}
+
+.comment {
+    margin-left: 5px;
+}
+
+.platform-row {
+    display: flex;
+}
+
+.number-of-pages {
+    display: flex;
+    margin-top: 20px;
+}
+
+.number-of-pages button {
+    padding: 5px;
+    border-radius: 7px;
+    border: none;
+    margin: 10px;
+}
+
+.num-page {
+    font-family: 'Cera Pro Black';
+    background: none;
+}
+
+.pages a {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+.pages a:hover {
+    color: orange;
+}

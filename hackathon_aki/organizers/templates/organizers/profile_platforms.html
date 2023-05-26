@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load jinja_filters %}
+{% load django_template_maths %}
 
 
 {% block title %}Профиль арендодателя{% endblock %}
@@ -11,24 +12,25 @@
 {% endblock %}
 
 {% block content %}
-    <div class="main-str">
-        <div class="hat-of-cat-prof">
-            <h1 class="text-white">Мои площадки</h1>
-            <form class="btn-create" action="{% url 'create_platform' %}">
-                <button class="btn create-platform" type="submit">Создать площадку</button>
-            </form>
-        </div>
+<div class="main-str">
+    <div class="hat-of-cat-prof">
+        <h1 class="text-white">Мои площадки</h1>
+        <form class="btn-create" action="{% url 'create_platform' %}">
+            <button class="btn create-platform" type="submit">Создать площадку</button>
+        </form>
+    </div>
 
 
-        <div class="col-6 catalog-page">
+    <div class="col-6 catalog-page">
         <div class="container catalog-pages">
-            {% for row in platforms %}
-                {% if forloop.counter|sub:1|flr:5|add:1 == page_id %}
-                    <div class="platform">
-                        {% for platform in row %}
-                            <div class="col card">
-
-                                <img class="card-img-top" src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
+            <div class="platform">
+                {% for platform in platforms %}
+                    {% if forloop.counter|sub:1|flr:15|add:1 == page_id %}
+                        {% with platform_categories|key:"platform-type"|key:"filters"|key:platform.categories|key:1 as card_color %}
+                            <div class="col card" style="border: solid; border-color: #{{card_color}};">
+                                <div class="aspect-ratio-box-catalogue card-img-top">
+                                    <img src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
+                                </div>
 
                                 <div class="card-body">
                                     <h5 class="card-title">{{ platform.name }}</h5>
@@ -41,20 +43,76 @@
                                         <img class="comment" src="{% static 'main\img\comment.svg' %}">
                                         <p>100</p>
                                     </div>
-                                    <p class="card-text">{{ platform.description }}</p>
+                                    <div class="card-text">
+                                        <p>{{ platform.short_description }}</p>
+                                    </div>
+
 
                                 </div>
                                 <div class="but-in-card">
                                     <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
                                 </div>
+                                {% if not platform.verified %}
+                                    <p>На рассмотрении</p>
+                                {% endif %}
                             </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endfor %}
+                        {% endwith %}
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
-      <h1>Вот здесь будут площадки</h1>
+
+    {% if all_pages|length == 0 %}
+        <h3>У вас пока нет площадок.</h3>
+    {% else %}
+        <div class="number-of-pages">
+            {% if page_id != 1 %}
+                <form method="get" action="{% url 'show_organizer_platforms' page_id=page_id|sub:1 %}">
+                    <input name="__filter_form" type="hidden">
+                    <button type="submit">Предыдущая</button>
+                    {% for filter in filters %}
+                        <input type="hidden" name="{{ filter }}" value="{{ filters|key:filter }}">
+                    {% endfor %}
+                </form>
+            {% endif %}
+            {% for page_number in all_pages %}
+                {% if page_number >= page_id|sub:2 and page_number <= page_id|add:2 %}
+                    <form method="get" id="open_page{{page_number}}" action="{% url 'show_organizer_platforms' page_id=page_number %}">
+                        <input name="__filter_form" type="hidden">
+                        {% for filter in filters %}
+                            <input type="hidden" name="{{ filter }}" value="{{ filters|key:filter }}">
+                        {% endfor %}
+
+                        <button class="num-page" type="submit">
+                            <div class="pages" style="display: flex; ">
+                                {% if page_number == all_pages|length or page_number == page_id|add:2 %}
+                                    <a href="#" onclick="submitForm{{page_number}}()" style="margin-right: 0;"> {{ page_number }} </a>
+                                {% else %}
+                                    <a href="#" onclick="submitForm{{page_number}}()"> {{ page_number }} </a>
+                                {% endif %}
+                            </div>
+                        </button>
+                    </form>
+                    <script>
+                        function submitForm{{page_number}}() {
+                            let form = document.getElementById("open_page{{page_number}}");
+                            form.submit();
+                        }
+                    </script>
+                {% endif %}
+            {% endfor %}
+            {% if page_id != all_pages|length %}
+                <form method="get" action="{% url 'show_organizer_platforms' page_id=page_id|add:1 %}">
+                    <input name="__filter_form" type="hidden">
+                    <button type="submit">Следующая</button>
+                    {% for filter in filters %}
+                    <input type="hidden" name="{{ filter }}" value="{{ filters|key:filter }}">
+                    {% endfor %}
+                </form>
+            {% endif %}
+        </div>
+    {% endif %}
 </div>
     
 {% endblock %}

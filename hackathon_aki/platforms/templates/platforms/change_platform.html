@@ -1,0 +1,130 @@
+{% extends 'main/html_template.html' %}
+
+{% load static %}
+{% load jinja_filters %}
+
+{% block title %}Изменение площадки{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'organizers\css\profile.css' %}">
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=0c302373-1600-40fe-8920-973e5e09b5e0" type="text/javascript"></script>
+    <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+    <script src="{% static 'platforms\js\new_platform_address_validation.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="main-str">
+    {% if has_errors %}
+        <div style="display: none" id="form_has_errors">
+        </div>
+    {% endif %}
+
+    <h1 class="text-white hat-of-profile">Изменение площадки</h1>
+    <br>
+    <form method="POST" enctype='multipart/form-data' action="" id="platform_creating_form">
+        {% if organizer_errors.incorrect_form %}
+            <div class="form_alert">
+                <p>Некорректные данные формы</p>
+            </div>
+        {% endif %}
+
+        <div class="main-form">
+            <div class="form-group">
+                <label class="text-muted">Название</label>
+                {{ creating_form.name }}
+                {% for error in errors.name %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <label for="platform_category_select">Категория площадки: </label>
+            <select name="platform_category" id="platform_category_select">
+                {% with platform_categories|key:"platform-type"|key:"filters" as filters %}
+                    {% for category in filters %}
+                        <option value='{{ category }}'>{{ filters|key:category|key:0 }}</option>
+                    {% endfor %}
+                {% endwith %}
+            </select>
+
+            <div class="form-group">
+                <label class="text-muted">Краткое описание</label>
+                {{ creating_form.short_description }}
+                {% for error in errors.short_description %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label class="text-muted">Описание</label>
+                {{ creating_form.description }}
+                {% for error in errors.description %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+
+             <div class="form-group">
+                <label class="text-muted">Фотографии</label>
+                {{ attachment_form.file_field }}
+            </div>
+
+            <div class="form-group">
+                <label class="text-muted">Соглашение</label>
+                {{ creating_form.agreement }}
+            </div>
+
+            <div class="form-group">
+                <label class="text-muted">Адрес</label>
+                {{ creating_form.address }}
+                {% for error in errors.address %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label class="text-muted">Юридическое имя</label>
+                {{ profile_organizer_registration_form.juridical_name }}
+                {% for error in organizer_errors.juridical_name %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label class="text-muted">ИНН</label>
+                {{ profile_organizer_registration_form.inn }}
+                {% for error in organizer_errors.inn %}
+                    <div class="form_alert">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button id="adders_check_button" type="button">Проверить</button>
+
+            <div id="map" style="width: 600px; height: 400px"></div>
+
+            <p id="adders_check_result" class="text-white">Введите или выберите на карте адрес площадки.</p>
+
+            <div style="display: none">
+                <input name="address_text" id="address_text_form"> <br>
+                <input name="address_latitude" id="address_latitude_form"> <br>
+                <input name="address_longitude" id="address_longitude_form"> <br>
+            </div>
+
+            {% csrf_token %}
+            <button type="button" class="btn change-profile" id="platform_creating_form_submit_button">Изменить профиль</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

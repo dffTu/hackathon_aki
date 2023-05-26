@@ -88,7 +88,7 @@
                                                 <li><a href="#"><img src="{% static 'main\img\lk.svg' %}"><p>{{ user_fields.first_name }}</p></a>
                                                     <ul class="submenu">
                                                         <li><a href="{% url 'show_organizer_profile' %}">Личный кабинет</a></li>
-                                                        <li><a href="{% url 'show_organizer_platforms' %}">Мои площадки</a></li>
+                                                        <li><a href="{% url 'show_organizer_platforms' page_id=1 %}">Мои площадки</a></li>
                                                         <li><a href="{% url 'show_organizer_schedule' %}">Расписание</a></li>
                                                         <li><a href="/logout/">Выйти</a></li>
                                                     </ul>
