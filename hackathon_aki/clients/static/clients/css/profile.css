@@ -1,0 +1,66 @@
+* {
+    color: #fff;
+}
+
+.main-str {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: max-content;
+    width: 80%;
+    margin: 3% auto;
+    padding: 2%;
+    border-radius: 7px;
+    backdrop-filter: blur(50px);
+    background: rgba(171, 174, 255, 0.05);
+}
+
+.main-form {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: column;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.hat-of-profile {
+    padding: 0 8%;
+}
+
+.email {
+    text-align: left;
+    background: #fff;
+    color: #000;
+    font-family: 'Cera Pro Bold';
+    padding: 6px 12px;
+    border-radius: 5px;
+}
+
+.create-platform, .change-profile {
+    background-color: #E74362;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    border: none;
+    font-family: 'Cera Pro Bold';
+    padding: 1.5%;
+}
+
+.create-platform {
+    width: 100%;
+}
+
+.c {
+    width: 25%;
+}
+
+.change-profile {
+    margin-top: 8%;
+}
+
+.change-profile:hover {
+    background: #d93232;
+    color: #000;
+    transition: linear;
+}

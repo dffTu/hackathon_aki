@@ -101,7 +101,7 @@ def show_organizer_profile(request, data):
             return redirect('home')
         return redirect('show_client_profile')
 
-    data['email'] = request.user.username
+    data['profile'] = request.user
 
     return render(request, 'organizers/profile.html', data)
 

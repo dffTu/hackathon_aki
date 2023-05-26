@@ -35,6 +35,9 @@
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
 }
+.carousel-inner img{
+    
+}
 
 .name-company {
     backdrop-filter: blur(100px);
@@ -43,7 +46,6 @@
     align-items: center;
     position: relative;
     flex-direction: column;
-    top: -100px;
 }
 
 .name-company p {
