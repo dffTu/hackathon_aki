@@ -45,17 +45,16 @@
                     <div class="col-6">
                         <form class="search" method="get" action="{% url 'show_page' page_id=1 %}">
                             <div class="bar">
-                                {% if filters %}
-                                    {% for platform_filter_en in filters %}
-                                        <input type="hidden" name="{{ platform_filter_en}}" value="on">
-                                    {% endfor %}
-                                {% endif %}
-                                {% if search %}
-                                    <input name="search" class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" value="{{search}}">
-                                {% else %}
+                                {% for filter in filters %}
+                                    {% if filter == "search" %}
+                                        <input name="search" class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" value="{{ filters|key:filter }}">
+                                    {% else %}
+                                        <input type="hidden" name="{{ filter }}" value="{{ filters|key:filter }}">
+                                    {% endif %}
+                                {% endfor %}
+                                {% if "search" not in filters %}
                                     <input name="search" class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
                                 {% endif %}
-                                <!-- <input type="search" name="Поиск" placeholder="Поиск"> -->
                             </div>
                             <button class="button" type="submit">Поиск</button>
                         </form>

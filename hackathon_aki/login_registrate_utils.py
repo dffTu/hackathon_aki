@@ -132,21 +132,27 @@ def organizer_registration(request, data):
 
 def save_search_request(request, data):
     if 'search' in request.GET and request.GET['search'] != '':
-        data['search'] = request.GET['search']
+        data['filters']['search'] = request.GET['search']
 
 
 def save_filters_request(request, data):
-    filters = []
     for category in platform_categories:
         for category_filter in platform_categories[category]['filters']:
             if category_filter[0] in request.GET:
-                filters.append(category_filter[0])
-    data['filters'] = filters
+                data['filters'][category_filter[0]] = 'on'
+
+
+def save_prices_request(request, data):
+    if 'min_price' in request.GET:
+        data['filters']['min_price'] = request.GET['min_price']
+    if 'max_price' in request.GET:
+        data['filters']['max_price'] = request.GET['max_price']
 
 
 def save_get_request(request, data):
     save_search_request(request, data)
     save_filters_request(request, data)
+    save_prices_request(request, data)
 
 
 def process_post_forms_requests(f):

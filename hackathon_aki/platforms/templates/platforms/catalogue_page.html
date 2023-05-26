@@ -7,6 +7,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'platforms\css\catalogue_page.css' %}">
+<link rel="stylesheet" href="{% static 'platforms\css\price_slider.css' %}"
 {% endblock %}
 
 {% block content %}
@@ -47,6 +48,48 @@
                     {% endwith %}
                 </fieldset>
             {% endfor %}
+
+            <!--  Начало ползунка цен    -->
+            <div class="wrapper">
+              <header>
+                <h2>Цена</h2>
+              </header>
+              <div class="price-input">
+                <div class="field">
+                    {% if "min_price" in filters %}
+                        <input name="min_price" type="number" class="input-min" value='{{ filters|key:"min_price" }}'>
+                    {% else %}
+                        <input name="min_price" type="number" class="input-min" value="0">
+                    {% endif %}
+                </div>
+                <div class="separator">-</div>
+                <div class="field">
+                    {% if "max_price" in filters %}
+                        <input name="max_price" type="number" class="input-max" value='{{ filters|key:"max_price" }}'>
+                    {% else %}
+                        <input name="max_price" type="number" class="input-max" value="1000000">
+                    {% endif %}
+                </div>
+              </div>
+              <div class="slider">
+                <div class="progress"></div>
+              </div>
+              <div class="range-input">
+                  {% if "min_price" in filters %}
+                        <input type="range" class="range-min" min="0" max="1000000" value='{{ filters|key:"min_price" }}' step="100">
+                  {% else %}
+                        <input type="range" class="range-min" min="0" max="1000000" value="0" step="100">
+                  {% endif %}
+                  {% if "max_price" in filters %}
+                        <input type="range" class="range-max" min="0" max="1000000" value='{{ filters|key:"max_price" }}' step="100">
+                  {% else %}
+                        <input type="range" class="range-max" min="0" max="1000000" value="1000000" step="100">
+                  {% endif %}
+              </div>
+            </div>
+            <script src="{% static 'platforms\js\price_slider.js' %}"></script>
+            <!--  Конец ползунка цен    -->
+
             <button type="submit">Применить фильтр</button>
         </form>
     </div>
@@ -95,27 +138,17 @@
                         {% if page_id != 1 %}
                             <form method="get" action="{% url 'show_page' page_id=page_id|sub:1 %}">
                                 <button type="submit">Предыдущая</button>
-                                {% if filters %}
-                                    {% for platform_filter_en in filters %}
-                                        <input type="hidden" name="{{ platform_filter_en}}" value="on">
-                                    {% endfor %}
-                                {% endif %}
-                                {% if search %}
-                                    <input type="hidden" name="search" value="{{ search }}">
-                                {% endif %}
+                                {% for filter in filters %}
+                                    <input type="hidden" name="{{ filter }}" value="{{ filters|key:filter }}">
+                                {% endfor %}
                             </form>
                         {% endif %}
                         {% for page_number in all_pages %}
                             {% if page_number >= page_id|sub:2 and page_number <= page_id|add:2 %}
                                 <form method="get" id="open_page{{page_number}}" action="{% url 'show_page' page_id=page_number %}">
-                                    {% if filters %}
-                                        {% for platform_filter_en in filters %}
-                                            <input type="hidden" name="{{ platform_filter_en}}" value="on">
-                                        {% endfor %}
-                                    {% endif %}
-                                    {% if search %}
-                                        <input type="hidden" name="search" value="{{ search }}">
-                                    {% endif %}
+                                    {% for filter in filters %}
+                                        <input type="hidden" name="{{ filter }}" value="{{ filters|key:filter }}">
+                                    {% endfor %}
 
                                     <button class="num-page" type="submit">
                                         <div class="pages" style="display: flex; ">
@@ -138,14 +171,9 @@
                         {% if page_id != all_pages|length %}
                             <form method="get" action="{% url 'show_page' page_id=page_id|add:1 %}">
                                 <button type="submit">Следующая</button>
-                                {% if filters %}
-                                    {% for platform_filter_en in filters %}
-                                        <input type="hidden" name="{{ platform_filter_en}}" value="on">
-                                    {% endfor %}
-                                {% endif %}
-                                {% if search %}
-                                    <input type="hidden" name="search" value="{{ search }}">
-                                {% endif %}
+                                {% for filter in filters %}
+                                <input type="hidden" name="{{ filter }}" value="{{ filters|key:filter }}">
+                                {% endfor %}
                             </form>
                         {% endif %}
                     </div>
@@ -155,6 +183,3 @@
     </div>
 </div>
 {% endblock %}
-
-
-
