@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.forms.models import model_to_dict
 from main.models import PlatformAttachment
 from platforms.models import Platform
 from platforms.forms import PlatformCreatingForm, PlatformFileAttachingForm
-from .forms import FreeSlotAddingForm
+from .forms import FreeSlotAddingForm, UserOrganizerChangingForm, ProfileOrganizerRegistrationForm
 from utils import platform_categories
 from login_registrate_utils import process_post_forms_requests
 
@@ -104,7 +106,47 @@ def show_organizer_profile(request, data):
             return redirect('home')
         return redirect('show_client_profile')
 
-    data['profile'] = request.user
+    errors = {'email': [],
+              'password': [],
+              'repeat_password': [],
+              'first_name': [],
+              'last_name': [],
+              'middle_name': [],
+              'phone_number': [],
+              'position': [],
+              'juridical_name': [],
+              'inn': []}
+
+    if request.method == 'POST':
+        user_form = UserOrganizerChangingForm(request.POST)
+        profile_form = ProfileOrganizerRegistrationForm(request.POST)
+
+        data['user_organizer_registration_form'] = user_form
+        data['profile_organizer_registration_form'] = profile_form
+
+        is_valid = user_form.validate(errors)
+        is_valid = profile_form.validate(errors) and is_valid
+        if is_valid:
+            user = user_form.save(commit=False)
+            request.user.first_name = user.first_name
+            request.user.last_name = user.last_name
+            request.user.save()
+
+            user_profile = profile_form.save(commit=False)
+            request.user.organizer.middle_name = user_profile.middle_name
+            request.user.organizer.phone_number = user_profile.phone_number
+            request.user.organizer.position = user_profile.position
+            request.user.organizer.juridical_name = user_profile.juridical_name
+            request.user.organizer.inn = user_profile.inn
+            request.user.organizer.save()
+
+            return redirect('show_organizer_profile')
+
+        data['organizer_errors'] = errors
+        data['has_errors'] = True
+    else:
+        data['user_organizer_registration_form'] = UserOrganizerChangingForm(model_to_dict(request.user))
+        data['profile_organizer_registration_form'] = ProfileOrganizerRegistrationForm(model_to_dict(request.user.organizer))
 
     return render(request, 'organizers/profile.html', data)
 

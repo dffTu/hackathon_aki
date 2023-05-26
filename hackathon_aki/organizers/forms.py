@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from .models import Organizer
 from platforms.models import FreeSlot
 from main.models import EmailVerification
@@ -79,6 +80,41 @@ class ProfileOrganizerRegistrationForm(forms.ModelForm):
             'inn': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': '123412341234',
+            }),
+        }
+
+    def validate(self, error_log):
+        is_valid = self.is_valid()
+        if not is_valid:
+            error_log['incorrect_form'] = True
+
+        is_valid = validate_length(self.length_validation_fields, self.required_fields, self.data, error_log) and is_valid
+        is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
+        return is_valid
+
+
+class UserOrganizerChangingForm(forms.ModelForm):
+    required_fields = ['first_name', 'last_name']
+    length_validation_fields = ['first_name', 'last_name']
+    charset_validation_fields = ['first_name', 'last_name']
+
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name']
+
+        widgets = {
+            'email': forms.TextInput(attrs={
+                'immutable': True,
+                'class': 'form-control',
+                'placeholder': 'name@example.com',
+            }),
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Иван',
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Иванов',
             }),
         }
 
