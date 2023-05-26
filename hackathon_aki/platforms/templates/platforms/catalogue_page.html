@@ -23,6 +23,7 @@
         <h4>Фильтр</h4>
         <div class="form-points">
             <form method="get" action="{% url 'show_page' page_id=1 %}">
+            <input name="__filter_form" type="hidden">
             {% for platform_category_name in platform_categories %}
                 <fieldset>
                     {% with platform_categories|key:platform_category_name as platform_category %}
