@@ -64,3 +64,7 @@
     color: #000;
     transition: linear;
 }
+
+.form-control:disabled, .form-control[readonly]{
+    background-color: #cacaca;
+}
