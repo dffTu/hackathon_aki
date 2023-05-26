@@ -8,25 +8,14 @@ let month2 = document.getElementById("month_table_2");
 let month3 = document.getElementById("month_table_3");
 
 function timetable_button_click(clicked_button) {
-    let description_block = document.createElement('div');
-
-    description_block.id = "new_form_for_button";
-    description_block.style.zIndex = "1";
-    description_block.style.position = "fixed";
-    description_block.style.display = "flex";
-    description_block.style.overflow = "auto";
-    description_block.style.background = "red";
-    description_block.style.width = "40%";
-    description_block.style.height = "30%";
-    description_block.innerText = "Дата: " + clicked_button.getAttribute("event_day") +
-        " " + clicked_button.getAttribute("event_month") + "\n" +
-    "Цена: " + clicked_button.getAttribute("event_price") + "\n" +
-    "Статус: " + clicked_button.getAttribute("event_status") + "\n" +
-    "Документ (оферта): " + "здесь должна быть какая-то ссылка";
-
-
+    document.getElementById('date-paragraph-calendar-window-form').textContent ="Дата: " +
+        clicked_button.getAttribute("event_day") + " " + clicked_button.getAttribute("event_month");
+    document.getElementById('price-paragraph-calendar-window-form').textContent = "Цена: " +
+        clicked_button.getAttribute("event_price");
+    document.getElementById('status-paragraph-calendar-window-form').textContent = "Статус: " +
+        clicked_button.getAttribute("event_status");
+    document.getElementById('file-paragraph-calendar-window-form').textContent = "Скачать оферту";
     calendar_window.style.display = "flex";
-    calendar_window.append(description_block);
 }
 
 button_prev_month.onclick = function () {
@@ -63,7 +52,6 @@ window.onclick = function (event) {
         setDefaultValues();
     }
     if (event.target === calendar_window) {
-        document.getElementById("new_form_for_button").remove();
         calendar_window.style.display = "none";
     }
 }

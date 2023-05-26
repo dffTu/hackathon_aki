@@ -170,6 +170,16 @@
     <button id="button_next_month" type="button" class="btn btn-danger">Посмотреть следующий месяц</button>
 
 <div id="calendar-window" class="authorize-window">
+    <div id="calendar-window-form" class="calendar-window-form">
+        <h2 id="date-paragraph-calendar-window-form"></h2>
+        <h2 id="price-paragraph-calendar-window-form"></h2>
+        <h2 id="status-paragraph-calendar-window-form"></h2>
+        <a href="#" id="file-paragraph-calendar-window-form" download>Скачать оферту</a>
+        <form method="post" action="{{ url_path }}">
+            {% csrf_token %}
+            <button type="submit">Забронировать</button>
+        </form>
+    </div>
 </div>
 
 <script src="{% static 'platforms\js\platform_description.js' %}"></script>

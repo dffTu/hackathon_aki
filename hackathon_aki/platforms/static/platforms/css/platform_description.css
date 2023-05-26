@@ -105,3 +105,13 @@
 .amount-reviews {
     margin-left: 1%;
 }
+
+.calendar-window-form {
+    z-index: 1;
+    position: fixed;
+    display: block;
+    overflow: auto;
+    background: blue;
+    width: 40%;
+    height: 30%;
+}
