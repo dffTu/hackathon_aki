@@ -14,6 +14,7 @@ def redirect_to_first_page(request, data):        # Redirects to first catalogue
 @process_post_forms_requests
 def show_page(request, data, page_id):            # Shows catalogue page
     relevant_platforms_list = Platform.objects.filter(verified=True)
+    data['catalogue_type'] = 'show_page'
     return show_catalogue_page(request, data, page_id, relevant_platforms_list)
 
 

@@ -43,7 +43,7 @@
                         </a>
                     </div>
                     <div class="col-6">
-                        <form class="search" method="get" action="{% url 'show_page' page_id=1 %}">
+                        <form class="search" method="get" action="{% url catalogue_type page_id=1 %}">
                             <input name="__search_form" type="hidden">
                             <div class="bar">
                                 {% for filter in filters %}

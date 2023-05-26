@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'clients',
     'organizers',
     'platforms',
+    'administration',
     'django_template_maths',
     'django.contrib.admin',
     'django.contrib.auth',
