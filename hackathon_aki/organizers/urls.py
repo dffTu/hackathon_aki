@@ -11,5 +11,5 @@ urlpatterns = [
     path('profile/platforms/add/', views.create_platform, name='create_platform'),
     path('profile/platforms/<int:platform_id>/change', views.change_platform, name='change_platform'),
     path('profile/platforms/<int:platform_id>/add_free_slot', views.add_free_slot, name='add_free_slot'),
-    path('profile/delete_entry/<int:platform_id>/<int:user_id>', views.delete_entry, name='delete_entry'),
+    path('profile/delete_entry/<int:platform_id>/<int:client_id>', views.delete_entry, name='delete_entry'),
 ]
