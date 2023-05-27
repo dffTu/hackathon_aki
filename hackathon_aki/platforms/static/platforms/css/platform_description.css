@@ -244,6 +244,8 @@
 
 .delete {
     background: #e63c3c;
+    margin-left: 1%;
+    margin-right: 1%;
 }
 
 .confirmation-window {

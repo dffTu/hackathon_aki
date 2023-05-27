@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from main.forms import LoginForm
 from clients.forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 from organizers.forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
-from main.models import PasswordReset
+from main.models import PasswordReset, CommentAttachment
 from organizers.models import Entry
 from platforms.search_utils import search_platforms
 from platforms.models import Platform
@@ -311,6 +311,10 @@ def leave_comment(request, data):
                 comment.save()
                 platform.rating = (platform.rating * (len(platform.comment_set.all()) - 1) + comment.rating) / len(platform.comment_set.all())
                 platform.save()
+
+                for file_description in attachment_form.cleaned_data['file_field']:
+                    file = CommentAttachment(comment=comment, file=file_description)
+                    file.save()
             else:
                 is_valid = False
 

@@ -284,7 +284,7 @@ def change_platform(request, data, platform_id):
                 file = PlatformAttachment(platform=concurrent_platform, file=file_description)
                 file.save()
 
-            return redirect('show_organizer_platforms')
+            return redirect('show_platform_description', platform_id=platform_id)
 
         data['errors'] = errors
     else:
