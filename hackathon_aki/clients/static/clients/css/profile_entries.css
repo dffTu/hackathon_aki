@@ -1,5 +1,73 @@
-.entry {
-    background-color: #2b2b30;
-    border-radius: 5px;
+
+.main-str{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: max-content;
+    width: 70%;
+    margin: 3% auto;
+    padding: 4% 2%;
+    border-radius: 7px;
+    backdrop-filter: blur(50px);
+    background: rgba(171, 174, 255, 0.05);
+}
+
+h1{
+    margin-left: 2% ;
+}
+
+.main-str ul{
+    display: grid;
+    /* Автоматически заполняем на всю ширину grid-контейнера */
+    grid-template-columns: repeat(auto-fill, 40%);
+    width: 100%;
+    padding: 0;
+    justify-content: center;
+    justify-items: center; /* Размещаем карточку по центру */
+    column-gap: 10%; /* Отступ между колонками */
+    margin: 0 auto;
+    grid-row-gap: 10%;
+}
+
+.entries-block {
     width: 90%;
+    margin: 0 auto;
+    margin-top: 2%;
+}
+
+.entry {
+    padding: 5%;
+    margin: 0 2%;
+    background: #4b5569;
+    border-radius: 5px;
+    font-size: 1rem;    
+}
+
+.str {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.title-str {
+    font-size: 18px; 
+    font-family: 'Cera Pro Bold';
+    margin-right: 2%;   
+}
+
+.entry a{
+    color: #04214c;
+    font-family: 'Cera Pro Bold';
+    font-size: 1.5rem;
+}
+
+.main-str li{
+    width: 100%;
+}
+
+.delete {
+    background: #cc331f;
+    color: #fff;
+    font-family: 'Cera Pro Bold';
+    border-radius: 7px;
 }
