@@ -6,6 +6,9 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'platforms\css\platform_description.css' %}">
 <link rel="stylesheet" href="{% static 'platforms\css\calendar.css' %}">
+
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=0c302373-1600-40fe-8920-973e5e09b5e0" type="text/javascript"></script>
+<script src="{% static 'platforms\js\platform_address_description.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -88,6 +91,8 @@
                 <br>
 
                 <p>Адрес:</p>
+
+                <div id="map" platform_name="{{ platform.name }}" address_latitude="{{ platform.address|key:"address_coords"|key:0 }}" address_longitude="{{ platform.address|key:"address_coords"|key:1 }}"></div>
             </div>
         </div>
 
