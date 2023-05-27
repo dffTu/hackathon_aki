@@ -23,7 +23,8 @@ def show_platform_description(request, data, platform_id):
     platform = Platform.objects.filter(id=platform_id)
     if not platform.exists():
         return render(request, 'platforms/platform_not_found.html', data)
-    if not request.user.is_staff and (not platform.first().verified and platform.first().organizer != request.user):
+    is_organizer = (hasattr(request.user, 'organizer') and platform.first().organizer == request.user.organizer)
+    if not request.user.is_staff and not is_organizer:
         return render(request, 'platforms/platform_not_found.html', data)
 
     platform = platform.first()
