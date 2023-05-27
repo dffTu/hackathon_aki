@@ -161,13 +161,15 @@ def show_organizer_profile(request, data):
 
 @process_post_forms_requests
 def show_organizer_schedule(request, data):
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated or not hasattr(request.user, 'organizer'):
         return redirect('home')
 
-    if not hasattr(request.user, 'organizer'):
-        return redirect('home')
+    data['entries'] = []
+    for platform in request.user.organizer.platform_set.all():
+        for entry in platform.entry_set.all():
+            data['entries'].append(entry)
 
-    data['email'] = request.user.username
+    data['entries'].sort(key=lambda x: x.date)
 
     return render(request, 'organizers/profile_schedule.html', data)
 
