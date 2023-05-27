@@ -6,15 +6,10 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'main\css\profile_page.css' %}">
-    <script src="{% static 'main\js\profile_page.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 <div class="main-str">
-
-    {% if user %}
-        <p>АМОНГАС</p>
-    {% endif %}
 
     {% if user.client %}
         <h1 class="text-white hat-of-profile">Профиль арендатора</h1>
@@ -25,34 +20,34 @@
     <div class="main-form" id="profile_form">
         <div class="form-group">
             <label class="text-muted">Email</label>
-            {{ user.email }}
+            <input class="form-control" value="{{ user.email }}" readonly>
         </div>
 
         <div class="form-group">
             <label class="text-muted">Фамилия</label>
-            {{ user.last_name }}
+            <input class="form-control" value="{{ user.last_name }}" readonly>
         </div>
 
         <div class="form-group">
             <label class="text-muted">Имя</label>
-            {{ user.first_name }}
+            <input class="form-control" value="{{ user.first_name }}" readonly>
         </div>
 
          <div class="form-group">
             <label class="text-muted">Отчество</label>
              {% if user.client %}
-                {{ user.client.middle_name }}
+                <input class="form-control" value="{{ user.client.middle_name }}" readonly>
              {% elif user.organizer %}
-                {{ user.organizer.middle_name }}
+                <input class="form-control" value="{{ user.organizer.middle_name }}" readonly>
              {% endif %}
         </div>
 
         <div class="form-group">
             <label class="text-muted">Номер телефона</label>
             {% if user.client %}
-                {{ user.client.phone_number }}
+                <input class="form-control" value="{{ user.client.phone_number }}" readonly>
              {% elif user.organizer %}
-                {{ user.organizer.phone_number }}
+                <input class="form-control" value="{{ user.organizer.phone_number }}" readonly>
              {% endif %}
         </div>
     </div>
