@@ -217,7 +217,7 @@
             <!--<img src="{{ comment.commentattachment_set.first.file.url }}" class="card-img-top">-->
             <div class="one-comment">
                 <div class="hat-comment">
-                    <p>{{ comment.client.user.first_name }}</p>
+                    <a class="user-profile-link" href="{% url 'show_profile' profile_id=comment.client.user.id %}">{{ comment.client.user.first_name }}</a>
                     <div class="top-stars">
                         {% for x in 1|range:6 %}
                             {% if comment.rating >= x %}

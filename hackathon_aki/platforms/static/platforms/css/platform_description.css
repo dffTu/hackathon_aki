@@ -282,6 +282,11 @@
     font-size: 20px;
 }
 
+.user-profile-link {
+    text-decoration: none;
+    color: #fff;
+}
+
 .top-stars{
     display: flex;
     flex-direction: row;
