@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="main-str">
+<div class="text-white main-str">
 
     <h1 class="text-white">Мои записи</h1>
 
@@ -19,10 +19,35 @@
             {% for entry in entries %}
                 <li>
                     <div class="entry">
-                        <p>Дата: {{ entry.date|get_date }}</p>
-                        <p>ФИО: {{ entry.client.user.last_name }} {{ entry.client.user.first_name }} {{ entry.client.middle_name }}</p>
-                        <p>Контакты: {{ entry.client.phone_number }}, {{ entry.client.user.email }} </p>
-                        <p>Площадка: <a href="{% url 'show_platform_description' platform_id=entry.platform.id %}">{{ entry.platform.name }}</a></p>
+                        <div class="str">
+                            <p class="title-str">Дата:</p>
+                            <p>{{ entry.date|get_date }}</p>
+                        </div>
+
+                        <div class="str">
+                            <p class="title-str">Адрес: </p>
+                            <p>{{ entry.platform.address|key:"address_text" }}</p>
+                        </div>
+
+                        <div class="str">
+                            <p class="title-str">Контакты: </p>
+                            <p>{{ entry.platform.organizer.phone_number }}</p>
+                        </div>
+                        <div class="str">
+                            <p class="title-str">Email: </p>
+                            <p>{{ entry.platform.organizer.user.email }}</p>
+                        </div>
+                        <div class="str">
+                            <p class="title-str">Площадка: </p>
+                            <p><a href="{% url 'show_platform_description' platform_id=entry.platform.id %}">{{ entry.platform.name }}</a></p>
+                        </div>
+                        <div class="str">
+                            <p class="title-str">Цена: </p>
+                            <p>1000</p>
+                        </div>
+                        <div>
+                            <button class="btn delete">Удалить запись</button>
+                        </div>
                     </div>
                 </li>
             {% endfor %}

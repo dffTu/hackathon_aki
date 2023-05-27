@@ -6,7 +6,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'organizers\css\profile.css' %}">
+    <link rel="stylesheet" href="{% static 'platforms\css\create_platform.css' %}">
 
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=0c302373-1600-40fe-8920-973e5e09b5e0" type="text/javascript"></script>
     <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="text-muted" for="platform_category_select">Категория площадки: </label>
+                    <label class="text-muted" for="platform_category_select">Категория площадки</label>
                     <select class="form-control" name="platform_category" id="platform_category_select">
                         {% with platform_categories|key:"platform-type"|key:"filters" as filters %}
                             {% for category in filters %}
@@ -102,19 +102,19 @@
 
                 <div class="form-group">
                     <label class="text-muted">Адрес</label>
-                    {{ creating_form.address }}
+
+                    <div class="check-address">
+                        {{ creating_form.address }}
+                        <button class="btn check" id="adders_check_button" type="button">Проверить</button>
+                    </div>
                     {% for error in errors.address %}
                         <div class="form_alert">
                         {{ error }}
                         </div>
                     {% endfor %}
                 </div>
-
-                <button id="adders_check_button" type="button">Проверить</button>
-
-                <div id="map"></div>
-
                 <p id="adders_check_result" class="text-white">Введите или выберите на карте адрес площадки.</p>
+                <div class="map" id="map"></div>
 
                 <div style="display: none">
                     <input name="address_text" id="address_text_form"> <br>

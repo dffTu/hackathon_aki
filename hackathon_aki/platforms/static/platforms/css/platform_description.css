@@ -216,6 +216,9 @@
 
 .delete {
     background: #e63c3c;
+    font-family: 'Cera Pro Bold';
+    color: #fff;
+    padding: 2% 5%;
 }
 
 .confirmation-window {
