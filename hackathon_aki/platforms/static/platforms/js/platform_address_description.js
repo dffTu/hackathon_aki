@@ -1,10 +1,16 @@
 "use strict"
 
 document.addEventListener("DOMContentLoaded", document_init);
+window.addEventListener('resize', function(event){
+    update_size();
+}, true);
 
 function document_init() {
-    let map_container = document.getElementById("map");
+    update_size();
+}
 
+function update_size() {
+    let map_container = document.getElementById("map");
     let parent_width = parseInt(map_container.parentNode.offsetWidth);
     map_container.setAttribute('style', `width: ${parent_width}px; height: ${parent_width}px`);
 }

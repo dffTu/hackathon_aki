@@ -1,8 +1,14 @@
 "use strict"
 
+const MAP_RATIO = 0.67;
 let suggest_view;
 
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", document_init);
+window.addEventListener('resize', function(event){
+    update_size();
+}, true);
+
+function document_init() {
     $("#address_suggest_form").keydown(function(event) {
         if (suggest_view.options.get('provider', 'yandex#map') == 'none') {
             suggest_view.options.set('provider', 'yandex#map');
@@ -16,11 +22,19 @@ $(document).ready(function() {
     document.getElementById("platform_creating_form_submit_button").onclick = function() {
         document.getElementById("platform_creating_form").submit();
     };
-});
 
-ymaps.ready(init);
+    update_size();
+}
 
-function init() {
+function update_size() {
+    let map_container = document.getElementById("map");
+    let parent_width = parseInt(map_container.parentNode.offsetWidth);
+    map_container.setAttribute('style', `width: ${parent_width}px; height: ${MAP_RATIO * parent_width}px`);
+}
+
+ymaps.ready(map_init);
+
+function map_init() {
     suggest_view = new ymaps.SuggestView('address_suggest_form');
 
     let map;
