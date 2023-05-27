@@ -2,10 +2,10 @@ import datetime
 from django.shortcuts import render, redirect
 from django.forms.models import model_to_dict
 from main.models import PlatformAttachment
-from platforms.models import Platform, FreeSlot
+from platforms.models import Platform
 from .models import Entry
 from platforms.forms import PlatformCreatingForm, PlatformFileAttachingForm
-from .forms import FreeSlotAddingForm, UserOrganizerChangingForm, ProfileOrganizerRegistrationForm
+from .forms import UserOrganizerChangingForm, ProfileOrganizerRegistrationForm
 from utils import platform_categories, DEFAULT_SLOT_PRICE, SLOTS_COUNT_FOR_PLATFORM
 from login_registrate_utils import process_post_forms_requests
 from platforms.search_utils import search_platforms
@@ -56,7 +56,7 @@ def create_platform(request, data):
             platform.organizer = request.user.organizer
             platform.rating = 5
             platform.address = {
-                'address_text':  request.POST['address_text'],
+                'address_text': request.POST['address_text'],
                 'address_coords': [request.POST['address_latitude'], request.POST['address_longitude']],
             }
             platform.save()
@@ -68,8 +68,8 @@ def create_platform(request, data):
             current_date = datetime.date.today()
 
             for i in range(SLOTS_COUNT_FOR_PLATFORM + 1):
-                new_slot = FreeSlot(platform=platform, date=current_date + datetime.timedelta(days=i),
-                                    price=DEFAULT_SLOT_PRICE)
+                new_slot = Entry(client=None, platform=platform, date=current_date + datetime.timedelta(days=i),
+                                 price=DEFAULT_SLOT_PRICE)
                 new_slot.save()
 
             return redirect('show_organizer_platforms', page_id=1)
@@ -101,34 +101,6 @@ def delete_entry(request, data, platform_id, client_id):
     if entry.exists():
         entry.first().delete()
     return redirect('show_platform_description', platform_id=platform_id)
-
-
-@process_post_forms_requests
-def add_free_slot(request, data, platform_id):
-    if not request.user.is_authenticated or not hasattr(request.user, 'organizer'):
-        return redirect('home')
-
-    platform = Platform.objects.filter(id=platform_id)
-    if not platform.exists():
-        return render(request, 'platforms/platform_not_found.html', data)
-    platform = platform.first()
-
-    errors = {'date': [],
-              'price': []}
-
-    if request.method == 'POST':
-        form = FreeSlotAddingForm(request.POST)
-        if form.is_valid():
-            free_slot = form.save(commit=False)
-            free_slot.platform = platform
-            free_slot.save()
-
-            return redirect('show_organizer_platforms')
-
-    data['form'] = FreeSlotAddingForm()
-    data['errors'] = errors
-
-    return render(request, 'organizers/add_free_slot.html', data)
 
 
 @process_post_forms_requests
@@ -179,7 +151,8 @@ def show_organizer_profile(request, data):
         data['has_errors'] = True
     else:
         data['user_organizer_registration_form'] = UserOrganizerChangingForm(model_to_dict(request.user))
-        data['profile_organizer_registration_form'] = ProfileOrganizerRegistrationForm(model_to_dict(request.user.organizer))
+        data['profile_organizer_registration_form'] = ProfileOrganizerRegistrationForm(
+            model_to_dict(request.user.organizer))
 
     return render(request, 'organizers/profile.html', data)
 

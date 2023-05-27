@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Organizer
-from platforms.models import FreeSlot
 from main.models import EmailVerification
 from utils import validate_length, validate_charset
 
@@ -127,28 +126,3 @@ class UserOrganizerChangingForm(forms.ModelForm):
         is_valid = validate_charset(self.charset_validation_fields, self.data, error_log) and is_valid
         return is_valid
 
-
-class FreeSlotAddingForm(forms.ModelForm):
-    required_fields = ['date', 'price']
-
-    class Meta:
-        model = FreeSlot
-        fields = ['date', 'price']
-
-        widgets = {
-            'date': forms.DateInput(attrs={
-                'class': 'form-control',
-            }),
-            'price': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Цена',
-            }),
-        }
-
-    def validate(self, error_log):
-        is_valid = self.is_valid()
-        if not is_valid:
-            error_log['incorrect_form'] = True
-
-        is_valid = validate_length([], self.required_fields, self.data, error_log) and is_valid
-        return is_valid

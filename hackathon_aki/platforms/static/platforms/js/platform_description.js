@@ -52,6 +52,9 @@ function timetable_button_click(clicked_button) {
             }
             document.getElementById("get_arendator_info_button").setAttribute("user_link", user_link);
             document.getElementById("delete_entry_button").setAttribute("delete_link", delete_link);
+        } else {
+            document.getElementById("div_for_get_arendator_info_button").style.display = "none";
+            document.getElementById("div_for_delete_entry_button").style.display = "none";
         }
     }
 

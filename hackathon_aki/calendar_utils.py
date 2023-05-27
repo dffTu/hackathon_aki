@@ -1,7 +1,6 @@
 import datetime
 from django.utils import timezone
 from organizers.models import Entry
-from platforms.models import FreeSlot
 
 WEEKDAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 MONTHS = ['Январь',
@@ -45,12 +44,12 @@ class Slot:
 
 
 class Month:
-    def __init__(self, tmp, today, free_slots, entries):
+    def __init__(self, tmp, today, entries):
         self.tmp = tmp
         self.month = MONTHS[tmp.month - 1]
         self.weeks = []
         for week_delta in range(-5, 6):
-            self.add_week(self.tmp + datetime.timedelta(weeks=week_delta), today, free_slots, entries)
+            self.add_week(self.tmp + datetime.timedelta(weeks=week_delta), today, entries)
 
     @staticmethod
     def get_next_sunday(date):
@@ -62,7 +61,7 @@ class Month:
         weekday = date.weekday()
         return date + datetime.timedelta(days=-weekday)
 
-    def add_week(self, date, today, free_slots, entries):
+    def add_week(self, date, today, entries):
         if self.get_next_sunday(date).month < self.tmp.month or self.get_prev_monday(date).month > self.tmp.month:
             return
 
@@ -81,10 +80,10 @@ class Month:
 
             user_id = None
             client_id = None
-            if entries.filter(date=tmp_date).exists():
+            if entries.filter(date=tmp_date).exclude(client__isnull=True).exists():
                 is_booked = True
-                client_id = entries.filter(date=tmp_date).first().client.id
-                user_id = entries.filter(date=tmp_date).first().client.user_id
+                client_id = entries.filter(date=tmp_date).exclude(client__isnull=True).first().client.id
+                user_id = entries.filter(date=tmp_date).exclude(client__isnull=True).first().client.user_id
             else:
                 is_booked = False
 
@@ -96,13 +95,12 @@ class Month:
 def build_calendar(platform_id):
     today = datetime.date(year=timezone.now().year, month=timezone.now().month, day=timezone.now().day)
 
-    free_slots = FreeSlot.objects.filter(platform_id=platform_id)
-    entries = Entry.objects.filter(platform_id=platform_id)
+    entries = Entry.objects.filter(platform_id=platform_id).exclude(client__isnull=True)
 
     months = []
     tmp = today
     for i in range(3):
-        months.append(Month(tmp, today, free_slots, entries))
+        months.append(Month(tmp, today, entries))
         if tmp.month == 12:
             tmp = datetime.date(tmp.year + 1, 1, 1)
         else:

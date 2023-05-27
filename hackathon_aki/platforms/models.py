@@ -23,20 +23,6 @@ class Platform(models.Model):
         verbose_name_plural = 'Площадки'
 
 
-class FreeSlot(models.Model):
-    platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)
-
-    date = models.DateField('Свободная дата', blank=True)
-    price = models.IntegerField('Цена', blank=True)
-
-    def __str__(self):
-        return f'Свободно {self.date}'
-
-    class Meta:
-        verbose_name = 'Свободный слот'
-        verbose_name_plural = 'Свободные слоты'
-
-
 class Comment(models.Model):
     client = models.ForeignKey('clients.Client', on_delete=models.CASCADE)
     platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)

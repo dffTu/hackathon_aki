@@ -10,6 +10,5 @@ urlpatterns = [
     path('profile/platforms/<int:page_id>/', views.show_organizer_platforms, name='show_organizer_platforms'),
     path('profile/platforms/add/', views.create_platform, name='create_platform'),
     path('profile/platforms/<int:platform_id>/change', views.change_platform, name='change_platform'),
-    path('profile/platforms/<int:platform_id>/add_free_slot', views.add_free_slot, name='add_free_slot'),
     path('profile/delete_entry/<int:platform_id>/<int:client_id>', views.delete_entry, name='delete_entry'),
 ]

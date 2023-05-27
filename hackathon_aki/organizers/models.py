@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from utils import DEFAULT_SLOT_PRICE
 
 
 class Organizer(models.Model):
@@ -23,10 +24,11 @@ class Organizer(models.Model):
 
 
 class Entry(models.Model):
-    client = models.ForeignKey('clients.Client', on_delete=models.CASCADE)
+    client = models.ForeignKey('clients.Client', on_delete=models.SET_NULL, null=True)
     platform = models.ForeignKey('platforms.Platform', on_delete=models.CASCADE)
 
-    date = models.DateTimeField('Дата начала записи', blank=True)
+    date = models.DateField('Дата начала записи', blank=True)
+    price = models.IntegerField('Цена', default=DEFAULT_SLOT_PRICE)
 
     def __str__(self):
         return f'Запись на {self.date}'

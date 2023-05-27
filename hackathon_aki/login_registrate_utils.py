@@ -230,7 +230,7 @@ def show_catalogue_page(request, data, page_id, relevant_platforms_list):
 
     for platform in relevant_platforms_list_temp:
         should_add = False
-        for slot in platform.freeslot_set.all():
+        for slot in platform.entry_set.all():
             if datetime.date.today() > slot.date:
                 continue
             if minimal_price <= slot.price <= maximal_price:
