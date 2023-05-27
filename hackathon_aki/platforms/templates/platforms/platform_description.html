@@ -186,21 +186,21 @@
     </div>
 
     <div class="action">
-        {% if user_fields and user_fields.is_staff %}
-
-        {% if platform.verified %}
-            <form action="{% url 'unverify_platform' platform_id=platform.id %}">
-                <button class="btn send" type="submit">Отправить на рассмотрение</button>
-            </form>
-        {% else %}
-            <form action="{% url 'verify_platform' platform_id=platform.id %}">
-                <button class="btn apply" type="submit">Принять площадку</button>
-            </form>
-            <form action="{% url 'delete_platform' platform_id=platform.id %}">
-                <button class="btn delete" type="submit">Удалить площадку</button>
-            </form>
-        {% endif %}
-
+        {% if user_fields %}
+            {% if user_fields.is_staff %}
+                {% if platform.verified %}
+                    <form action="{% url 'unverify_platform' platform_id=platform.id %}">
+                        <button class="btn send" type="submit">Отправить на рассмотрение</button>
+                    </form>
+                {% else %}
+                    <form action="{% url 'verify_platform' platform_id=platform.id %}">
+                        <button class="btn apply" type="submit">Принять площадку</button>
+                    </form>
+                    <button class="btn delete" type="button" id="delete_platform">Удалить площадку</button>
+                {% endif %}
+            {% elif user_fields.organizer and user_fields.organizer == platform.organizer %}
+                    <button class="btn delete" type="button" id="delete_platform">Удалить площадку</button>
+            {% endif %}
         {% endif %}
     </div>
     <div class="form-comments">
@@ -278,6 +278,17 @@
     </div>
 
 </div>
+
+{% if user_fields and user_fields.is_staff and not platform.verified or user_fields.organizer and user_fields.organizer == platform.organizer %}
+    <div class="authorize-window" id="confirm_delete_window">
+        <div class="confirmation-window">
+            <form action="{% url 'delete_platform' platform_id=platform.id %}">
+                <button class="btn delete" type="submit">Подтвердить</button>
+            </form>
+            <button class="btn btn-secondary" id="cancel_delete_button">Отмена</button>
+        </div>
+    </div>
+{% endif %}
     
 <script src="{% static 'platforms\js\platform_description.js' %}"></script>
     

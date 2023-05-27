@@ -214,6 +214,10 @@
     background: red;
 }
 
+.confirmation-window {
+    background: #fff;
+}
+
 .form-comments {
     display: flex;
     justify-content: flex-start;
