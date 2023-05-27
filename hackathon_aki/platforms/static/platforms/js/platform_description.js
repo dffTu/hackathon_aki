@@ -13,12 +13,10 @@ let delete_platform_button = document.getElementById("delete_platform");
 let cancel_deletion_button = document.getElementById("cancel_delete_button");
 
 function timetable_button_click(clicked_button) {
-    document.getElementById('date-paragraph-calendar-window-form').textContent ="Дата: " +
+    document.getElementById('date-paragraph-calendar-window-form').textContent =
         clicked_button.getAttribute("event_day") + " " + clicked_button.getAttribute("event_month_text");
-    document.getElementById('price-paragraph-calendar-window-form').textContent = "Цена: " +
-        clicked_button.getAttribute("event_price");
-    document.getElementById('status-paragraph-calendar-window-form').textContent = "Статус: " +
-        clicked_button.getAttribute("event_status");
+    document.getElementById('price-paragraph-calendar-window-form').textContent =
+        clicked_button.getAttribute("event_price") + " рублей";
     document.getElementById('file-paragraph-calendar-window-form').textContent = "Скачать оферту";
     calendar_window.style.display = "flex";
 

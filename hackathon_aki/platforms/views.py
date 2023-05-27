@@ -1,3 +1,4 @@
+from django.http import FileResponse
 from django.shortcuts import render, redirect
 from .models import Platform, Comment
 from main.models import CommentAttachment
@@ -125,3 +126,12 @@ def unverify_platform(request, data, platform_id):
     this_platform.verified = False
     this_platform.save()
     return redirect('show_page', page_id=1)
+
+
+@process_post_forms_requests
+def download_agreement(request, data, platform_id):
+    platform = Platform.objects.filter(id=platform_id)
+    if not platform.exists():
+        return render(request, 'platforms/platform_not_found.html', data)
+
+    return FileResponse(platform.first().agreement, as_attachment=True)

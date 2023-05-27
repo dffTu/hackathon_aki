@@ -227,7 +227,7 @@
     <!-- Выпадающая форма -->
     <div class="authorize-window" id="calendar-window">
         <div id="calendar-window-form" class="calendar-window-form">
-            <h2>"Название"</h2>
+            <h2>{{ platform.name }}</h2>
             <div class="icons-in-form">
                 <div class="date">
                     <img src="{% static 'main\img\calendar.svg' %}">
@@ -241,10 +241,21 @@
 
                 <div class="offert">
                     <img src="{% static 'main\img\download1.svg' %}">
-                    <a href="#" id="file-paragraph-calendar-window-form" download>Скачать оферту</a>
+                    <form action="{% url 'download_agreement' platform_id=platform.id %}" id="download_agreement_form">
+                    </form>
+                    <a href="#" id="file-paragraph-calendar-window-form" onclick="downloadAgreement()">Скачать оферту</a>
+                    <script>
+                        function downloadAgreement() {
+                            let form = document.getElementById("download_agreement_form");
+                            form.submit();
+                        }
+                        document.getElementById("file-paragraph-calendar-window-form").addEventListener('click', function (e) {
+                            e.preventDefault();
+                        })
+                    </script>
                 </div>
             </div>
-            <h4>"адрес"</h4>
+            <h4>{{ platform.address|key:"address_text" }}</h4>
             <h4 class="status" id="status-paragraph-calendar-window-form"></h4>
             {% if user_fields.client %}
             <div class="form-book">
