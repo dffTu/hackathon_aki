@@ -193,7 +193,6 @@ def save_get_request(request, data):
 
 
 def calendar_entry_request(request, data):
-    print(request.POST)
     if not request.user.is_authenticated:
         return redirect('show_page', page_id=1)
     if hasattr(request.user, 'organizer'):
