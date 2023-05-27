@@ -23,7 +23,8 @@ class MultipleFileField(forms.FileField):
 
 class PlatformFileAttachingForm(forms.Form):
     file_field = MultipleFileField(required=False, widget=MultipleFileInput(attrs={
-        'class': 'form-control'
+        'class': 'form-control',
+        'accept': 'image/*'
     }))
 
 
@@ -57,6 +58,7 @@ class PlatformCreatingForm(forms.ModelForm):
             }),
             'agreement': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
+                'accept': 'image/*, .pdf'
             }),
         }
 
@@ -72,7 +74,8 @@ class PlatformCreatingForm(forms.ModelForm):
 
 class CommentFileAttachingForm(forms.Form):
     file_field = MultipleFileField(required=False, widget=MultipleFileInput(attrs={
-        'class': 'form-control'
+        'class': 'form-control',
+        'accept': 'image/*'
     }))
 
 
