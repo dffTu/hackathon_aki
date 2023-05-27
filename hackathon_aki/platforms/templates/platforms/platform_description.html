@@ -234,6 +234,9 @@
                 <div class="text-comment">
                     <p>{{ comment.text }}</p>
                 </div>
+                {% for file_description in comment.commentattachment_set.all %}
+                    <img src="{{ file_description.file.url }}">
+                {% endfor %}
             </div>
         {% endfor %}
 
