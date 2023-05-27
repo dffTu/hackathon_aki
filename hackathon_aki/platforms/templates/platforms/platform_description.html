@@ -34,13 +34,13 @@
                     <div class="carousel-inner">
                         {% for file in platform.platformattachment_set.all %}
                             {% if forloop.counter0 == 0 %}
-                                <div class="carousel-item active" data-bs-interval="5000">
+                                <div class="carousel-item active" data-bs-interval="4000">
                                     <div class="aspect-ratio-box-carousel">
                                         <img src="{{ file.file.url }}" class="d-block w-100">
                                     </div>
                                 </div>
                             {% else %}
-                                <div class="carousel-item" data-bs-interval="8000">
+                                <div class="carousel-item" data-bs-interval="4000">
                                     <div class="aspect-ratio-box-carousel">
                                         <img src="{{ file.file.url }}" class="d-block w-100">
                                     </div>
@@ -141,7 +141,11 @@
                                                 event_month_text = {{ event.month_text }}
                                                 event_status = "booked_event"
                                                 event_year = {{ event.year }}
+                                                event_user_link = {% url "show_profile" profile_id=event.user_id %}
+                                                {% if user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %}
+                                                {% else %}
                                                 disabled
+                                                {% endif %}
                                                 title="Этот слот уже занят"
                                                 event_price = {{ event.price }}
                                                 >{{ event.day }}</button>
@@ -232,8 +236,12 @@
 
     </div>
 
-    <!-- Выпадающая форма -->
-    <div class="authorize-window" id="calendar-window">
+</div>
+
+
+
+
+<div class="authorize-window" id="calendar-window">
         <div id="calendar-window-form" class="calendar-window-form">
             <h2>{{ platform.name }}</h2>
             <div class="icons-in-form">
@@ -265,20 +273,46 @@
             </div>
             <h4>{{ platform.address|key:"address_text" }}</h4>
             <h4 class="status" id="status-paragraph-calendar-window-form"></h4>
-            {% if user_fields.client %}
+            {% if user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %}
+                <div class="form-book">
+                    <form id="arendator_slot_info_form" method="post" action="{{ url_path }}">
+
+                        {% csrf_token %}
+                        <button class="btn book" type="button">Изменить цену</button>
+
+                        <div id="div_for_delete_entry_button">
+                            <form method="post" action="{% url 'delete_entry' platform_id=platform.id user_id=user_fields.id">
+                                <button class="btn book" type="button">Удалить запись</button>
+                            </form>
+                        </div>
+
+                        <div id="div_for_block_slot_button">
+                            <button class="btn book" type="button">Заблокировать слот</button>
+                        </div>
+
+                        <div id="div_for_get_arendator_info_button">
+                            <button
+                                    class="btn book"
+                                    id="get_arendator_info_button"
+                                    type="button">Посмотреть информацию об арендаторе
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            {% elif user_fields.client %}
             <div class="form-book">
                 <form id="user-client-register-form" method="post" action="{{ url_path }}">
-                <div style="display: none">
-                    <input id="__calendar_entry_request" name="__calendar_entry_request">
-                    <input id="__platform_id" name="__platform_id" type="number" value={{ platform.id }}>
-                    <input id="__day" name="__day" type="number" value={{ platform.id }}>
-                    <input id="__month" name="__month" type="number">
-                    <input id="__year" name="__year" type="number">
-                </div>
+                    <div style="display: none">
+                        <input id="__calendar_entry_request" name="__calendar_entry_request">
+                        <input id="__platform_id" name="__platform_id" type="number" value={{ platform.id }}>
+                        <input id="__day" name="__day" type="number" value={{ platform.id }}>
+                        <input id="__month" name="__month" type="number">
+                        <input id="__year" name="__year" type="number">
+                    </div>
 
-                {% csrf_token %}
-                <button class="btn book" type="submit">Забронировать</button>
-            </form>
+                    {% csrf_token %}
+                    <button class="btn book" type="submit">Забронировать</button>
+                </form>
             </div>
             {% elif user_fields.organizer %}
             <form method="post">
@@ -296,7 +330,10 @@
         </div>
     </div>
 
-</div>
+
+
+
+
 
 {% if user_fields and user_fields.is_staff and not platform.verified or user_fields.organizer and user_fields.organizer == platform.organizer %}
     <div class="authorize-window" id="confirm_delete_window">
@@ -336,6 +373,18 @@
         </div>
     </div>
 {% endif %}
+
+{% if user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %}
+    <div class="authorize-window" id="confirm_delete_entry">
+        <div class="confirmation-window">
+            <form action="{% url 'delete_entry' platform_id=platform.id user_id=user_fields.id %}">
+                <button class="btn delete" type="submit">Подтвердить</button>
+            </form>
+            <button class="btn btn-secondary" id="cancel_delete_button">Отмена</button>
+        </div>
+    </div>
+{% endif %}
+
 
 <script src="{% static 'platforms\js\platform_description.js' %}"></script>
 

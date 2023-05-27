@@ -122,3 +122,13 @@ def send_email_for_verify(request, email, verification_code):
         [email],
         fail_silently=False,
     )
+
+
+def send_email_for_reset_password(request, email, verification_code):
+    send_mail(
+        "Сброс пароля",
+        f"Перейдите по ссылке для сброса пароля: {request.build_absolute_uri()[:-len(request.path)]}/reset_password/{verification_code}/",
+        config.EMAIL_LOGIN,
+        [email],
+        fail_silently=False,
+    )

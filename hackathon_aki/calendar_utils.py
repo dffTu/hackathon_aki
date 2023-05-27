@@ -31,7 +31,7 @@ HUMANIZED_MONTHS = ['Января',
 
 
 class Slot:
-    def __init__(self, date, price, time_comparison, is_booked):
+    def __init__(self, date, price, time_comparison, is_booked, user_id=None):
         self.day = date.day
         self.year = date.year
         self.month = date.month
@@ -40,6 +40,7 @@ class Slot:
         self.weekday = date.weekday()
         self.time_comparison = time_comparison
         self.is_booked = is_booked
+        self.user_id = user_id
 
 
 class Month:
@@ -77,12 +78,14 @@ class Month:
             else:
                 time_comparison = 'more'
 
+            user_id = None
             if entries.filter(date=tmp_date).exists():
                 is_booked = True
+                user_id = entries.filter(date=tmp_date).first().client.user_id
             else:
                 is_booked = False
 
-            week_slots.append(Slot(tmp_date, 1000, time_comparison, is_booked))
+            week_slots.append(Slot(tmp_date, 1000, time_comparison, is_booked, user_id=user_id))
 
         self.weeks.append(week_slots)
 
