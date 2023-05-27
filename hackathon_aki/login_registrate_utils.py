@@ -6,11 +6,11 @@ from django.contrib.auth.models import User
 from main.forms import LoginForm
 from clients.forms import UserClientRegistrationForm, ProfileClientRegistrationForm
 from organizers.forms import UserOrganizerRegistrationForm, ProfileOrganizerRegistrationForm
-from main.models import PasswordReset
 from organizers.models import Entry
 from platforms.search_utils import search_platforms
 from platforms.models import Platform
-from utils import send_email_for_verify, send_email_for_reset_password
+from platforms.forms import CommentLeavingForm, CommentFileAttachingForm
+from utils import send_email_for_verify
 from utils import platform_categories
 from form_utils import get_basic_arguments_for_html_pages
 
@@ -20,25 +20,6 @@ def login(request, data):
         return redirect('home')
 
     if request.method == 'POST':
-        if request.POST['__is_password_reset'] == 'Y':
-            data['email'] = request.POST['email']
-
-            if not User.objects.filter(username=request.POST['email']).exists():
-                data['error'] = f"Аккаунт в почтой {request.POST['email']} не зарегистрирован."
-            else:
-                reset_query = PasswordReset(email=request.POST['email'])
-                reset_query.save()
-                reset_query.verification_code = hashlib.sha512((str(reset_query.id) + "-|-" + str(datetime.datetime.now().date()) + "-|-" + str(datetime.datetime.now().time())).encode('ascii')).hexdigest()
-                reset_query.save()
-
-                try:
-                    send_email_for_reset_password(request, reset_query.email, reset_query.verification_code)
-                except:
-                    data['error'] = f"Введён некорректный E-mail."
-                    reset_query.delete()
-
-            return render(request, 'main/forget_password.html', data)
-
         user = auth.authenticate(request, username=request.POST['email'], password=request.POST['password'])
         if user is not None:
             auth.login(request, user)
@@ -280,6 +261,47 @@ def show_catalogue_page(request, data, page_id, relevant_platforms_list):
     return render(request, 'platforms/catalogue_page.html', data)
 
 
+def leave_comment(request, data):
+    if 'platform_id' not in request.POST:
+        return redirect('show_page', page_id=1)
+    platform = Platform.objects.filter(id=request.POST['platform_id'])
+    if not platform.exists():
+        return redirect('show_page', page_id=1)
+    platform = platform.first()
+    if not request.user.is_authenticated or not hasattr(request.user, 'client'):
+        return redirect('show_platform_description', platform_id=platform.id)
+
+    errors = {
+        'text': [],
+        'rating': []
+    }
+
+    if request.method == 'POST':
+        is_valid = True
+        platform_id = int(request.POST['platform_id'])
+        comment_form = CommentLeavingForm(request.POST)
+        attachment_form = CommentFileAttachingForm(request.POST, request.FILES)
+        if comment_form.validate(errors) and attachment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.client = request.user.client
+            comment.platform = platform
+            comment.save()
+            platform.rating = (platform.rating * (len(platform.comment_set.all()) - 1) + comment.rating) / len(platform.comment_set.all())
+            platform.save()
+        else:
+            is_valid = False
+
+        data['errors'] = errors
+        data['comment_form'] = CommentLeavingForm()
+        data['attachment_form'] = CommentFileAttachingForm()
+        data['drop_localstorage'] = False
+
+        if is_valid:
+            return redirect('show_platform_description', platform_id=platform_id)
+
+    return None
+
+
 def process_post_forms_requests(f):
     def g(request, *args, **kwargs):
         data = get_basic_arguments_for_html_pages(request)
@@ -300,12 +322,15 @@ def process_post_forms_requests(f):
                 result = calendar_entry_request(request, data)
                 if not result is None:
                     return result
+            if '__comment_leaving_form' in request.POST:
+                result = leave_comment(request, data)
+                if not result is None:
+                    return result
         elif request.method == "GET":
             if "__search_form" in request.GET or "__filter_form" in request.GET:
                 result = save_get_request(request, data)
                 if not result is None:
                     return result
-
 
         return f(request, data, *args, **kwargs)
 

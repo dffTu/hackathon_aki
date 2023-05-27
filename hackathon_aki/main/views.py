@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
-from .forms import PasswordResetForm
-from .models import EmailVerification, PasswordReset
+from .models import EmailVerification
 from login_registrate_utils import process_post_forms_requests
 
 
@@ -50,47 +49,16 @@ def email_verification(request, data, verification_code):
 
 
 @process_post_forms_requests
-def reset_password(request, data, verification_code):
-    if request.user.is_authenticated:
+def show_profile(request, data, profile_id):
+    user = User.objects.filter(id=profile_id)
+    for userk in User.objects.all():
+        print(userk.id)
+    print(User.objects.all())
+    if not user.exists():
         return redirect('home')
 
-    reset_query = PasswordReset.objects.filter(verification_code=verification_code)
-    if not reset_query.exists():
-        data['error_status'] = 'Некорректный код подтверждения.'
-        return render(request, 'main/forget_password_fowm.html', data)
-    reset_query = reset_query.first()
-
-    user = User.objects.filter(username=reset_query.email)
-    if not user.exists():
-        data['error_status'] = 'Пользователь был удалён.'
-        return render(request, 'main/forget_password_fowm.html', data)
+    print(dir(user))
     user = user.first()
+    data['user'] = user
 
-    errors = {'password': [],
-              'repeat_password': []}
-
-    if request.method == 'POST':
-        is_valid = True
-        if request.POST['password'] != request.POST['repeat_password']:
-            errors['repeat_password'].append('Пароли не совпадают')
-            is_valid = False
-
-        form = PasswordResetForm(request.POST)
-
-        is_valid = form.validate(errors) and is_valid
-        if is_valid:
-            reset_query.delete()
-
-            user.set_password(request.POST['password'])
-            user.save()
-
-            auth.login(request, user)
-
-            return redirect('show_client_profile')
-
-        data['errors'] = errors
-        data['form'] = form
-    else:
-        data['form'] = PasswordResetForm()
-
-    return render(request, 'main/forget_password_fowm.html', data)
+    return render(request, 'main/profile_page.html', data)

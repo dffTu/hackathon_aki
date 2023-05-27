@@ -30,14 +30,9 @@ def show_platform_description(request, data, platform_id):
 
     platform = platform.first()
     data['platform'] = platform
-    data['comments'] = Comment.objects.filter(platform_id=platform_id)
-    data['comments_amount'] = len(data['comments'])
     data['months'] = build_calendar(platform_id)
-    data['own_platform'] = False
-
-    if hasattr(request.user, 'organizer'):
-        if platform.organizer.id == request.user.organizer.id:
-            data['own_platform'] = True
+    data['comment_leaving_form'] = CommentLeavingForm()
+    data['attachment_form'] = CommentFileAttachingForm()
 
     return render(request, 'platforms/platform_description.html', data)
 
