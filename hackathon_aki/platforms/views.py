@@ -1,3 +1,4 @@
+from django.http import FileResponse
 from django.shortcuts import render, redirect
 from .models import Platform, Comment
 from main.models import CommentAttachment
@@ -83,12 +84,19 @@ def delete_platform(request, data, platform_id):
     if not request.user.is_authenticated:
         return redirect('show_platform_description', platform_id=platform_id)
 
+    platform = Platform.objects.filter(id=platform_id)
+    is_organizer = (hasattr(request.user, 'organizer') and platform.first().organizer == request.user.organizer)
+
     if request.user.is_staff:
-        platform = Platform.objects.filter(id=platform_id)
         if not platform.exists():
             return render(request, 'platforms/platform_not_found.html', data)
         platform.first().delete()
         return redirect('show_unverified_page', page_id=1)
+    elif is_organizer:
+        if not platform.exists():
+            return render(request, 'platforms/platform_not_found.html', data)
+        platform.first().delete()
+        return redirect('show_organizer_platforms', page_id=1)
     else:
         return redirect('show_platform_description', platform_id=platform_id)
 
@@ -124,3 +132,12 @@ def unverify_platform(request, data, platform_id):
     this_platform.verified = False
     this_platform.save()
     return redirect('show_page', page_id=1)
+
+
+@process_post_forms_requests
+def download_agreement(request, data, platform_id):
+    platform = Platform.objects.filter(id=platform_id)
+    if not platform.exists():
+        return render(request, 'platforms/platform_not_found.html', data)
+
+    return FileResponse(platform.first().agreement, as_attachment=True)

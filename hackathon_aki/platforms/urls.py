@@ -10,4 +10,5 @@ urlpatterns = [
     path('platform/<int:platform_id>/delete', views.delete_platform, name='delete_platform'),
     path('platform/<int:platform_id>/verify', views.verify_platform, name='verify_platform'),
     path('platform/<int:platform_id>/unverify', views.unverify_platform, name='unverify_platform'),
+    path('platform/<int:platform_id>/download_agreement', views.download_agreement, name='download_agreement'),
 ]

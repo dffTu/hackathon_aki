@@ -62,12 +62,30 @@
                     </div>
                     <div class="col" id="three">
                         <div class="icons">
-                            <a class="href-catalog" href="{% url 'show_page' page_id=1 %}" id="open-catalog">
-                                <div class="catalog">
-                                    <img src="{% static 'main\img\catalog.svg' %}">
-                                    <p>Каталог</p>
-                                </div>
-                            </a>
+                            {% if user_fields and user_fields.is_staff %}
+                                {% if catalogue_type == "show_page" %}
+                                    <a class="href-catalog" href="{% url 'show_unverified_page' page_id=1 %}" id="open-catalog">
+                                        <div class="catalog">
+                                            <img src="{% static 'main\img\catalog.svg' %}">
+                                            Заявки площадок
+                                        </div>
+                                    </a>
+                                {% else %}
+                                    <a class="href-catalog" href="{% url 'show_page' page_id=1 %}" id="open-catalog">
+                                        <div class="catalog">
+                                            <img src="{% static 'main\img\catalog.svg' %}">
+                                            <p>Каталог</p>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <a class="href-catalog" href="{% url 'show_page' page_id=1 %}" id="open-catalog">
+                                    <div class="catalog">
+                                        <img src="{% static 'main\img\catalog.svg' %}">
+                                        <p>Каталог</p>
+                                    </div>
+                                </a>
+                            {% endif %}
                             {% if user_fields %}
                                 {% if user_fields.client %}
                                     <div class="three">

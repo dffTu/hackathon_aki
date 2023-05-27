@@ -26,6 +26,10 @@
     margin-top: 2%;
 }
 
+.carousel-indicators {
+    z-index: 1;
+}
+
 .photo {
     background: #10131e;
     width: 100%;
@@ -212,6 +216,10 @@
 
 .delete{
     background: red;
+}
+
+.confirmation-window {
+    background: #fff;
 }
 
 .form-comments {

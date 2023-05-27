@@ -2,6 +2,7 @@ let button_prev_month = document.getElementById("button_prev_month");
 let button_next_month = document.getElementById("button_next_month");
 
 let calendar_window = document.getElementById("calendar-window")
+let confirm_deletion_window = document.getElementById("confirm_delete_window")
 
 let month1 = document.getElementById("month_table_1");
 let month2 = document.getElementById("month_table_2");
@@ -10,14 +11,14 @@ let month3 = document.getElementById("month_table_3");
 let update_price_button = document.getElementById("update_price_button");
 
 let login_calendar_registrate_button = document.getElementById("login_calendar_registrate_button");
+let delete_platform_button = document.getElementById("delete_platform");
+let cancel_deletion_button = document.getElementById("cancel_delete_button");
 
 function timetable_button_click(clicked_button) {
-    document.getElementById('date-paragraph-calendar-window-form').textContent ="Дата: " +
+    document.getElementById('date-paragraph-calendar-window-form').textContent =
         clicked_button.getAttribute("event_day") + " " + clicked_button.getAttribute("event_month_text");
-    document.getElementById('price-paragraph-calendar-window-form').textContent = "Цена: " +
-        clicked_button.getAttribute("event_price");
-    document.getElementById('status-paragraph-calendar-window-form').textContent = "Статус: " +
-        clicked_button.getAttribute("event_status");
+    document.getElementById('price-paragraph-calendar-window-form').textContent =
+        clicked_button.getAttribute("event_price") + " рублей";
     document.getElementById('file-paragraph-calendar-window-form').textContent = "Скачать оферту";
     calendar_window.style.display = "flex";
 
@@ -77,9 +78,21 @@ window.onclick = function (event) {
     if (event.target === calendar_window) {
         calendar_window.style.display = "none";
     }
+    if (event.target === confirm_deletion_window) {
+        confirm_deletion_window.style.display = "none";
+    }
+}
+
+delete_platform_button.onclick = function () {
+    confirm_deletion_window.style.display = "block";
+}
+
+cancel_delete_button.onclick = function () {
+    confirm_deletion_window.style.display = "none";
 }
 
 login_calendar_registrate_button.onclick = function () {
     calendar_window.style.display = "none";
     open_user_button_onclick_func();
-};
+}
+
