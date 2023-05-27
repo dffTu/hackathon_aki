@@ -46,3 +46,19 @@ def email_verification(request, data, verification_code):
     auth.login(request, user)
     data['status'] = 'Почта подтверждена. Вход в аккаунт выполнен.'
     return render(request, 'main/email_verification.html', data)
+
+
+@process_post_forms_requests
+def show_profile(request, data, profile_id):
+    user = User.objects.filter(id=profile_id)
+    for userk in User.objects.all():
+        print(userk.id)
+    print(User.objects.all())
+    if not user.exists():
+        return redirect('home')
+
+    print(dir(user))
+    user = user.first()
+    data['user'] = user
+
+    return render(request, 'main/profile_page.html', data)
