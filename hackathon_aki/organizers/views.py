@@ -52,7 +52,7 @@ def create_platform(request, data):
         is_valid = creating_form.validate(errors) and is_valid
         if is_valid and attachment_form.is_valid():
             platform = creating_form.save(commit=False)
-            platform.categories = request.POST['platform_category']
+            platform.category = request.POST['platform_category']
             platform.organizer = request.user.organizer
             platform.rating = 5
             platform.address = {
@@ -242,7 +242,7 @@ def change_platform(request, data, platform_id):
             concurrent_platform.description = platform.description
             if platform.agreement:
                 concurrent_platform.agreement = platform.agreement
-            concurrent_platform.categories = request.POST['platform_category']
+            concurrent_platform.category = request.POST['platform_category']
             concurrent_platform.address = {
                 'address_text': request.POST['address_text'],
                 'address_coords': [request.POST['address_latitude'], request.POST['address_longitude']],
@@ -261,7 +261,7 @@ def change_platform(request, data, platform_id):
 
         data['errors'] = errors
     else:
-        data['platform_category'] = concurrent_platform.categories
+        data['platform_category'] = concurrent_platform.category
         data['creating_form'] = PlatformCreatingForm(model_to_dict(concurrent_platform))
         data['creating_form'].data['address'] = concurrent_platform.address['address_text']
         data['attachment_form'] = PlatformFileAttachingForm()

@@ -263,7 +263,7 @@ def show_catalogue_page(request, data, page_id, relevant_platforms_list):
                     continue
                 found_tag = False
                 for category_filter in platform_categories[category_type]['filters']:
-                    if category_filter in platform.categories.split(';') and category_filter in filters:
+                    if category_filter in platform.category.split(';') and category_filter in filters:
                         found_tag = True
                         break
                 if not found_tag:

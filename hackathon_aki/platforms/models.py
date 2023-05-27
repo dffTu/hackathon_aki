@@ -6,7 +6,7 @@ class Platform(models.Model):
 
     verified = models.BooleanField('Подтверждена', default=False)
     name = models.CharField('Имя', max_length=250, blank=True)
-    categories = models.CharField('Категории', max_length=250, blank=True)
+    category = models.CharField('Категория', max_length=250, blank=True)
     short_description = models.TextField('Краткое описание', blank=True)
     description = models.TextField('Описание площадки', blank=True)
     rating = models.FloatField('Рейтинг', blank=True)

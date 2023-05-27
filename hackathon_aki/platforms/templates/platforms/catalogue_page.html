@@ -102,7 +102,7 @@
             <div class="platform">
                 {% for platform in platforms %}
                     {% if forloop.counter|sub:1|flr:15|add:1 == page_id %}
-                        {% with platform_categories|key:"platform-type"|key:"filters"|key:platform.categories|key:1 as card_color %}
+                        {% with platform_categories|key:"platform-type"|key:"filters"|key:platform.category|key:1 as card_color %}
                             <div class="col card" style="border: solid; border-color: #{{card_color}};">
                                 <div class="aspect-ratio-box-catalogue card-img-top">
                                     <img src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
@@ -110,7 +110,7 @@
 
                                 <div class="card-body">
                                     <h5 class="card-title">{{ platform.name }}</h5>
-                                    <h7>{{ platform_categories|key:"platform-type"|key:"filters"|key:platform.categories|key:0 }}</h7>
+                                    <h7>{{ platform_categories|key:"platform-type"|key:"filters"|key:platform.category|key:0 }}</h7>
                                     <div class="top">
                                         <div class="img-platforms">
                                             <img src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
