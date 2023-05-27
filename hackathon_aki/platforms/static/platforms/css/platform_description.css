@@ -101,19 +101,95 @@
 }
 
 /*календарь*/
-.calendar-window-form {
-    z-index: 1;
-    position: fixed;
-    display: block;
-    overflow: auto;
-    background: blue;
-    width: 40%;
-    height: 30%;
-}
 
 #calendar {
     margin-top: 50px;
 }
+
+.authorize-window{
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-window-form {
+    z-index: 1;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto;
+    background: #0F2144;
+    border-radius: 7px;
+    width: 50%;
+    height: 50%;
+    padding: 1%;
+    color: #fff;
+}
+
+.icons-in-form{
+    width: 100%;
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
+.icons-in-form .date img, .offert img{
+    height: 25%;
+    width: 25%;
+    margin-bottom: 2%;
+    filter: drop-shadow(4px 4px 2px #797979);
+}
+
+.price img{
+    height: 30%;
+    width: 30%;
+    margin-bottom: 2%;
+    filter: drop-shadow(4px 4px 2px #797979);
+}
+
+.icons-in-form div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 33%;
+}
+
+.calendar-window-form a{
+    color: #fff;
+}
+
+.calendar-window-form a:hover{
+    color: #2552AD;
+}
+
+.calendar-window-form h4, .book{
+    margin-top: 2%;
+}
+
+.form-book{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding-right: 65px;
+    margin-top: 5%;
+}
+
+.book {
+    background-color: #E74362;
+    font-family: 'Cera Pro Bold';
+    font-size: 20px;
+    color: #fff;
+    border: none;
+    padding: 10% 20%;
+    border-radius: 7px;
+}
+
 
 .buttons{
     display: flex;
@@ -123,6 +199,7 @@
     display: flex;
     justify-content: center;
     margin-top: 7%;
+    margin-bottom: 4%;
 }
 
 .send {
@@ -135,4 +212,43 @@
 
 .delete{
     background: red;
+}
+
+.form-comments {
+    display: flex;
+    justify-content: flex-start;
+    width: 85%;
+    height: max-content;
+    margin: 0 auto;
+    padding: 3%;
+    border-radius: 7px;
+    backdrop-filter: blur(50px);
+    background: rgba(171, 174, 255, 0.05);
+}
+
+.one-comment {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+}
+.hat-comment {
+    width: 90%;
+    margin: 0 auto;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    font-family: 'Cera Pro Bold';
+    font-size: 20px;
+}
+
+.top-stars{
+    display: flex;
+    flex-direction: row;
+}
+
+.text-comment{
+    width: 80%;
+    margin: 1% 3%   ;
 }
