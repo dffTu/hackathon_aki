@@ -2,7 +2,10 @@ let button_prev_month = document.getElementById("button_prev_month");
 let button_next_month = document.getElementById("button_next_month");
 
 let calendar_window = document.getElementById("calendar-window");
-let confirm_deletion_window = document.getElementById("confirm_delete_window");
+
+let confirm_deletion_platform_window = document.getElementById("confirm_delete_platform_window");
+let confirm_deletion_entry_window = document.getElementById("confirm_delete_entry_window");
+
 let adding_comment_window = document.getElementById("adding_comment_window");
 
 let month1 = document.getElementById("month_table_1");
@@ -12,8 +15,13 @@ let month3 = document.getElementById("month_table_3");
 let update_price_button = document.getElementById("update_price_button");
 
 let login_calendar_registrate_button = document.getElementById("login_calendar_registrate_button");
+
 let delete_platform_button = document.getElementById("delete_platform");
-let cancel_deletion_button = document.getElementById("cancel_delete_button");
+let delete_entry_button = document.getElementById("delete_entry_button");
+
+let cancel_deletion_platform_button = document.getElementById("cancel_deletion_platform_button");
+let cancel_deletion_entry_button = document.getElementById("cancel_deletion_entry_button");
+
 let add_comment_button = document.getElementById("add_comment_button");
 
 let get_arendator_info_button = document.getElementById("get_arendator_info_button");
@@ -34,11 +42,14 @@ function timetable_button_click(clicked_button) {
 
     if (document.getElementById("arendator_slot_info_form")) {
         document.getElementById("div_for_get_arendator_info_button").style.display = "";
+        document.getElementById("div_for_delete_entry_button").style.display = "";
+
         let link = clicked_button.getAttribute("event_user_link");
         if (link != null) {
             document.getElementById("get_arendator_info_button").setAttribute("arendator_link", link);
         } else {
             document.getElementById("div_for_get_arendator_info_button").style.display = "none";
+            document.getElementById("div_for_delete_entry_button").style.display = "none";
         }
     }
 
@@ -88,8 +99,10 @@ function get_current_month() {
     return month3;
 }
 
-get_arendator_info_button.onclick = function() {
-    window.location.href = get_arendator_info_button.getAttribute("arendator_link");
+if (get_arendator_info_button) {
+    get_arendator_info_button.onclick = function () {
+        window.location.href = get_arendator_info_button.getAttribute("arendator_link");
+    }
 }
 
 window.onclick = function (event) {
@@ -99,23 +112,38 @@ window.onclick = function (event) {
     if (event.target === calendar_window) {
         calendar_window.style.display = "none";
     }
-    if (event.target === confirm_deletion_window) {
-        confirm_deletion_window.style.display = "none";
+    if (event.target === confirm_deletion_platform_window) {
+        confirm_deletion_platform_window.style.display = "none";
+    }
+    if (event.target === confirm_deletion_entry_window) {
+        confirm_deletion_entry_window.style.display = "none";
     }
     if (event.target === adding_comment_window) {
         adding_comment_window.style.display = "none";
     }
 }
 
-if (delete_platform_button) {
-    delete_platform_button.onclick = function () {
-        confirm_deletion_window.style.display = "flex";
+if (delete_entry_button) {
+    delete_entry_button.onclick = function() {
+        confirm_deletion_entry_window.style.display = "flex";
     }
 }
 
-if (cancel_deletion_button) {
-    cancel_deletion_button.onclick = function () {
-        confirm_deletion_window.style.display = "none";
+if (delete_platform_button) {
+    delete_platform_button.onclick = function () {
+        confirm_deletion_platform_window.style.display = "flex";
+    }
+}
+
+if (cancel_deletion_platform_button) {
+    cancel_deletion_platform_button.onclick = function () {
+        confirm_deletion_platform_window.style.display = "none";
+    }
+}
+
+if (cancel_deletion_entry_button) {
+    cancel_deletion_entry_button.onclick = function () {
+        confirm_deletion_entry_window.style.display = "none";
     }
 }
 
