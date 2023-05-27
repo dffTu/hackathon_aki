@@ -110,6 +110,23 @@
     border-radius: 7px;
 }
 
+.question{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3%;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.input p{
+    font-size: 14px;
+    text-decoration: underline;
+}
+
 .log-in-content button {
     width: 50%;
     background-color: #E74362;
