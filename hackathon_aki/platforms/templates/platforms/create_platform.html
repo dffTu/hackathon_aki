@@ -93,6 +93,11 @@
                         <label class="text-muted">Соглашение</label>
                     {% endif %}
                     {{ creating_form.agreement }}
+                    {% for error in errors.agreement %}
+                        <div class="form_alert">
+                        {{ error }}
+                        </div>
+                    {% endfor %}
                 </div>
 
                 <div class="form-group">
