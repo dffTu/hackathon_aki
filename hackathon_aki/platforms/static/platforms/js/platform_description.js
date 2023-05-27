@@ -46,12 +46,14 @@ if (button_prev_month) {
     }
 }
 
-update_price_button.onclick = function() {
-    document.getElementById("form_price_field").readOnly = false;
-    if (update_price_button.textContent === "Сохранить") {
-        update_price_button.type = "submit";
-    } else {
-        update_price_button.textContent = "Сохранить";
+if (update_price_button) {
+    update_price_button.onclick = function() {
+        document.getElementById("form_price_field").readOnly = false;
+        if (update_price_button.textContent === "Сохранить") {
+            update_price_button.type = "submit";
+        } else {
+            update_price_button.textContent = "Сохранить";
+        }
     }
 }
 
