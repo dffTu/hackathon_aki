@@ -186,6 +186,9 @@
     width: 70%;
     margin-top: 4%;
 }
+.but-in-form{
+    width: 50%;
+}
 
 .book {
     width: 100%;
@@ -215,15 +218,24 @@
     display: flex;
     justify-content: space-evenly;
 }
+
 .action {
-    width: 50%;
+    width: 60%;
     display: flex;
     justify-content: space-around;
     margin: 5% auto;
 }
 
+.action button{
+    font-family: 'Cera Pro Bold';
+    color: #fff;
+    padding: 2% 5%;
+    height: 100%;
+    width: 100%;
+}
+
 .send {
-    background: #ddd;
+    background: #878787;
 
 }
 .apply {
@@ -232,9 +244,6 @@
 
 .delete {
     background: #e63c3c;
-    font-family: 'Cera Pro Bold';
-    color: #fff;
-    padding: 2% 5%;
 }
 
 .confirmation-window {
