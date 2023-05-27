@@ -25,13 +25,19 @@ def show_platform_description(request, data, platform_id):
     if not platform.exists():
         return render(request, 'platforms/platform_not_found.html', data)
     is_organizer = (hasattr(request.user, 'organizer') and platform.first().organizer == request.user.organizer)
-    if not request.user.is_staff and not is_organizer:
+    if not platform.first().verified and not request.user.is_staff and not is_organizer:
         return render(request, 'platforms/platform_not_found.html', data)
 
-    data['platform'] = platform.first()
+    platform = platform.first()
+    data['platform'] = platform
     data['comments'] = Comment.objects.filter(platform_id=platform_id)
     data['comments_amount'] = len(data['comments'])
     data['months'] = build_calendar(platform_id)
+    data['own_platform'] = False
+
+    if hasattr(request.user, 'organizer'):
+        if platform.organizer.id == request.user.organizer.id:
+            data['own_platform'] = True
 
     return render(request, 'platforms/platform_description.html', data)
 
@@ -44,7 +50,7 @@ def leave_comment(request, data, platform_id):
     data['platform_id'] = platform_id
 
     platform = Platform.objects.filter(id=platform_id)
-    if not platform.exists() or not platform.verified:
+    if not platform.exists() or not platform.first().verified:
         return render(request, 'platforms/platform_not_found.html', data)
     platform = platform.first()
 
@@ -59,6 +65,8 @@ def leave_comment(request, data, platform_id):
             comment.client = request.user.client
             comment.platform = platform
             comment.save()
+            platform.rating = (platform.rating * (len(platform.comment_set.all()) - 1) + comment.rating) / len(platform.comment_set.all())
+            platform.save()
 
             for file_description in attachment_form.cleaned_data['file_field']:
                 file = CommentAttachment(comment=comment, file=file_description)

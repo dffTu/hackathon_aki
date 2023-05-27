@@ -32,12 +32,17 @@ def create_platform(request, data):
               'short_description': [],
               'description': [],
               'categories': [],
-              'address': []}
+              'address': [],
+              'agreement': []}
 
     if request.method == 'POST':
         is_valid = True
         if request.POST['address_text'] == '':
             errors['address'].append('Введён не корректный адрес.')
+            is_valid = False
+
+        if 'agreement' not in request.FILES:
+            errors['agreement'].append('Требуется прикрепить соглашение.')
             is_valid = False
 
         creating_form = PlatformCreatingForm(request.POST, request.FILES)

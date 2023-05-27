@@ -6,6 +6,9 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'platforms\css\platform_description.css' %}">
 <link rel="stylesheet" href="{% static 'platforms\css\calendar.css' %}">
+
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=0c302373-1600-40fe-8920-973e5e09b5e0" type="text/javascript"></script>
+<script src="{% static 'platforms\js\platform_address_description.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -75,11 +78,11 @@
 
                 <div class="rating">
                     {% if comments %}
-                    <img class="stars" src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
-                    <p class="p1"> 4.3</p>
+                    <img class="stars" src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
+                    <p class="p1"> {{ platform.rating|round:1 }}</p>
                     <p class="main-p">/5</p>
                     <img class="comment" src="{% static 'main\img\comment.svg' %}">
-                    <p class="amount-reviews">{{ comments|length }}</p>
+                    <p class="amount-reviews">{{ platform.comment_set|get_all|length }}</p>
                     {% else %}
                     <img class="stars" src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
                     <p class="main-p">Отзывов пока нет</p>
@@ -87,17 +90,11 @@
                 </div>
                 <br>
 
-                <p>Адрес:</p>
+                <p>Адрес: {{ platform.address|key:"address_text" }}</p>
+
+                <div id="map" platform_name="{{ platform.name }}" address_latitude="{{ platform.address|key:"address_coords"|key:0 }}" address_longitude="{{ platform.address|key:"address_coords"|key:1 }}"></div>
             </div>
         </div>
-
-        {% for comment in comments %}
-            <div>
-                <span class="text-white">{{ comment.text }}</span> <br>
-                <span class="text-white">{{ comment.rating }}</span> <br>
-                <img src="{{ comment.commentattachment_set.first.file.url }}" class="card-img-top">
-            </div>
-        {% endfor %}
     </div>
 
     {% for month in months %}
@@ -176,7 +173,7 @@
                             </tr>
                     {% endfor %}
                 </tbody>
-            </table> 
+            </table>
         </div>
     {% endfor %}
 
@@ -204,23 +201,34 @@
         {% endif %}
     </div>
     <div class="form-comments">
-        <div class="one-comment">
-            <div class="hat-comment">
-                <p>Lorem</p>
-                <div class="top-stars">
-                    <img class="stars" src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
-                    <img class="stars" src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
-                    <img class="stars" src="{% static 'main\img\star-grey.svg' %}" alt="Рейтинг">
-                    <img class="stars" src="{% static 'main\img\star-grey.svg' %}" alt="Рейтинг">
-                    <img class="stars" src="{% static 'main\img\star-grey.svg' %}" alt="Рейтинг">
-                    <p style="margin: 0;">2.0</p>
+        <div class="comment-section-title">
+            <h2>Отзывы</h2>
+            {% if user_fields and user_fields.client and platform.verified %}
+                <button class="btn add-comment-button" id="add_comment_button">Добавить комментарий</button>
+            {% else %}
+                <button class="btn add-comment-button" id="add_comment_button" style="display: none;">Добавить комментарий</button>
+            {% endif %}
+        </div>
+        {% for comment in comments %}
+            <!--<img src="{{ comment.commentattachment_set.first.file.url }}" class="card-img-top">-->
+            <div class="one-comment">
+                <div class="hat-comment">
+                    <p>{{ comment.client.user.first_name }}</p>
+                    <div class="top-stars">
+                        {% for x in 1|range:6 %}
+                            {% if comment.rating >= x %}
+                                <img class="stars" src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
+                            {% else %}
+                                <img class="stars" src="{% static 'main\img\star-grey.svg' %}" alt="Рейтинг">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="text-comment">
+                    <p>{{ comment.text }}</p>
                 </div>
             </div>
-            <div class="text-comment">
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur non repudiandae adipisci, libero nam ut doloribus cum earum corrupti, qui.</p>
-            </div>
-            
-        </div>
+        {% endfor %}
 
     </div>
 
@@ -300,7 +308,18 @@
         </div>
     </div>
 {% endif %}
-    
+
+{% if user_fields and user_fields.client and platform.verified %}
+    <div class="authorize-window" id="adding_comment_window">
+        <div class="confirmation-window">
+            <form action="{% url 'delete_platform' platform_id=platform.id %}">
+                <button class="btn delete" type="submit">Подтвердить</button>
+            </form>
+            <button class="btn btn-secondary" id="cancel_delete_button">Отмена</button>
+        </div>
+    </div>
+{% endif %}
+
 <script src="{% static 'platforms\js\platform_description.js' %}"></script>
-    
+
 {% endblock %}

@@ -29,3 +29,23 @@ def shorten_text(value, arg):
 @register.filter(name='get_date')
 def shorten_text(value):
     return value.date()
+
+
+@register.filter(name='get_date')
+def shorten_text(value):
+    return value.date()
+
+
+@register.filter(name='get_all')
+def shorten_text(value):
+    return value.all()
+
+
+@register.filter(name='round')
+def shorten_text(value, arg):
+    return round(value, arg)
+
+
+@register.filter(name='range')
+def shorten_text(value, arg):
+    return range(value, arg)
