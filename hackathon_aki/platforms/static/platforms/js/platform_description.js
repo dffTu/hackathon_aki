@@ -44,12 +44,14 @@ function timetable_button_click(clicked_button) {
         document.getElementById("div_for_get_arendator_info_button").style.display = "";
         document.getElementById("div_for_delete_entry_button").style.display = "";
 
-        let link = clicked_button.getAttribute("event_user_link");
-        if (link != null) {
-            document.getElementById("get_arendator_info_button").setAttribute("arendator_link", link);
-        } else {
-            document.getElementById("div_for_get_arendator_info_button").style.display = "none";
-            document.getElementById("div_for_delete_entry_button").style.display = "none";
+        let user_link = clicked_button.getAttribute("event_user_link");
+        let delete_link = clicked_button.getAttribute("event_delete_link");
+        if (user_link != null && delete_link != null) {
+            if (document.getElementById("confirm_entry_delete_form")) {
+                document.getElementById("confirm_entry_delete_form").action = delete_link;
+            }
+            document.getElementById("get_arendator_info_button").setAttribute("user_link", user_link);
+            document.getElementById("delete_entry_button").setAttribute("delete_link", delete_link);
         }
     }
 
@@ -101,7 +103,7 @@ function get_current_month() {
 
 if (get_arendator_info_button) {
     get_arendator_info_button.onmousedown = function () {
-        window.location.href = get_arendator_info_button.getAttribute("arendator_link");
+        window.location.href = get_arendator_info_button.getAttribute("user_link");
     }
 }
 
