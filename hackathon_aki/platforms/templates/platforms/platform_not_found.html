@@ -3,5 +3,7 @@
 {% block title %}Описание площадки{% endblock %}
 
 {% block content %}
-    <p class="text-white">Площадка {{ platform_id }} не найдена</p>
+<div class="error" style="display: flex; align-items: center; justify-content: center; margin-top: 60px">
+    <p style="font-size: 40px; font-family: 'Cera Pro Bold'; color: #fff" >Площадка {{ platform_id }} не найдена</p>
+</div>
 {% endblock %}

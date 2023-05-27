@@ -146,7 +146,9 @@
                 <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
                         <input name="__login_form" type="hidden">
                         <input name="__is_password_reset" type="hidden" id="is_password_reset_input">
-
+                        <div class="input">
+                            <p id="forget_password_hint">Введите адрес электронной почты для восстановления пароля</p>
+                        </div>
                         <div class="form-group">
                             <label class="text-muted">Email</label>
                             {{ login_form.email }}
@@ -160,10 +162,9 @@
                             {{ error }}
                         </div>
                         {% endif %}
-
-                        <a href="#" id="forget_password_link">Забыли пароль?</a>
-                        <p id="forget_password_hint">Введите адрес электронной почты для восстановления пароля.</p>
-
+                        <div class="question">
+                            <a href="#" id="forget_password_link">Забыли пароль?</a>
+                        </div>
                         <div class="form-group text-center">
                             {% csrf_token %}
                             <button type="submit" class="btn " id="login_form_button">Войти</button>
