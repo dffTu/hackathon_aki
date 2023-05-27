@@ -61,7 +61,7 @@
 
                 <div class="name-company">
                     <p class="p-name">{{ platform.name }}</p>
-                    <p class="p-type">{{ platform.categories|split:";"|join:",  "}}</p>
+                    <p class="p-type">{{ platform_categories|key:"platform-type"|key:"filters"|key:platform.categories|key:0 }}</p>
                 </div>
             </div>
         </div>
@@ -316,6 +316,7 @@
 
                     {% csrf_token %}
                     <button class="btn book" type="submit">Забронировать</button>
+                    <p>Нажимая на кнопку "Забронировать", вы соглашаетесь с условиями публичной оферты</p>
                 </form>
             </div>
             {% elif user_fields.organizer %}
