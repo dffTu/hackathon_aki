@@ -110,14 +110,14 @@
 
                                 <div class="card-body">
                                     <h5 class="card-title">{{ platform.name }}</h5>
-                                    <h6>Тип: Дизайн</h6>
+                                    <h7>{{ platform_categories|key:"platform-type"|key:"filters"|key:platform.categories|key:0 }}</h7>
                                     <div class="top">
                                         <div class="img-platforms">
-                                            <img src="{% static 'main\img\star.svg' %}" alt="Рейтинг">
+                                            <img src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
                                         </div>
-                                        <p>4,5</p>
+                                        <p>{{ platform.rating|round:1 }}</p>
                                         <img class="comment" src="{% static 'main\img\comment.svg' %}">
-                                        <p>100</p>
+                                        <p>{{ platform.comment_set|get_all|length }}</p>
                                     </div>
                                     <div class="card-text">
                                         <p>{{ platform.short_description }}</p>

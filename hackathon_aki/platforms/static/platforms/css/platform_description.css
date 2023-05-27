@@ -200,31 +200,41 @@
     justify-content: space-evenly;
 }
 .action {
+    width: 50%;
     display: flex;
-    justify-content: center;
-    margin-top: 7%;
-    margin-bottom: 4%;
+    justify-content: space-around;
+    margin: 5% auto;
 }
 
 .send {
     background: #ddd;
 
 }
-.apply{
-    background: blue;
+.apply {
+    background: #57b051;
 }
 
-.delete{
-    background: red;
+.delete {
+    background: #e63c3c;
 }
 
 .confirmation-window {
-    background: #fff;
+    background: #2e2e5a;
+    padding: 3% 7%;
+    border-radius: 7px;
+    display: grid;
+    justify-items: stretch;
+    grid-gap: 25%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
 }
 
+/* Секция комментариев */
 .form-comments {
     display: flex;
     justify-content: flex-start;
+    flex-direction: column;
     width: 85%;
     height: max-content;
     margin: 0 auto;
@@ -234,12 +244,30 @@
     background: rgba(171, 174, 255, 0.05);
 }
 
+.comment-section-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 3%;
+    margin-bottom: 2%;
+}
+
+.add-comment-button {
+    background: #E74362;
+    color: #fff;
+    font-family: 'Cera Pro Bold';
+}
+
 .one-comment {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-
+    margin-bottom: 2%;
+    border-radius: 7px;
+    border: 2px solid #c7c2c24f;
 }
+
 .hat-comment {
     width: 90%;
     margin: 0 auto;
@@ -260,3 +288,4 @@
     width: 80%;
     margin: 1% 3%   ;
 }
+/* Конец секции комментариев */

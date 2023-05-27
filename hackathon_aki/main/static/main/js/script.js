@@ -101,42 +101,52 @@ function open_user_button_onclick_func() {
     localStorage.setItem("log_in_window_style_display", "flex");
 }
 
-open_user_button.onclick = open_user_button_onclick_func;
-
-register_button.onclick = function () {
-    organizer_client_buttons.style.display = "flex";
-    register_window.style.display = "flex";
-    log_in_window.style.display = "none";localStorage.setItem("register_window_style_display", "flex");
-    localStorage.setItem("log_in_window_style_display", "none");
-    localStorage.setItem("organizer_client_buttons_style_display", "flex");
+if (open_user_button) {
+    open_user_button.onclick = open_user_button_onclick_func;
 }
 
-register_client_button.onclick = function () {
-    register_client_window.style.display = "flex";
-    register_organizer_window.style.display = "none";
-
-    localStorage.setItem("register_client_window_style_display", "flex");
-    localStorage.setItem("register_organizer_window_style_display", "none");
+if (register_button) {
+    register_button.onclick = function () {
+        organizer_client_buttons.style.display = "flex";
+        register_window.style.display = "flex";
+        log_in_window.style.display = "none";localStorage.setItem("register_window_style_display", "flex");
+        localStorage.setItem("log_in_window_style_display", "none");
+        localStorage.setItem("organizer_client_buttons_style_display", "flex");
+    }
 }
 
-register_organizer_button.onclick = function () {
-    register_organizer_window.style.display = "flex";
-    register_client_window.style.display = "none";
+if (register_client_button) {
+    register_client_button.onclick = function () {
+        register_client_window.style.display = "flex";
+        register_organizer_window.style.display = "none";
 
-    localStorage.setItem("register_client_window_style_display", "none");
-    localStorage.setItem("register_organizer_window_style_display", "flex");
+        localStorage.setItem("register_client_window_style_display", "flex");
+        localStorage.setItem("register_organizer_window_style_display", "none");
+    }
 }
 
-log_in_button.onclick = function () {
-    log_in_window.style.display = "flex";
-    register_window.style.display = "none";
-    register_organizer_window.style.display = "none";
-    register_client_window.style.display = "none";
+if (register_organizer_button) {
+    register_organizer_button.onclick = function () {
+        register_organizer_window.style.display = "flex";
+        register_client_window.style.display = "none";
 
-    localStorage.setItem("register_window_style_display", "none");
-    localStorage.setItem("log_in_window_style_display", "flex");
-    localStorage.setItem("register_client_window_style_display", "none");
-    localStorage.setItem("register_organizer_window_style_display", "none");
+        localStorage.setItem("register_client_window_style_display", "none");
+        localStorage.setItem("register_organizer_window_style_display", "flex");
+    }
+}
+
+if (log_in_button) {
+    log_in_button.onclick = function () {
+        log_in_window.style.display = "flex";
+        register_window.style.display = "none";
+        register_organizer_window.style.display = "none";
+        register_client_window.style.display = "none";
+
+        localStorage.setItem("register_window_style_display", "none");
+        localStorage.setItem("log_in_window_style_display", "flex");
+        localStorage.setItem("register_client_window_style_display", "none");
+        localStorage.setItem("register_organizer_window_style_display", "none");
+    }
 }
 
 window.onclick = function(event) {
