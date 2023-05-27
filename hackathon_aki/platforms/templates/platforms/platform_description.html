@@ -77,7 +77,7 @@
                 <h4>Информация о площадке</h4>
 
                 <div class="rating">
-                    {% if comments %}
+                    {% if platform.comment_set|get_all|length > 0 %}
                     <img class="stars" src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
                     <p class="p1"> {{ platform.rating|round:1 }}</p>
                     <p class="main-p">/5</p>
@@ -209,7 +209,7 @@
                 <button class="btn add-comment-button" id="add_comment_button" style="display: none;">Добавить комментарий</button>
             {% endif %}
         </div>
-        {% for comment in comments %}
+        {% for comment in platform.comment_set|get_all %}
             <!--<img src="{{ comment.commentattachment_set.first.file.url }}" class="card-img-top">-->
             <div class="one-comment">
                 <div class="hat-comment">
@@ -311,11 +311,28 @@
 
 {% if user_fields and user_fields.client and platform.verified %}
     <div class="authorize-window" id="adding_comment_window">
-        <div class="confirmation-window">
-            <form action="{% url 'delete_platform' platform_id=platform.id %}">
-                <button class="btn delete" type="submit">Подтвердить</button>
+        <div class="commenting-window">
+            <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
+                <input name="__comment_leaving_form" type="hidden">
+                <input name="platform_id" value="{{ platform.id }}" type="hidden">
+                <div class="form-group">
+                    <label class="text-muted">Текст комментария</label>
+                    {{ comment_leaving_form.text }}
+                </div>
+                <div class="form-group">
+                    <label class="text-muted">Рейтинг</label>
+                    {{ comment_leaving_form.rating }}
+                </div>
+                {% if error %}
+                <div class="form_alert">
+                    {{ error }}
+                </div>
+                {% endif %}
+                <div class="form-group text-center">
+                    {% csrf_token %}
+                    <button type="submit" class="btn ">Оставить комментарий</button>
+                </div>
             </form>
-            <button class="btn btn-secondary" id="cancel_delete_button">Отмена</button>
         </div>
     </div>
 {% endif %}

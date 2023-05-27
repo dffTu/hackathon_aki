@@ -3,7 +3,7 @@ let button_next_month = document.getElementById("button_next_month");
 
 let calendar_window = document.getElementById("calendar-window");
 let confirm_deletion_window = document.getElementById("confirm_delete_window");
-//let adding_comment_window = document.getElementById("adding_comment_window");
+let adding_comment_window = document.getElementById("adding_comment_window");
 
 let month1 = document.getElementById("month_table_1");
 let month2 = document.getElementById("month_table_2");
@@ -14,7 +14,7 @@ let update_price_button = document.getElementById("update_price_button");
 let login_calendar_registrate_button = document.getElementById("login_calendar_registrate_button");
 let delete_platform_button = document.getElementById("delete_platform");
 let cancel_deletion_button = document.getElementById("cancel_delete_button");
-//let add_comment_button = document.getElementById("add_comment_button");
+let add_comment_button = document.getElementById("add_comment_button");
 
 function timetable_button_click(clicked_button) {
     document.getElementById('date-paragraph-calendar-window-form').textContent =
@@ -89,6 +89,9 @@ window.onclick = function (event) {
     if (event.target === confirm_deletion_window) {
         confirm_deletion_window.style.display = "none";
     }
+    if (event.target === adding_comment_window) {
+        adding_comment_window.style.display = "none";
+    }
 }
 
 if (delete_platform_button) {
@@ -107,6 +110,12 @@ if (login_calendar_registrate_button) {
     login_calendar_registrate_button.onclick = function () {
         calendar_window.style.display = "none";
         open_user_button_onclick_func();
+    }
+}
+
+if (add_comment_button) {
+    add_comment_button.onclick = function () {
+        adding_comment_window.style.display = "flex";
     }
 }
 

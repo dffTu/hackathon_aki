@@ -9,6 +9,7 @@ from organizers.forms import UserOrganizerRegistrationForm, ProfileOrganizerRegi
 from organizers.models import Entry
 from platforms.search_utils import search_platforms
 from platforms.models import Platform
+from platforms.forms import CommentLeavingForm, CommentFileAttachingForm
 from utils import send_email_for_verify
 from utils import platform_categories
 from form_utils import get_basic_arguments_for_html_pages
@@ -260,6 +261,47 @@ def show_catalogue_page(request, data, page_id, relevant_platforms_list):
     return render(request, 'platforms/catalogue_page.html', data)
 
 
+def leave_comment(request, data):
+    if 'platform_id' not in request.POST:
+        return redirect('show_page', page_id=1)
+    platform = Platform.objects.filter(id=request.POST['platform_id'])
+    if not platform.exists():
+        return redirect('show_page', page_id=1)
+    platform = platform.first()
+    if not request.user.is_authenticated or not hasattr(request.user, 'client'):
+        return redirect('show_platform_description', platform_id=platform.id)
+
+    errors = {
+        'text': [],
+        'rating': []
+    }
+
+    if request.method == 'POST':
+        is_valid = True
+        platform_id = int(request.POST['platform_id'])
+        comment_form = CommentLeavingForm(request.POST)
+        attachment_form = CommentFileAttachingForm(request.POST, request.FILES)
+        if comment_form.validate(errors) and attachment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.client = request.user.client
+            comment.platform = platform
+            comment.save()
+            platform.rating = (platform.rating * (len(platform.comment_set.all()) - 1) + comment.rating) / len(platform.comment_set.all())
+            platform.save()
+        else:
+            is_valid = False
+
+        data['errors'] = errors
+        data['comment_form'] = CommentLeavingForm()
+        data['attachment_form'] = CommentFileAttachingForm()
+        data['drop_localstorage'] = False
+
+        if is_valid:
+            return redirect('show_platform_description', platform_id=platform_id)
+
+    return None
+
+
 def process_post_forms_requests(f):
     def g(request, *args, **kwargs):
         data = get_basic_arguments_for_html_pages(request)
@@ -280,12 +322,15 @@ def process_post_forms_requests(f):
                 result = calendar_entry_request(request, data)
                 if not result is None:
                     return result
+            if '__comment_leaving_form' in request.POST:
+                result = leave_comment(request, data)
+                if not result is None:
+                    return result
         elif request.method == "GET":
             if "__search_form" in request.GET or "__filter_form" in request.GET:
                 result = save_get_request(request, data)
                 if not result is None:
                     return result
-
 
         return f(request, data, *args, **kwargs)
 
