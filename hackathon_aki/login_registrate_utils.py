@@ -296,18 +296,23 @@ def leave_comment(request, data):
 
     if request.method == 'POST':
         is_valid = True
-        platform_id = int(request.POST['platform_id'])
-        comment_form = CommentLeavingForm(request.POST)
-        attachment_form = CommentFileAttachingForm(request.POST, request.FILES)
-        if comment_form.validate(errors) and attachment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.client = request.user.client
-            comment.platform = platform
-            comment.save()
-            platform.rating = (platform.rating * (len(platform.comment_set.all()) - 1) + comment.rating) / len(platform.comment_set.all())
-            platform.save()
-        else:
+        if 'rating_selector' not in request.POST or request.POST['rating_selector'] not in ['1', '2', '3', '4', '5']:
             is_valid = False
+        else:
+            rating_number = int(request.POST['rating_selector'])
+            platform_id = int(request.POST['platform_id'])
+            comment_form = CommentLeavingForm(request.POST)
+            attachment_form = CommentFileAttachingForm(request.POST, request.FILES)
+            if comment_form.validate(errors) and attachment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.client = request.user.client
+                comment.rating = rating_number
+                comment.platform = platform
+                comment.save()
+                platform.rating = (platform.rating * (len(platform.comment_set.all()) - 1) + comment.rating) / len(platform.comment_set.all())
+                platform.save()
+            else:
+                is_valid = False
 
         data['errors'] = errors
         data['comment_form'] = CommentLeavingForm()

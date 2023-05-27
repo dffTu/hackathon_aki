@@ -96,6 +96,10 @@
     margin-right: 5px;
 }
 
+.stars-pointer {
+    cursor: pointer;
+}
+
 .comment {
     margin-left: 15%;
 }

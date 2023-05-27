@@ -19,7 +19,7 @@ function document_init() {
         }
     });
 
-    document.getElementById("platform_creating_form_submit_button").onclick = function() {
+    document.getElementById("platform_creating_form_submit_button").onmousedown = function() {
         document.getElementById("platform_creating_form").submit();
     };
 

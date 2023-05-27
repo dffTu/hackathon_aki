@@ -17,7 +17,7 @@ function document_init() {
         switch_button_view();
     }
 
-    button.onclick = function() {
+    button.onmousedown = function() {
         if (!profile_changing) {
             switch_button_view();
         } else {

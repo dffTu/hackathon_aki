@@ -12,7 +12,7 @@ function document_init() {
 
     forget_password_hint.style.display = 'none';
 
-    forget_password_link.onclick = function() {
+    forget_password_link.onmousedown = function() {
         login_form_button.firstChild.data = 'Восстановить пароль';
         is_password_reset_input.value = 'Y';
 

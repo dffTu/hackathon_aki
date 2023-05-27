@@ -56,7 +56,7 @@ function timetable_button_click(clicked_button) {
 }
 
 if (button_prev_month) {
-    button_prev_month.onclick = function () {
+    button_prev_month.onmousedown = function () {
         if (get_current_month() === month1) return;
         if (get_current_month() === month2) {
             set_data(month1, month2);
@@ -67,7 +67,7 @@ if (button_prev_month) {
 }
 
 if (update_price_button) {
-    update_price_button.onclick = function() {
+    update_price_button.onmousedown = function() {
         document.getElementById("form_price_field").readOnly = false;
         if (update_price_button.textContent === "Сохранить") {
             update_price_button.type = "submit";
@@ -78,7 +78,7 @@ if (update_price_button) {
 }
 
 if (button_next_month) {
-    button_next_month.onclick = function () {
+    button_next_month.onmousedown = function () {
         if (get_current_month() === month3) return;
         if (get_current_month() === month2) {
             set_data(month3, month2);
@@ -100,12 +100,12 @@ function get_current_month() {
 }
 
 if (get_arendator_info_button) {
-    get_arendator_info_button.onclick = function () {
+    get_arendator_info_button.onmousedown = function () {
         window.location.href = get_arendator_info_button.getAttribute("arendator_link");
     }
 }
 
-window.onclick = function (event) {
+window.onmousedown = function (event) {
     if (event.target === modal) {
         setDefaultValues();
     }
@@ -124,38 +124,38 @@ window.onclick = function (event) {
 }
 
 if (delete_entry_button) {
-    delete_entry_button.onclick = function() {
+    delete_entry_button.onmousedown = function() {
         confirm_deletion_entry_window.style.display = "flex";
     }
 }
 
 if (delete_platform_button) {
-    delete_platform_button.onclick = function () {
+    delete_platform_button.onmousedown = function () {
         confirm_deletion_platform_window.style.display = "flex";
     }
 }
 
 if (cancel_deletion_platform_button) {
-    cancel_deletion_platform_button.onclick = function () {
+    cancel_deletion_platform_button.onmousedown = function () {
         confirm_deletion_platform_window.style.display = "none";
     }
 }
 
 if (cancel_deletion_entry_button) {
-    cancel_deletion_entry_button.onclick = function () {
+    cancel_deletion_entry_button.onmousedown = function () {
         confirm_deletion_entry_window.style.display = "none";
     }
 }
 
 if (login_calendar_registrate_button) {
-    login_calendar_registrate_button.onclick = function () {
+    login_calendar_registrate_button.onmousedown = function () {
         calendar_window.style.display = "none";
-        open_user_button_onclick_func();
+        open_user_button_onmousedown_func();
     }
 }
 
 if (add_comment_button) {
-    add_comment_button.onclick = function () {
+    add_comment_button.onmousedown = function () {
         adding_comment_window.style.display = "flex";
     }
 }

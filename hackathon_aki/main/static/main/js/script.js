@@ -114,7 +114,7 @@ window.onload = function() {
     }
 }
 
-function open_user_button_onclick_func() {
+function open_user_button_onmousedown_func() {
     modal.style.display = "flex";
     authorize_window.style.display = "inline-block";
     log_in_window.style.display = "flex";
@@ -125,11 +125,11 @@ function open_user_button_onclick_func() {
 }
 
 if (open_user_button) {
-    open_user_button.onclick = open_user_button_onclick_func;
+    open_user_button.onmousedown = open_user_button_onmousedown_func;
 }
 
 if (register_button) {
-    register_button.onclick = function () {
+    register_button.onmousedown = function () {
         organizer_client_buttons.style.display = "flex";
         register_window.style.display = "flex";
         log_in_window.style.display = "none";
@@ -141,7 +141,7 @@ if (register_button) {
 }
 
 if (register_client_button) {
-    register_client_button.onclick = function () {
+    register_client_button.onmousedown = function () {
         register_client_window.style.display = "flex";
         register_organizer_window.style.display = "none";
 
@@ -151,7 +151,7 @@ if (register_client_button) {
 }
 
 if (register_organizer_button) {
-    register_organizer_button.onclick = function () {
+    register_organizer_button.onmousedown = function () {
         register_organizer_window.style.display = "flex";
         register_client_window.style.display = "none";
 
@@ -161,7 +161,7 @@ if (register_organizer_button) {
 }
 
 if (log_in_button) {
-    log_in_button.onclick = function () {
+    log_in_button.onmousedown = function () {
         log_in_window.style.display = "flex";
         register_window.style.display = "none";
         register_organizer_window.style.display = "none";
@@ -174,7 +174,7 @@ if (log_in_button) {
     }
 }
 
-window.onclick = function(event) {
+window.onmousedown = function(event) {
     if (event.target === modal) {
         setDefaultValues();
     }

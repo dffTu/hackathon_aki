@@ -77,22 +77,19 @@ class CommentFileAttachingForm(forms.Form):
 
 
 class CommentLeavingForm(forms.ModelForm):
-    required_fields = ['text', 'rating']
+    required_fields = ['text']
     length_validation_fields = ['text']
     charset_validation_fields = ['text']
 
     class Meta:
         model = Comment
-        fields = ['text', 'rating']
+        fields = ['text']
 
         widgets = {
             'text': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Текст отзыва',
-            }),
-            'rating': forms.NumberInput(attrs={
-                'class': 'form-control',
-            }),
+            })
         }
 
     def validate(self, error_log):

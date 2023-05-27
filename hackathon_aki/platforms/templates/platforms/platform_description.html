@@ -358,16 +358,47 @@
 {% if user_fields and user_fields.client and platform.verified %}
     <div class="authorize-window" id="adding_comment_window">
         <div class="commenting-window">
-            <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
+            <form id="rating_form" method="post" enctype='multipart/form-data' action="{{ url_path }}">
                 <input name="__comment_leaving_form" type="hidden">
                 <input name="platform_id" value="{{ platform.id }}" type="hidden">
                 <div class="form-group">
-                    <label class="text-muted">Текст комментария</label>
-                    {{ comment_leaving_form.text }}
+                    <label class="text-muted">Рейтинг</label>
+                    <select id="rating_selector" name="rating_selector" form="rating_form" hidden required>
+                        <option value="0" selected></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <div class="top-stars">
+                        {% for x in 1|range:6 %}
+                            <img class="stars stars-pointer" id="star{{ x }}" src="{% static 'main\img\star-grey.svg' %}" alt="Рейтинг">
+                        {% endfor %}
+                        <script>
+                            let selector = document.getElementById("rating_selector");
+                            let stars_rating = [];
+                            for (let i = 1; i <= 5; i++) {
+                                stars_rating.push(document.getElementById("star" + i.toString()));
+                            }
+                            for (let i = 0; i < 5; i++) {
+                                stars_rating[i].onclick = function () {
+                                    selector.value = (i + 1).toString();
+                                    for (let j = 0; j <= i; j++) {
+                                        stars_rating[j].src = "{% static 'main\img\star-yellow.svg' %}";
+                                    }
+                                    for (let j = i + 1; j < 5; j++) {
+                                        stars_rating[j].src = "{% static 'main\img\star-grey.svg' %}";
+                                    }
+                                }
+                            }
+                        </script>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label class="text-muted">Рейтинг</label>
-                    {{ comment_leaving_form.rating }}
+                    <label class="text-muted">Текст комментария</label>
+                    {{ comment_leaving_form.text }}
+                    {{ attachment_form.file_field }}
                 </div>
                 {% if error %}
                 <div class="form_alert">
