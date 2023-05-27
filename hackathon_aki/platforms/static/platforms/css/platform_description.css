@@ -216,6 +216,9 @@
 
 .delete {
     background: #e63c3c;
+    font-family: 'Cera Pro Bold';
+    color: #fff;
+    padding: 2% 5%;
 }
 
 .confirmation-window {
@@ -277,6 +280,11 @@
     flex-direction: row;
     font-family: 'Cera Pro Bold';
     font-size: 20px;
+}
+
+.user-profile-link {
+    text-decoration: none;
+    color: #fff;
 }
 
 .top-stars{

@@ -16,6 +16,8 @@ let delete_platform_button = document.getElementById("delete_platform");
 let cancel_deletion_button = document.getElementById("cancel_delete_button");
 let add_comment_button = document.getElementById("add_comment_button");
 
+let get_arendator_info_button = document.getElementById("get_arendator_info_button");
+
 function timetable_button_click(clicked_button) {
     document.getElementById('date-paragraph-calendar-window-form').textContent =
         clicked_button.getAttribute("event_day") + " " + clicked_button.getAttribute("event_month_text");
@@ -24,15 +26,22 @@ function timetable_button_click(clicked_button) {
     document.getElementById('file-paragraph-calendar-window-form').textContent = "Скачать оферту";
     calendar_window.style.display = "flex";
 
-    if (document.getElementById("user-organizer-register-form") != null) return;
-
-    document.getElementById("__day").value = clicked_button.getAttribute("event_day");
-    document.getElementById("__month").value = clicked_button.getAttribute("event_month");
-    document.getElementById("__year").value = clicked_button.getAttribute("event_year");
-
-    if (document.getElementById("own-platform-form")) {
-        document.getElementById("form_price_field").value = clicked_button.getAttribute("event_price");
+    if (document.getElementById("__day")) {
+        document.getElementById("__day").value = clicked_button.getAttribute("event_day");
+        document.getElementById("__month").value = clicked_button.getAttribute("event_month");
+        document.getElementById("__year").value = clicked_button.getAttribute("event_year");
     }
+
+    if (document.getElementById("arendator_slot_info_form")) {
+        document.getElementById("div_for_get_arendator_info_button").style.display = "";
+        let link = clicked_button.getAttribute("event_user_link");
+        if (link != null) {
+            document.getElementById("get_arendator_info_button").setAttribute("arendator_link", link);
+        } else {
+            document.getElementById("div_for_get_arendator_info_button").style.display = "none";
+        }
+    }
+
 }
 
 if (button_prev_month) {
@@ -77,6 +86,10 @@ function get_current_month() {
     if (month1.style.display !== "none") return month1;
     if (month2.style.display !== "none") return month2;
     return month3;
+}
+
+get_arendator_info_button.onclick = function() {
+    window.location.href = get_arendator_info_button.getAttribute("arendator_link");
 }
 
 window.onclick = function (event) {

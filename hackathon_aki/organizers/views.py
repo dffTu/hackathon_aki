@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.forms.models import model_to_dict
 from main.models import PlatformAttachment
 from platforms.models import Platform, FreeSlot
+from .models import Entry
 from platforms.forms import PlatformCreatingForm, PlatformFileAttachingForm
 from .forms import FreeSlotAddingForm, UserOrganizerChangingForm, ProfileOrganizerRegistrationForm
 from utils import platform_categories, DEFAULT_SLOT_PRICE, SLOTS_COUNT_FOR_PLATFORM
@@ -81,6 +82,18 @@ def create_platform(request, data):
     data['button_name'] = 'Создать площадку'
 
     return render(request, 'platforms/create_platform.html', data)
+
+
+
+@process_post_forms_requests
+def delete_entry(request, data, platform_id, user_id):
+    if not request.user.is_authenticated or request.user.id != user_id:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    entry = Entry.objects.filter(platform_id=platform_id, client_id=user_id)
+    if entry.exists():
+        entry.first().delete()
+    return render(request, 'platforms/show_platform_description.html', data)
 
 
 @process_post_forms_requests

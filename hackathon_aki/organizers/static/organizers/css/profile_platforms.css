@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: center;
     height: max-content;
     width: 80%;
     margin: 3% auto;
@@ -12,6 +13,7 @@
 }
 
 .hat-of-cat-prof {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,11 +66,10 @@ button {
     margin-bottom: 0px;
 }
 
-#filter, .catalog-page {
-    justify-content: flex-start;
+#filter, .catalog-page-org {
     backdrop-filter: blur(100px);
     border-radius: 7px;
-    width: 70%;
+    width: 90%;
 }
 
 #filter {
@@ -267,4 +268,8 @@ button {
 
 .pages a:hover {
     color: orange;
+}
+
+.status {
+    margin: 2% auto;
 }

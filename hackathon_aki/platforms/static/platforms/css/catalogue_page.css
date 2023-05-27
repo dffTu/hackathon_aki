@@ -83,7 +83,6 @@ button {
     display: block;
     flex-direction: column;
     padding: 0 auto;
-    padding-bottom: 2%;
     width: 70%;
     background: rgba(171, 174, 255, 0.05);
     margin-right: 5%;
@@ -208,6 +207,8 @@ button {
 
 .number-of-pages {
     display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 20px;
 }
 
