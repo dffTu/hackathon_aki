@@ -192,14 +192,14 @@
         {% if user_fields %}
             {% if user_fields.is_staff %}
                 {% if platform.verified %}
-                    <form action="{% url 'unverify_platform' platform_id=platform.id %}">
+                    <form style="width: 40%" action="{% url 'unverify_platform' platform_id=platform.id %}">
                         <button class="btn send" type="submit">Отправить на рассмотрение</button>
                     </form>
                 {% else %}
-                    <form action="{% url 'verify_platform' platform_id=platform.id %}">
+                    <form style="width: 40%" action="{% url 'verify_platform' platform_id=platform.id %}">
                         <button class="btn apply" type="submit">Принять площадку</button>
                     </form>
-                    <button class="btn delete" type="button" id="delete_platform">Удалить площадку</button>
+                    <button style="width: 40%" class="btn delete" type="button" id="delete_platform">Удалить площадку</button>
                 {% endif %}
             {% elif user_fields.organizer and user_fields.organizer == platform.organizer %}
                     <button class="btn delete" type="button" id="delete_platform">Удалить площадку</button>
@@ -305,7 +305,7 @@
                 </div>
             {% elif user_fields.client %}
             <div class="form-book">
-                <form id="user-client-register-form" method="post" action="{{ url_path }}">
+                <form class="but-in-form" id="user-client-register-form" method="post" action="{{ url_path }}">
                     <div style="display: none">
                         <input id="__calendar_entry_request" name="__calendar_entry_request">
                         <input id="__platform_id" name="__platform_id" type="number" value={{ platform.id }}>
