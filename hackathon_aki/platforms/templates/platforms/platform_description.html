@@ -97,6 +97,7 @@
         </div>
     </div>
 
+    <!-- календарь -->
     {% for month in months %}
         {% if forloop.counter == 1 %}
         <div id="month_table_{{ forloop.counter }}" class="calendar" style="display: block">
@@ -205,6 +206,7 @@
             {% endif %}
         {% endif %}
     </div>
+
     <div class="form-comments">
         <div class="comment-section-title">
             <h2>Отзывы</h2>
@@ -236,15 +238,12 @@
         {% endfor %}
 
     </div>
-
 </div>
-
-
-
 
 <div class="authorize-window" id="calendar-window">
         <div id="calendar-window-form" class="calendar-window-form">
             <h2>{{ platform.name }}</h2>
+
             <div class="icons-in-form">
                 <div class="date">
                     <img src="{% static 'main\img\calendar.svg' %}">
@@ -272,30 +271,32 @@
                     </script>
                 </div>
             </div>
-            <h4>{{ platform.address|key:"address_text" }}</h4>
+
+            <h5 class="address-platform"> Адрес: {{ platform.address|key:"address_text" }}</h5>
+
             <h4 class="status" id="status-paragraph-calendar-window-form"></h4>
             {% if user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %}
                 <div class="form-book">
-                    <form id="arendator_slot_info_form" method="post" action="{{ url_path }}">
+                    <form style="width: 100%;" id="arendator_slot_info_form" method="post" action="{{ url_path }}">
 
                         {% csrf_token %}
                         <button class="btn book" type="button">Изменить цену</button>
 
                         <div id="div_for_delete_entry_button">
                             <button
-                                    class="btn book"
+                                    class="btn book delete-note"
                                     id="delete_entry_button"
                                     type="button">Удалить запись
                             </button>
                         </div>
 
                         <div id="div_for_block_slot_button">
-                            <button class="btn book" type="button">Заблокировать слот</button>
+                            <button class="btn book block-slot" type="button">Заблокировать слот</button>
                         </div>
 
                         <div id="div_for_get_arendator_info_button">
                             <button
-                                    class="btn book"
+                                    class="btn book look-info"
                                     id="get_arendator_info_button"
                                     type="button">Посмотреть информацию об арендаторе
                             </button>

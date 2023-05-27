@@ -149,11 +149,11 @@
                         <div class="input">
                             <p id="forget_password_hint">Введите адрес электронной почты для восстановления пароля</p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group0">
                             <label class="text-muted">Email</label>
                             {{ login_form.email }}
                         </div>
-                        <div class="form-group">
+                        <div class="form-group0">
                             <label class="text-muted" id="login_form_password_label">Пароль</label>
                             {{ login_form.password }}
                         </div>
@@ -167,7 +167,7 @@
                         </div>
                         <div class="form-group text-center">
                             {% csrf_token %}
-                            <button type="submit" class="btn " id="login_form_button">Войти</button>
+                            <button type="submit" class="btn" id="login_form_button">Войти</button>
                         </div>
                 </form>
             </div>
@@ -180,7 +180,7 @@
 
                 <div class="register-window-client" id="register-window-client">
                     <div class="forms_cl">
-                        <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
+                        <form class="form-client" method="post" enctype='multipart/form-data' action="{{ url_path }}">
                             <input name="__client_register" type="hidden">
 
                             {% if client_errors.incorrect_form %}
@@ -271,7 +271,7 @@
 
                 <div class="register-window-organizer" id="register-window-organizer">
                     
-                    <form method="post" enctype='multipart/form-data' action="{{ url_path }}">
+                    <form class="form-registr" method="post" enctype='multipart/form-data' action="{{ url_path }}">
                         <input name="__organizer_register" type="hidden">
 
                         {% if organizer_errors.incorrect_form %}
@@ -280,11 +280,11 @@
                             </div>
                         {% endif %}
 
-                        <div class="row">
+                        <div class="myrow">
 
                             <div class="col" style="flex-direction: column;">
 
-                                <div class="form-group">
+                                <div class="form-group-org">
                                     <label class="text-muted">Фамилия</label>
                                     {{ user_organizer_registration_form.last_name }}
                                     {% for error in organizer_errors.last_name %}
@@ -294,7 +294,7 @@
                                     {% endfor %}
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group-org">
                                     <label class="text-muted">Имя</label>
                                     {{ user_organizer_registration_form.first_name }}
                                     {% for error in organizer_errors.first_name %}
@@ -304,7 +304,7 @@
                                     {% endfor %}
                                 </div>
 
-                                 <div class="form-group">
+                                 <div class="form-group-org">
                                     <label class="text-muted">Отчество</label>
                                     {{ profile_organizer_registration_form.middle_name }}
                                     {% for error in organizer_errors.middle_name %}
@@ -314,7 +314,7 @@
                                     {% endfor %}
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group-org">
                                     <label class="text-muted">Пароль</label>
                                     {{ user_organizer_registration_form.password }}
                                     {% for error in organizer_errors.password %}
@@ -324,7 +324,7 @@
                                     {% endfor %}
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group-org">
                                     <label class="text-muted">Повторите пароль</label>
                                     {{ user_organizer_registration_form.repeat_password }}
                                     {% for error in organizer_errors.repeat_password %}
@@ -339,7 +339,7 @@
 
                             <div class="col" style="flex-direction: column;">
 
-                                <div class="form-group">
+                                <div class="form-group-org">
                                     <label class="text-muted">Email</label>
                                     {{ user_organizer_registration_form.email }}
                                     {% for error in organizer_errors.email %}
@@ -349,7 +349,7 @@
                                     {% endfor %}
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group-org">
                                     <label class="text-muted">Номер телефона</label>
                                     {{ profile_organizer_registration_form.phone_number }}
                                     {% for error in organizer_errors.phone_number %}
@@ -359,7 +359,7 @@
                                     {% endfor %}
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group-org">
                                     <label class="text-muted">Позиция в компании</label>
                                     {{ profile_organizer_registration_form.position }}
                                     {% for error in organizer_errors.position %}
@@ -369,7 +369,7 @@
                                     {% endfor %}
                                 </div>
 
-                                 <div class="form-group">
+                                 <div class="form-group-org">
                                     <label class="text-muted">Юридическое имя</label>
                                     {{ profile_organizer_registration_form.juridical_name }}
                                     {% for error in organizer_errors.juridical_name %}
@@ -379,7 +379,7 @@
                                     {% endfor %}
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group-org">
                                     <label class="text-muted">ИНН</label>
                                     {{ profile_organizer_registration_form.inn }}
                                     {% for error in organizer_errors.inn %}
@@ -390,11 +390,10 @@
                                 </div>
 
                             </div>
-                            <div class="form-group text-center">
-                                {% csrf_token %}
-                                <button type="submit" class="btn">Зарегистрироваться</button>
-                            </div>
-
+                        </div>
+                        <div class="form-group text-center">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">Зарегистрироваться</button>
                         </div>
                         
                     </form>

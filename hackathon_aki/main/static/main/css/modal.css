@@ -155,6 +155,7 @@
 
 /*Форма для регистрации*/
 .register-content {
+    align-items: stretch;
     height: 100%;
     display: none;
     justify-content: flex-start;
@@ -175,19 +176,47 @@
 
 .col {
     flex-direction: column;
-    align-items: stretch;
     justify-content: flex-start;
 }
 
+.form-group-org{
+    width: 90%;
+}
+
+.form-client {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: auto;
+}
+
+.register-window-organizer{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.form-registr{
+    width: 90%;
+}
+
+.myrow {
+    display: flex;
+    justify-content: space-between;
+}
+
 .register-window-organizer col {
+    width: 90%;
     flex-direction: column;
 }
 
 .register-window-client {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     justify-content: center;
-    align-items: center;
     height: 90%;
+    width:80%;
 }
 
 .register-content button {

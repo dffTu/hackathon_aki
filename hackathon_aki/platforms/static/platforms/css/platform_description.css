@@ -128,11 +128,11 @@
     align-items: center;
     flex-direction: column;
     overflow: auto;
-    background: #0F2144;
+    background: #1d2d4b;
     border-radius: 7px;
     width: 50%;
-    height: 50%;
-    padding: 1%;
+    height: max-content;
+    padding: 3%;
     color: #fff;
 }
 
@@ -148,14 +148,14 @@
 .icons-in-form .date img, .offert img{
     height: 25%;
     width: 25%;
-    margin-bottom: 2%;
+    margin-bottom: 5%;
     filter: drop-shadow(4px 4px 2px #797979);
 }
 
 .price img{
     height: 30%;
     width: 30%;
-    margin-bottom: 2%;
+    margin-bottom: 5%;
     filter: drop-shadow(4px 4px 2px #797979);
 }
 
@@ -175,7 +175,7 @@
     color: #2552AD;
 }
 
-.calendar-window-form h4, .book{
+.calendar-window-form h5, .book{
     margin-top: 2%;
 }
 
@@ -183,19 +183,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50%;
-    padding-right: 65px;
-    margin-top: 5%;
+    width: 70%;
+    margin-top: 4%;
 }
 
 .book {
+    width: 100%;
     background-color: #E74362;
     font-family: 'Cera Pro Bold';
     font-size: 20px;
     color: #fff;
     border: none;
-    padding: 10% 20%;
+    padding: 1% 2%;
     border-radius: 7px;
+}
+
+.delete-note{
+    background-color: #e74343;
+}
+
+.block-slot {
+    background-color: #5e5d5f;
+}
+
+.look-info {
+    background-color: #2c89d0e3;
 }
 
 
