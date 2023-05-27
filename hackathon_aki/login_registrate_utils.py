@@ -175,7 +175,6 @@ def save_filters_request(request, data):
     for category in platform_categories:
         for category_filter in platform_categories[category]['filters']:
             if category_filter in request.GET:
-                print(category_filter)
                 data['filters'][category_filter] = 'on'
 
 
@@ -193,7 +192,6 @@ def save_get_request(request, data):
 
 
 def calendar_entry_request(request, data):
-    print(request.POST)
     if not request.user.is_authenticated:
         return redirect('show_page', page_id=1)
     if hasattr(request.user, 'organizer'):
