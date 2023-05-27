@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
-from .models import CommentAttachment, PlatformAttachment, EmailVerification
+from .models import CommentAttachment, PlatformAttachment, EmailVerification, PasswordReset
 from platforms.models import Platform
 
 
@@ -20,6 +20,7 @@ def platform_delete(sender, instance, **kwargs):
     instance.agreement.delete(False)
 
 
+admin.site.register(PasswordReset)
 admin.site.register(EmailVerification)
 admin.site.register(PlatformAttachment)
 admin.site.register(CommentAttachment)

@@ -17,6 +17,26 @@ let register_organizer_button = document.getElementById("register-organizer");
 let register_client_window = document.getElementById("register-window-client");
 let register_organizer_window = document.getElementById("register-window-organizer");
 
+let forget_password_link = document.getElementById('forget_password_link');
+let forget_password_hint = document.getElementById('forget_password_hint');
+let login_form_password = document.getElementById('login_form_password');
+let login_form_password_label = document.getElementById('login_form_password_label');
+
+function drop_password_reset_form() {
+    login_form_button.firstChild.data = 'Войти';
+    is_password_reset_input.value = '';
+
+    forget_password_link.style.display = 'block';
+    login_form_password.style.display = 'block';
+    login_form_password_label.style.display = 'block';
+    forget_password_hint.style.display = 'none';
+
+    let login_form_errors = document.getElementById('login_form_errors');
+    if (login_form_errors) {
+        login_form_errors.style.display = 'block';
+    }
+}
+
 function setDefaultValues() {
     localStorage.setItem("modal_style_display", "none");
     localStorage.setItem("authorize_window_style_display", "none");
@@ -33,6 +53,8 @@ function setDefaultValues() {
     register_client_window.style.display = "none";
     register_organizer_window.style.display = "none";
     organizer_client_buttons.style.display = "none";
+
+    drop_password_reset_form();
 }
 
 window.onload = function() {
@@ -64,6 +86,7 @@ window.onload = function() {
         res = localStorage.getItem("log_in_window_style_display");
         if (res === null) {
             log_in_window.style.display = "none";
+            drop_password_reset_form();
         } else {
             log_in_window.style.display = res;
         }
@@ -109,7 +132,9 @@ if (register_button) {
     register_button.onclick = function () {
         organizer_client_buttons.style.display = "flex";
         register_window.style.display = "flex";
-        log_in_window.style.display = "none";localStorage.setItem("register_window_style_display", "flex");
+        log_in_window.style.display = "none";
+        drop_password_reset_form();
+        localStorage.setItem("register_window_style_display", "flex");
         localStorage.setItem("log_in_window_style_display", "none");
         localStorage.setItem("organizer_client_buttons_style_display", "flex");
     }
