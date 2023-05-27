@@ -281,8 +281,8 @@
                         <button class="btn book" type="button">Изменить цену</button>
 
                         <div id="div_for_delete_entry_button">
-                            <form method="post" action="{% url 'delete_entry' platform_id=platform.id user_id=user_fields.id">
-                                <button class="btn book" type="button">Удалить запись</button>
+                            <form method="post" action="{% url 'delete_entry' platform_id=platform.id user_id=user_fields.id %}">
+                                <button class="btn book" id="delete_entry_button" type="button">Удалить запись</button>
                             </form>
                         </div>
 
@@ -328,20 +328,29 @@
             </form>
             {% endif %}
         </div>
-    </div>
-
-
+</div>
 
 
 
 
 {% if user_fields and user_fields.is_staff and not platform.verified or user_fields.organizer and user_fields.organizer == platform.organizer %}
-    <div class="authorize-window" id="confirm_delete_window">
+    <div class="authorize-window" id="confirm_delete_platform_window">
         <div class="confirmation-window">
             <form action="{% url 'delete_platform' platform_id=platform.id %}">
                 <button class="btn delete" type="submit">Подтвердить</button>
             </form>
-            <button class="btn btn-secondary" id="cancel_delete_button">Отмена</button>
+            <button class="btn btn-secondary" id="cancel_deletion_platform_button">Отмена</button>
+        </div>
+    </div>
+{% endif %}
+
+{% if user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %}
+    <div class="authorize-window" id="confirm_delete_entry_window">
+        <div class="confirmation-window">
+            <form action="{% url 'delete_entry' platform_id=platform.id user_id=user_fields.id %}">
+                <button class="btn delete" type="submit">Подтвердить</button>
+            </form>
+            <button class="btn btn-secondary" id="cancel_deletion_entry_button">Отмена</button>
         </div>
     </div>
 {% endif %}
@@ -374,16 +383,7 @@
     </div>
 {% endif %}
 
-{% if user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %}
-    <div class="authorize-window" id="confirm_delete_entry">
-        <div class="confirmation-window">
-            <form action="{% url 'delete_entry' platform_id=platform.id user_id=user_fields.id %}">
-                <button class="btn delete" type="submit">Подтвердить</button>
-            </form>
-            <button class="btn btn-secondary" id="cancel_delete_button">Отмена</button>
-        </div>
-    </div>
-{% endif %}
+
 
 
 <script src="{% static 'platforms\js\platform_description.js' %}"></script>
