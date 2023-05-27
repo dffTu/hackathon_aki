@@ -203,6 +203,7 @@
                 {% endif %}
             {% elif user_fields.organizer and user_fields.organizer == platform.organizer %}
                     <button class="btn delete" type="button" id="delete_platform">Удалить площадку</button>
+                    <button class="btn delete" type="button" onclick="location.href='{% url 'change_platform' platform_id=platform.id %}';">Изменить</button>
             {% endif %}
         {% endif %}
     </div>
