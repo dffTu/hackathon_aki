@@ -141,6 +141,7 @@
                                                 event_month_text = {{ event.month_text }}
                                                 event_status = "booked_event"
                                                 event_year = {{ event.year }}
+                                                event_delete_link = {% url "delete_entry" platform_id=platform.id client_id=event.client_id %}
                                                 event_user_link = {% url "show_profile" profile_id=event.user_id %}
                                                 {% if user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %}
                                                 {% else %}
@@ -281,9 +282,11 @@
                         <button class="btn book" type="button">Изменить цену</button>
 
                         <div id="div_for_delete_entry_button">
-                            <form method="post" action="{% url 'delete_entry' platform_id=platform.id user_id=user_fields.id %}">
-                                <button class="btn book" id="delete_entry_button" type="button">Удалить запись</button>
-                            </form>
+                            <button
+                                    class="btn book"
+                                    id="delete_entry_button"
+                                    type="button">Удалить запись
+                            </button>
                         </div>
 
                         <div id="div_for_block_slot_button">
@@ -347,7 +350,7 @@
 {% if user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %}
     <div class="authorize-window" id="confirm_delete_entry_window">
         <div class="confirmation-window">
-            <form action="{% url 'delete_entry' platform_id=platform.id user_id=user_fields.id %}">
+            <form id="confirm_entry_delete_form">
                 <button class="btn delete" type="submit">Подтвердить</button>
             </form>
             <button class="btn btn-secondary" id="cancel_deletion_entry_button">Отмена</button>

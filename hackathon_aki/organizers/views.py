@@ -85,27 +85,19 @@ def create_platform(request, data):
 
 
 @process_post_forms_requests
-def delete_entry(request, data, platform_id, user_id):
-    if not request.user.is_authenticated or request.user.id != user_id:
+def delete_entry(request, data, platform_id, client_id):
+    if not request.user.is_authenticated:
         return redirect('show_platform_description', platform_id=platform_id)
 
     platform = Platform.objects.filter(id=platform_id)
-    is_organizer = (hasattr(request.user, 'organizer') and platform.first().organizer == request.user.organizer)
-
-    if request.user.is_staff:
-        if not platform.exists():
-            return render(request, 'platforms/platform_not_found.html', data)
-        platform.first().delete()
-        return redirect('show_unverified_page', page_id=1)
-    elif is_organizer:
-        if not platform.exists():
-            return render(request, 'platforms/platform_not_found.html', data)
-        platform.first().delete()
-        return redirect('show_organizer_platforms', page_id=1)
-    else:
+    if not platform.exists():
         return redirect('show_platform_description', platform_id=platform_id)
 
-    entry = Entry.objects.filter(platform_id=platform_id, client_id=request.user.client.id)
+    is_organizer = (hasattr(request.user, 'organizer') and platform.first().organizer == request.user.organizer)
+    if not is_organizer:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    entry = Entry.objects.filter(platform_id=platform_id, client_id=client_id)
     if entry.exists():
         entry.first().delete()
     return redirect('show_platform_description', platform_id=platform_id)
