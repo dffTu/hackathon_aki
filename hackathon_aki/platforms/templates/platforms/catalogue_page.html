@@ -136,20 +136,30 @@
                         <script>
                             let selector = document.getElementById("rating_selector");
                             {% if "rating_selector" in filters %}
-                            selector.value = "{{ filters.rating_selector }}";
+                                selector.value = "{{ filters.rating_selector }}";
                             {% endif %}
+                            let current_value = Number(selector.value) - 1;
                             let stars_rating = [];
                             for (let i = 1; i <= 5; i++) {
                                 stars_rating.push(document.getElementById("star" + i.toString()));
                             }
                             for (let i = 0; i < 5; i++) {
                                 stars_rating[i].onclick = function () {
-                                    selector.value = (i + 1).toString();
-                                    for (let j = 0; j <= i; j++) {
-                                        stars_rating[j].src = "{% static 'main\img\star-yellow.svg' %}";
-                                    }
-                                    for (let j = i + 1; j < 5; j++) {
-                                        stars_rating[j].src = "{% static 'main\img\star-grey.svg' %}";
+                                    if (i != current_value) {
+                                        selector.value = (i + 1).toString();
+                                        current_value = i;
+                                        for (let j = 0; j <= i; j++) {
+                                            stars_rating[j].src = "{% static 'main\img\star-yellow.svg' %}";
+                                        }
+                                        for (let j = i + 1; j < 5; j++) {
+                                            stars_rating[j].src = "{% static 'main\img\star-grey.svg' %}";
+                                        }
+                                    } else {
+                                        selector.value = '0';
+                                        current_value = -1;
+                                        for (let j = 0; j <= i; j++) {
+                                            stars_rating[j].src = "{% static 'main\img\star-grey.svg' %}";
+                                        }
                                     }
                                 }
                             }
