@@ -98,6 +98,8 @@ def delete_entry(request, data, platform_id, day, month, year):
 
     if "from_schedule" in request.POST:
         return redirect('show_organizer_schedule')
+    if "from_client_entries" in request.POST:
+        return redirect('show_client_entries')
 
     return redirect('show_platform_description', platform_id=platform_id)
 

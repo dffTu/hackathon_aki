@@ -44,10 +44,10 @@
                             </div>
                             <div class="str">
                                 <p class="title-str">Цена: </p>
-                                <p>{{ entry.price }} руб.</p>
+                                <p>{{ entry.price }} тыс. руб.</p>
                             </div>
                             <div>
-                                <form method="post" action="{% url 'delete_entry' platform_id=entry.platform.id client_id=entry.client.id %}">
+                                <form method="post" action="{% url 'delete_entry' platform_id=entry.platform.id day=entry.date.day month=entry.date.month year=entry.date.year %}">
                                     <input name="from_schedule" type="hidden">
                                     {% csrf_token %}
                                     <button class="btn delete" type="submit">Удалить запись</button>
