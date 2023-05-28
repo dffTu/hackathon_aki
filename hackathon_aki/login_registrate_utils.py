@@ -252,7 +252,7 @@ def show_catalogue_page(request, data, page_id, relevant_platforms_list):
                 continue
             if has_date_end and slot.date > date_end.date():
                 continue
-            if minimal_price <= slot.price * 1000 <= maximal_price:
+            if minimal_price * 1000 <= slot.price <= maximal_price * 1000:
                 should_add = True
                 break
         if should_add:
