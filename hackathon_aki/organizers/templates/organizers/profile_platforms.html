@@ -22,44 +22,46 @@
 
 
     <div class="col-6 catalog-page-org">
-        <div class="container catalog-pages">
-            <div class="platform">
-                {% for platform in platforms %}
-                    {% if forloop.counter|sub:1|flr:15|add:1 == page_id %}
-                        {% with platform_categories|key:"platform-type"|key:"filters"|key:platform.category|key:1 as card_color %}
-                            <div class="col card" style="border: solid; border-color: #{{card_color}};">
-                                <div class="aspect-ratio-box-catalogue card-img-top">
-                                    <img src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
-                                </div>
+        {% if platforms|length > 0 %}
+            <div class="container catalog-pages">
+                <div class="platform">
+                    {% for platform in platforms %}
+                        {% if forloop.counter|sub:1|flr:15|add:1 == page_id %}
+                            {% with platform_categories|key:"platform-type"|key:"filters"|key:platform.category|key:1 as card_color %}
+                                <div class="col card" style="border: solid; border-color: #{{card_color}};">
+                                    <div class="aspect-ratio-box-catalogue card-img-top">
+                                        <img src="{{ platform.platformattachment_set.first.file.url }}" alt="{{ platform.name }}">
+                                    </div>
 
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ platform.name }}</h5>
-                                    <h7>{{ platform_categories|key:"platform-type"|key:"filters"|key:platform.category|key:0 }}</h7>
-                                    <div class="top">
-                                        <div class="img-platforms">
-                                            <img src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ platform.name }}</h5>
+                                        <h7>{{ platform_categories|key:"platform-type"|key:"filters"|key:platform.category|key:0 }}</h7>
+                                        <div class="top">
+                                            <div class="img-platforms">
+                                                <img src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
+                                            </div>
+                                            <p>{{ platform.rating|round:1 }}</p>
+                                            <img class="comment" src="{% static 'main\img\comment.svg' %}">
+                                            <p>{{ platform.comment_set|get_all|length }}</p>
                                         </div>
-                                        <p>{{ platform.rating|round:1 }}</p>
-                                        <img class="comment" src="{% static 'main\img\comment.svg' %}">
-                                        <p>{{ platform.comment_set|get_all|length }}</p>
+                                        <div class="card-text">
+                                            <p>{{ platform.short_description }}</p>
+                                        </div>
                                     </div>
-                                    <div class="card-text">
-                                        <p>{{ platform.short_description }}</p>
+                                    <div class="but-in-card">
+                                        <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
                                     </div>
-                                </div>
-                                <div class="but-in-card">
-                                    <a href="{% url 'show_platform_description' platform_id=platform.id %}" class="btn">Подробнее</a>
-                                </div>
-                                {% if not platform.verified %}
+                                    {% if not platform.verified %}
 
-                                    <p class="status">На рассмотрении</p>
-                                {% endif %}
-                            </div>
-                        {% endwith %}
-                    {% endif %}
-                {% endfor %}
+                                        <p class="status">На рассмотрении</p>
+                                    {% endif %}
+                                </div>
+                            {% endwith %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 
     {% if all_pages|length == 0 %}

@@ -128,7 +128,7 @@
                                     </td>
                                 {% elif event.is_booked %}
                                 <!-- слот + бронь -->
-                                    <td class="cell_is_busy {% if event.time_comparison == "equal" %} today_cell {% endif %}">
+                                    <td class="{% if event.time_comparison == 'equal' %} today_cell {% endif %} {% if user_fields and user_fields.client and user_fields.client.id == event.client_id %} my_event_cell {% else %} cell_is_busy {% endif %}">
                                         <button onclick="timetable_button_click(this)"
                                                 event_day = {{ event.day }}
                                                 event_month = {{ event.month }}
@@ -142,58 +142,62 @@
                                                 event_delete_registration_link = {% url "delete_registration" platform_id=platform.id client_id=event.client_id day=event.day month=event.month year=event.year %}
                                                 event_user_link = {% url "show_profile" profile_id=event.user_id %}
 
-                                                {% if not user_fields or not user_fields.organizer or not user_fields.organizer == platform.organizer %} disabled {% endif %}
-
-                                                title="Этот слот уже занят"
-                                                >{{ event.day }}
-                                        </button>
-                                    </td>
-                                {% elif event.is_defined %}
-                                <!-- слот -->
-                                    <td class="defined_event {% if event.time_comparison == "equal" %} today_cell {% endif %}">
-                                        <button onclick="timetable_button_click(this)"
-                                                event_day = {{ event.day }}
-                                                event_month = {{ event.month }}
-                                                event_year = {{ event.year }}
-                                                event_month_text = {{ event.month_text }}
-
-                                                event_price = {{ event.price }}
-                                                event_is_booked = {{ event.is_booked }}
-                                                event_is_defined = {{ event.is_defined }}
-
-                                                event_delete_entry_link = {% url "delete_entry" platform_id=platform.id day=event.day month=event.month year=event.year %}
-                                                event_add_registration_link = {% url "add_registration" platform_id=platform.id day=event.day month=event.month year=event.year %}
-                                                event_change_price_link = {% url "change_price" platform_id=platform.id day=event.day month=event.month year=event.year %}
-
-                                                {% if user_fields and user_fields.client %}
-                                                    event_add_registration_link = {% url "add_registration"
-                                                    platform_id=platform.id client_id=user_fields.client.id
-                                                    day=event.day month=event.month year=event.year %}
+                                                {% if user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %}
+                                                {% elif user_fields and user_fields.client and user_fields.client.id == event.client_id %}
+                                                {% else %}
+                                                disabled
                                                 {% endif %}
 
+                                                {% if user_fields and user_fields.client and user_fields.client.id == event.client_id %} Вы записаны на этот слот {% else %} title="Этот слот уже занят" {% endif %}
                                                 >{{ event.day }}
                                         </button>
                                     </td>
-                                {% else %}
-                                <!-- ничего -->
-                                    <td class="undefined_event {% if event.time_comparison == "equal" %} today_cell {% endif %}">
-                                        <button onclick="timetable_button_click(this)"
-                                                event_day = {{ event.day }}
-                                                event_month = {{ event.month }}
-                                                event_year = {{ event.year }}
-                                                event_month_text = {{ event.month_text }}
+                                    {% elif event.is_defined %}
+                                    <!-- слот -->
+                                        <td class="defined_event {% if event.time_comparison == "equal" %} today_cell {% endif %}">
+                                            <button onclick="timetable_button_click(this)"
+                                                    event_day = {{ event.day }}
+                                                    event_month = {{ event.month }}
+                                                    event_year = {{ event.year }}
+                                                    event_month_text = {{ event.month_text }}
 
-                                                event_price = {{ event.price }}
-                                                event_is_booked = {{ event.is_booked }}
-                                                event_is_defined = {{ event.is_defined }}
+                                                    event_price = {{ event.price }}
+                                                    event_is_booked = {{ event.is_booked }}
+                                                    event_is_defined = {{ event.is_defined }}
 
-                                                {% if not user_fields or not user_fields.organizer or not user_fields.organizer == platform.organizer %} disabled {% endif %}
+                                                    event_delete_entry_link = {% url "delete_entry" platform_id=platform.id day=event.day month=event.month year=event.year %}
+                                                    event_add_registration_link = {% url "add_registration" platform_id=platform.id day=event.day month=event.month year=event.year %}
+                                                    event_change_price_link = {% url "change_price" platform_id=platform.id day=event.day month=event.month year=event.year %}
 
-                                                event_add_entry_link = {% url "add_entry" platform_id=platform.id day=event.day month=event.month year=event.year %}
-                                                >{{ event.day }}
-                                        </button>
-                                    </td>
-                                {% endif %}
+                                                    {% if user_fields and user_fields.client %}
+                                                        event_add_registration_link = {% url "add_registration"
+                                                        platform_id=platform.id client_id=user_fields.client.id
+                                                        day=event.day month=event.month year=event.year %}
+                                                    {% endif %}
+
+                                                    >{{ event.day }}
+                                            </button>
+                                        </td>
+                                    {% else %}
+                                    <!-- ничего -->
+                                        <td class="undefined_event {% if event.time_comparison == "equal" %} today_cell {% endif %}">
+                                            <button onclick="timetable_button_click(this)"
+                                                    event_day = {{ event.day }}
+                                                    event_month = {{ event.month }}
+                                                    event_year = {{ event.year }}
+                                                    event_month_text = {{ event.month_text }}
+
+                                                    event_price = {{ event.price }}
+                                                    event_is_booked = {{ event.is_booked }}
+                                                    event_is_defined = {{ event.is_defined }}
+
+                                                    {% if not user_fields or not user_fields.organizer or not user_fields.organizer == platform.organizer %} disabled {% endif %}
+
+                                                    event_add_entry_link = {% url "add_entry" platform_id=platform.id day=event.day month=event.month year=event.year %}
+                                                    >{{ event.day }}
+                                            </button>
+                                        </td>
+                                    {% endif %}
                             {% endfor %}
                             </tr>
                     {% endfor %}
@@ -410,7 +414,12 @@
 
     <div class="authorize-window" id="button_description_window">
         <div class="confirmation-window">
-            <p class='text-white'>Выберите один файл в формате xlsx. В таблице должно быть две колонки, первая - дата записи, вторая - цена записи.</p>
+            <p class='text-white'>Выберите один файл в формате xlsx. В таблице должно быть две колонки.
+                В первой строчке должно быть название колонок, например "Дата" и "Цена".
+                Начиная со второй строчки должны идти блоки информации в слотах.
+                В первом столбце должна быть указана дата в формате (дд.мм.гггг).
+                Во втором столбце должна быть указана цена на соответствующий день (тыс. Р).
+                Пример такого документа можно посмотреть <a style="display: inline; text-decoration: none; color: #E74362" href="{% static 'main/examples/timetable.xlsx' %}" download>здесь</a></p>
         </div>
     </div>
 {% endif %}
@@ -444,7 +453,7 @@
         <div class="confirmation-window">
             <form method="post" id="change_price_form">
                 {% csrf_token %}
-                <input type="number" name="new_price" required>
+                <input class="form-control" type="number" name="new_price" required>
                 <button class="btn delete" type="submit">Изменить цену</button>
             </form>
             <button class="btn btn-secondary" id="cancel_change_price_button">Отмена</button>
