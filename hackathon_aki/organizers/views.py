@@ -101,6 +101,9 @@ def delete_entry(request, data, platform_id, day, month, year):
     if entry.exists():
         entry.first().delete()
 
+    if "from_schedule" in request.POST:
+        return redirect('show_organizer_schedule')
+
     return redirect('show_platform_description', platform_id=platform_id)
 
 
