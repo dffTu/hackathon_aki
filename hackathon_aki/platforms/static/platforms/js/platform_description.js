@@ -9,6 +9,9 @@ let confirm_deletion_registration_window = document.getElementById("confirm_dele
 
 let adding_comment_window = document.getElementById("adding_comment_window");
 
+let desc_import_calendar_button = document.getElementById('desc_import_calendar_button');
+let button_description_window = document.getElementById("button_description_window");
+
 let month1 = document.getElementById("month_table_1");
 let month2 = document.getElementById("month_table_2");
 let month3 = document.getElementById("month_table_3");
@@ -183,6 +186,15 @@ window.onmousedown = function (event) {
     }
     if (event.target === adding_comment_window) {
         adding_comment_window.style.display = "none";
+    }
+    if (event.target === button_description_window) {
+        button_description_window.style.display = "none";
+    }
+}
+
+if (desc_import_calendar_button) {
+    desc_import_calendar_button.onmousedown = function() {
+        button_description_window.style.display = "flex";
     }
 }
 

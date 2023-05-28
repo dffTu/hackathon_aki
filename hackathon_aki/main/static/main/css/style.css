@@ -41,6 +41,7 @@ body {
     color: #fff;
 }
 
+/* Шапка */
 .header {
     font-family: "Cera Pro Medium";
     width: 100%;
@@ -238,7 +239,7 @@ ul {
     top: 100%;
     height: max-content;
     width: 10rem;
-    z-index: 10;
+    z-index: 1;
     -webkit-transition: 0.3s ease-in-out;
     -moz-transition: 0.3s ease-in-out;
     -o-transition: 0.3s ease-in-out;
@@ -261,6 +262,168 @@ ul {
     border-radius: 7px;
     padding-left: 5px;
 }
+/*Конец шапки*/
+
+
+/*Главная страница*/
+.main-body {
+    height: 90vh;
+    width: 100%;
+    padding: 1% 4%;
+}
+.title-main-str{
+    font-size: 65px;
+    font-family: 'Cera pro Bold';
+    color: #fff;
+    overflow: hidden;
+    width: 80%;
+}
+
+.cards-main {
+    display: grid;
+    height: 80%;
+    /* Автоматически заполняем на всю ширину grid-контейнера */
+    grid-template-columns: repeat(auto-fill, 30%);
+    width: 100%;
+    justify-content: center;
+    justify-items: center; /* Размещаем карточку по центру */
+    column-gap: 3%; /* Отступ между колонками */
+    margin: 0 auto;
+}
+
+.card1, .card2, .card3 {
+    background: linear-gradient(230.64deg, rgba(25, 46, 67, 0.92) 0%, rgba(13, 21, 29, 0.92) 100%);
+    box-shadow: 10px 13px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+    height: 88%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.card1 div, .card2 div, .card3 div{
+    position: relative;
+}
+
+.card1 img, .card2 img, .card3 img{
+    height: 50%;
+    width: 50%;
+    z-index: 1;
+    position: relative;
+    top: -180px;
+    left: 65%;
+}
+
+.card2 img{
+    margin-top: 4%;
+}
+
+.card3 img{
+    margin-top: 7%;
+}
+
+.card1 {
+    margin-top: 14%;
+}
+.card2 {
+    margin-top: 7%;
+}
+
+
+
+
+.ellipse11 {
+    height: 12%;
+    width: 12%;
+    left: 125px;
+    top: 60px;
+    border-radius: 55px;
+    background: rgba(56, 214, 42, 0.50);
+    filter: blur(27.5px);
+}
+
+.ellipse12{
+    height: 22%;
+    width: 35%;
+    left: 20px;
+    top: 190px;
+    background: rgba(97, 44, 150, 0.80);
+    filter: blur(45px);
+    border-radius: 90px;
+}
+.ellipse13{
+    height: 17%;
+    width: 20%;
+    left: 235px;
+    top: 70px;
+    border-radius: 85px;
+    background: rgba(93, 42, 42, 0.9);
+    filter: blur(42.5px);
+}
+
+
+.ellipse21{
+    height: 8%;
+    width: 8%;
+    left: 75px;
+    top: 80px;
+    border-radius: 55px;
+    background: #3F2FF0;
+    filter: blur(27.5px);
+}
+.ellipse22{
+    height: 17%;
+    width: 15%;
+    left: 220px;
+    top: 160px;
+    border-radius: 85px;
+    background: rgba(80, 93, 42);
+    filter: blur(42px);
+}
+
+.ellipse23{
+    height: 22%;
+    width: 20%;
+    left: 40px;
+    top: 150px;
+    border-radius: 90px;
+    background: #472C96;
+    filter: blur(45px);
+}
+
+
+.ellipse31{
+    height: 7%;
+    width: 5%;
+    left: 170px;
+    top: 35px;
+    border-radius: 55px;
+    background: #C234DE;
+    filter: blur(27px);
+}
+
+.ellipse32{
+    height: 15%;
+    width: 19%;
+    left: 60px;
+    top: 130px;
+    border-radius: 85px;
+    background: #7C6206;
+    filter: blur(42px);
+}
+
+.ellipse33{
+    height: 22%;
+    width: 20%;
+    left: 220px;
+    top: 190px;
+    border-radius: 90px;
+    background: #3009A0;
+    filter: blur(45px);
+}
+
+
+
+/*Конец главной страницы*/
 
 /* Position child elements relative to this element */
 .aspect-ratio-box-catalogue {

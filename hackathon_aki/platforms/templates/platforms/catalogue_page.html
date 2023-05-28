@@ -14,7 +14,6 @@
 
 <div class="cat">
     <h2 class="name-of-page">Каталог</h2>
-    <p> страница {{ page_id }}</p>
 </div>
 
 
@@ -22,7 +21,7 @@
     <div class="col" id="filter">
         <h4>Фильтр</h4>
         <div class="form-points">
-            <form method="get" action="{% url catalogue_type page_id=1 %}">
+            <form method="get" id="filters_form" action="{% url catalogue_type page_id=1 %}">
             <input name="__filter_form" type="hidden">
             {% for platform_category_name in platform_categories %}
                 <fieldset>
@@ -51,7 +50,7 @@
             <!--  Начало ползунка цен    -->
             <div class="wrapper">
               <header>
-                <h4>Цена</h4>
+                <h4>Цена (тыс. ₽)</h4>
               </header>
               <div class="price-input">
                 <div class="field">
@@ -66,7 +65,7 @@
                     {% if "max_price" in filters %}
                         <input name="max_price" type="number" class="input-max" value='{{ filters|key:"max_price" }}'>
                     {% else %}
-                        <input name="max_price" type="number" class="input-max" value="1000000">
+                        <input name="max_price" type="number" class="input-max" value="1000">
                     {% endif %}
                 </div>
               </div>
@@ -75,20 +74,88 @@
               </div>
               <div class="range-input">
                   {% if "min_price" in filters %}
-                        <input type="range" class="range-min" min="0" max="1000000" value='{{ filters|key:"min_price" }}' step="100">
+                        <input type="range" class="range-min" min="0" max="1000" value='{{ filters|key:"min_price" }}' step="1">
                   {% else %}
-                        <input type="range" class="range-min" min="0" max="1000000" value="0" step="100">
+                        <input type="range" class="range-min" min="0" max="1000" value="0" step="1">
                   {% endif %}
                   {% if "max_price" in filters %}
-                        <input type="range" class="range-max" min="0" max="1000000" value='{{ filters|key:"max_price" }}' step="100">
+                        <input type="range" class="range-max" min="0" max="1000" value='{{ filters|key:"max_price" }}' step="1">
                   {% else %}
-                        <input type="range" class="range-max" min="0" max="1000000" value="1000000" step="100">
+                        <input type="range" class="range-max" min="0" max="1000" value="1000" step="1">
                   {% endif %}
               </div>
             </div>
             <script src="{% static 'platforms\js\price_slider.js' %}"></script>
             <!--  Конец ползунка цен    -->
             <br>
+
+            <div class="date-filters">
+                <div class="date-begin-filter">
+                    <p class="data-filter-text">Дата начала</p>
+                    {% if "date_begin" in filters %}
+                        <input type="date" name="date_begin" value="{{ filters|key:'date_begin' }}">
+                    {% else %}
+                        <input type="date" name="date_begin">
+                    {% endif %}
+                </div>
+                <div class="date-end-filter">
+                    <p class="data-filter-text">Дата конца</p>
+                    {% if "date_end" in filters %}
+                        <input type="date" name="date_end" value="{{ filters|key:'date_end' }}">
+                    {% else %}
+                        <input type="date" name="date_end">
+                    {% endif %}
+                </div>
+            </div>
+            <br>
+            <div class="rating-filters">
+                <label style="margin-right: 5%;">Рейтинг от:</label>
+                    <select id="rating_selector" name="rating_selector" form="filters_form" hidden required>
+                        <option value="0" selected></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <div class="top-stars">
+                        {% if "rating_selector" not in filters %}
+                            {% for x in 1|range:6 %}
+                                <img class="stars stars-pointer" id="star{{ x }}" src="{% static 'main\img\star-grey.svg' %}" alt="Рейтинг">
+                            {% endfor %}
+                        {% else %}
+                            {% for x in 0|range:filters.rating_selector %}
+                                <img class="stars stars-pointer" id="star{{ x|add:1 }}" src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
+                            {% endfor %}
+                            {% with 5|sub:filters.rating_selector as left_stars %}
+                                {% for x in 0|range:left_stars %}
+                                    <img class="stars stars-pointer" id="star{{ x|add:filters.rating_selector|add:1 }}" src="{% static 'main\img\star-grey.svg' %}" alt="Рейтинг">
+                                {% endfor %}
+                            {% endwith %}
+                        {% endif %}
+                        <script>
+                            let selector = document.getElementById("rating_selector");
+                            {% if "rating_selector" in filters %}
+                            selector.value = "{{ filters.rating_selector }}";
+                            {% endif %}
+                            let stars_rating = [];
+                            for (let i = 1; i <= 5; i++) {
+                                stars_rating.push(document.getElementById("star" + i.toString()));
+                            }
+                            for (let i = 0; i < 5; i++) {
+                                stars_rating[i].onclick = function () {
+                                    selector.value = (i + 1).toString();
+                                    for (let j = 0; j <= i; j++) {
+                                        stars_rating[j].src = "{% static 'main\img\star-yellow.svg' %}";
+                                    }
+                                    for (let j = i + 1; j < 5; j++) {
+                                        stars_rating[j].src = "{% static 'main\img\star-grey.svg' %}";
+                                    }
+                                }
+                            }
+                        </script>
+                    </div>
+            </div>
             <div class="but-filter">
                 <button class="btn apply-a-filter" type="submit">Применить фильтр</button>
             </div>
@@ -115,7 +182,11 @@
                                         <div class="img-platforms">
                                             <img src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
                                         </div>
-                                        <p>{{ platform.rating|round:1 }}</p>
+                                        {% if platform.comment_set|get_all|length > 0 %}
+                                            <p>{{ platform.rating|round:1 }}</p>
+                                        {% else %}
+                                            <p>Нет рейтинга</p>
+                                        {% endif %}
                                         <img class="comment" src="{% static 'main\img\comment.svg' %}">
                                         <p>{{ platform.comment_set|get_all|length }}</p>
                                     </div>
@@ -159,9 +230,17 @@
                             <button class="num-page" type="submit">
                                 <div class="pages" style="display: flex; ">
                                     {% if page_number == all_pages|length or page_number == page_id|add:2 %}
-                                        <a href="#" onclick="submitForm{{page_number}}()" style="margin-right: 0;"> {{ page_number }} </a>
+                                        {% if page_number == page_id %}
+                                            <a href="#" onclick="submitForm{{page_number}}()" style="margin-right: 0; color: orange;"> {{ page_number }} </a>
+                                        {% else %}
+                                            <a href="#" onclick="submitForm{{page_number}}()" style="margin-right: 0;"> {{ page_number }} </a>
+                                        {% endif %}
                                     {% else %}
-                                        <a href="#" onclick="submitForm{{page_number}}()"> {{ page_number }} </a>
+                                        {% if page_number == page_id %}
+                                            <a href="#" onclick="submitForm{{page_number}}()" style="color: orange;"> {{ page_number }} </a>
+                                        {% else %}
+                                            <a href="#" onclick="submitForm{{page_number}}()"> {{ page_number }} </a>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </button>

@@ -17,39 +17,45 @@
     <div class="entries-block">
         <ul>
             {% for entry in entries %}
-                <li>
-                    <div class="entry">
-                        <div class="str">
-                            <p class="title-str">Дата:</p>
-                            <p>{{ entry.date }}</p>
-                        </div>
+                {% if entry.client %}
+                    <li>
+                        <div class="entry">
+                            <div class="str">
+                                <p class="title-str">Дата:</p>
+                                <p>{{ entry.date }}</p>
+                            </div>
 
-                        <div class="str">
-                            <p class="title-str">Адрес: </p>
-                            <p>{{ entry.platform.address|key:"address_text" }}</p>
-                        </div>
+                            <div class="str">
+                                <p class="title-str">Адрес: </p>
+                                <p>{{ entry.platform.address|key:"address_text" }}</p>
+                            </div>
 
-                        <div class="str">
-                            <p class="title-str">Контакты: </p>
-                            <p>{{ entry.platform.organizer.phone_number }}</p>
+                            <div class="str">
+                                <p class="title-str">Контакты: </p>
+                                <p>{{ entry.client.phone_number }}</p>
+                            </div>
+                            <div class="str">
+                                <p class="title-str">Email: </p>
+                                <p>{{ entry.client.user.email }}</p>
+                            </div>
+                            <div class="str">
+                                <p class="title-str">Площадка: </p>
+                                <p><a href="{% url 'show_platform_description' platform_id=entry.platform.id %}">{{ entry.platform.name }}</a></p>
+                            </div>
+                            <div class="str">
+                                <p class="title-str">Цена: </p>
+                                <p>{{ entry.price }} руб.</p>
+                            </div>
+                            <div>
+                                <form method="post" action="{% url 'delete_entry' platform_id=entry.platform.id client_id=entry.client.id %}">
+                                    <input name="from_schedule" type="hidden">
+                                    {% csrf_token %}
+                                    <button class="btn delete" type="submit">Удалить запись</button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="str">
-                            <p class="title-str">Email: </p>
-                            <p>{{ entry.platform.organizer.user.email }}</p>
-                        </div>
-                        <div class="str">
-                            <p class="title-str">Площадка: </p>
-                            <p><a href="{% url 'show_platform_description' platform_id=entry.platform.id %}">{{ entry.platform.name }}</a></p>
-                        </div>
-                        <div class="str">
-                            <p class="title-str">Цена: </p>
-                            <p>1000</p>
-                        </div>
-                        <div>
-                            <button class="btn delete">Удалить запись</button>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>

@@ -9,6 +9,7 @@
 
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=0c302373-1600-40fe-8920-973e5e09b5e0" type="text/javascript"></script>
 <script src="{% static 'platforms\js\platform_address_description.js' %}"></script>
+<script src="{% static 'platforms\js\calendar_import.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -199,9 +200,25 @@
     {% endfor %}
 
     <div class="buttons">
-        <button id="button_prev_month" type="button" class="btn btn-danger">Посмотреть предыдущий месяц</button>
-        <button id="button_next_month" type="button" class="btn btn-danger">Посмотреть следующий месяц</button>
+        <button id="button_prev_month" type="button" class="btn btn-danger">Предыдущий месяц</button>
+        {% if user_fields %}
+            {% if not user_fields.is_staff and user_fields.organizer and user_fields.organizer == platform.organizer %}
+            <div class="buttons">
+                <button id="import_calendar_button" type="button" class="btn btn-danger">Импортировать</button>
+                <button id="desc_import_calendar_button" type="button" class="btn btn-info" style="position: relative">?</button>
+            </div>
+            {% endif %}
+        {% endif %}
+        <button id="button_next_month" type="button" class="btn btn-danger">Следующий месяц</button>
     </div>
+    <form method="POST" enctype='multipart/form-data' action="{% url 'update_platform_schedule' platform_id=platform.id %}" id="mport_calendar_form">
+        {% if user_fields %}
+            {% if not user_fields.is_staff and user_fields.organizer and user_fields.organizer == platform.organizer %}
+                {% csrf_token %}
+                {{ calendar_importing_form.file_field }}
+            {% endif %}
+        {% endif %}
+    </form>
 
     <div class="action">
         {% if user_fields %}
@@ -376,6 +393,12 @@
                 <button class="btn delete" type="submit">Подтвердить</button>
             </form>
             <button class="btn btn-secondary" id="cancel_deletion_platform_button">Отмена</button>
+        </div>
+    </div>
+
+    <div class="authorize-window" id="button_description_window">
+        <div class="confirmation-window">
+            <p class='text-white'>Выберите один файл в формате xlsx. В таблице должно быть две колонки, первая - дата записи, вторая - цена записи.</p>
         </div>
     </div>
 {% endif %}

@@ -234,3 +234,23 @@ button {
 .pages a:hover {
     color: orange;
 }
+
+.date-begin-filter, .date-end-filter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.rating-filters {
+    display: flex;
+}
+
+.stars-pointer {
+    cursor: pointer;
+}
+
+.data-filter-text {
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
