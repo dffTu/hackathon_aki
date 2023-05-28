@@ -166,29 +166,24 @@ def organizer_registration(request, data):
     return None
 
 
-def save_search_request(request, data):
+def save_get_request(request, data):
     if 'search' in request.GET and request.GET['search'] != '':
         data['filters']['search'] = request.GET['search']
 
-
-def save_filters_request(request, data):
     for category in platform_categories:
         for category_filter in platform_categories[category]['filters']:
             if category_filter in request.GET:
                 data['filters'][category_filter] = 'on'
 
-
-def save_prices_request(request, data):
     if 'min_price' in request.GET:
         data['filters']['min_price'] = request.GET['min_price']
     if 'max_price' in request.GET:
         data['filters']['max_price'] = request.GET['max_price']
 
-
-def save_get_request(request, data):
-    save_search_request(request, data)
-    save_filters_request(request, data)
-    save_prices_request(request, data)
+    if 'date_begin' in request.GET:
+        data['filters']['date_begin'] = request.GET['date_begin']
+    if 'date_end' in request.GET:
+        data['filters']['date_end'] = request.GET['date_end']
 
 
 def calendar_entry_request(request, data):
@@ -225,6 +220,17 @@ def show_catalogue_page(request, data, page_id, relevant_platforms_list):
 
     data['platforms'] = []
 
+    has_date_begin = False
+    has_date_end = False
+    date_begin = datetime.date.today()
+    date_end = datetime.date.today()
+    if 'date_begin' in request.GET and request.GET['date_begin'] != '':
+        has_date_begin = True
+        date_begin = datetime.datetime.strptime(request.GET['date_begin'], '%Y-%m-%d')
+    if 'date_end' in request.GET and request.GET['date_end'] != '':
+        has_date_end = True
+        date_end = datetime.datetime.strptime(request.GET['date_end'], '%Y-%m-%d')
+
     relevant_platforms_list_temp = [platform for platform in relevant_platforms_list]
     relevant_platforms_list = []
 
@@ -232,6 +238,10 @@ def show_catalogue_page(request, data, page_id, relevant_platforms_list):
         should_add = False
         for slot in platform.entry_set.all():
             if datetime.date.today() > slot.date:
+                continue
+            if has_date_begin and slot.date < date_begin.date():
+                continue
+            if has_date_end and slot.date > date_end.date():
                 continue
             if minimal_price <= slot.price <= maximal_price:
                 should_add = True

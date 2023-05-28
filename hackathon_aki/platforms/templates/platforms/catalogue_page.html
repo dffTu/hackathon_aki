@@ -89,6 +89,26 @@
             <script src="{% static 'platforms\js\price_slider.js' %}"></script>
             <!--  Конец ползунка цен    -->
             <br>
+
+            <div class="date-filters">
+                <div class="date-begin-filter">
+                    <p style="margin: 0;">Дата начала</p>
+                    {% if "date_begin" in filters %}
+                        <input type="date" name="date_begin" value="{{ filters|key:'date_begin' }}">
+                    {% else %}
+                        <input type="date" name="date_begin">
+                    {% endif %}
+                </div>
+                <div class="date-end-filter">
+                    <p style="margin: 0;">Дата конца</p>
+                    {% if "date_end" in filters %}
+                        <input type="date" name="date_end" value="{{ filters|key:'date_end' }}">
+                    {% else %}
+                        <input type="date" name="date_end">
+                    {% endif %}
+                </div>
+            </div>
+            <br>
             <div class="but-filter">
                 <button class="btn apply-a-filter" type="submit">Применить фильтр</button>
             </div>
