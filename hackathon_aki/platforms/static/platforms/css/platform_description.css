@@ -188,7 +188,7 @@
 }
 
 .but-in-form{
-    width: 50%;
+    width: 70%;
 }
 
 .book {
@@ -200,6 +200,26 @@
     border: none;
     padding: 1% 2%;
     border-radius: 7px;
+}
+
+.book-info{
+    margin-top: 10px;
+    font-size: 10px;
+    text-align: center;
+}
+.enter{
+    margin-top: 5%;
+    font-size: 18px;
+    background: #E74362;
+    padding: 15% 75%;
+    border: none;
+    border-radius: 7px;
+    color: #fff;
+}
+
+.cell_is_busy{
+    background: #1E1E1E;
+    color: #fff;
 }
 
 .delete-note{
@@ -259,6 +279,18 @@
     align-items: center;
     justify-content: center;
     align-content: center;
+}
+
+.form-orig {
+    display: flex;
+    justify-content: center;
+    width: 70%;
+}
+.form-orig button {
+    color: #fff;
+    font-size: 14px;
+    padding: 0 7%;
+    border-radius: 7px;
 }
 
 /* Секция комментариев */

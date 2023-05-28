@@ -127,6 +127,7 @@
                                         <button disabled title="На этот слот уже нельзя записаться">{{ event.day }}</button>
                                     </td>
                                 {% elif event.is_booked %}
+                                <!-- слот + бронь -->
                                     <td class="cell_is_busy {% if event.time_comparison == "equal" %} today_cell {% endif %}">
                                         <button onclick="timetable_button_click(this)"
                                                 event_day = {{ event.day }}
@@ -148,7 +149,8 @@
                                         </button>
                                     </td>
                                 {% elif event.is_defined %}
-                                    <td class="defined_event {% if event.time_comparison == "equal" %} "today_cell" {% endif %}">
+                                <!-- слот -->
+                                    <td class="defined_event {% if event.time_comparison == "equal" %} today_cell {% endif %}">
                                         <button onclick="timetable_button_click(this)"
                                                 event_day = {{ event.day }}
                                                 event_month = {{ event.month }}
@@ -173,7 +175,8 @@
                                         </button>
                                     </td>
                                 {% else %}
-                                    <td class="undefined_event {% if event.time_comparison == "equal" %} "today_cell" {% endif %}">
+                                <!-- ничего -->
+                                    <td class="undefined_event {% if event.time_comparison == "equal" %} today_cell {% endif %}">
                                         <button onclick="timetable_button_click(this)"
                                                 event_day = {{ event.day }}
                                                 event_month = {{ event.month }}
@@ -369,18 +372,23 @@
 
                     {% csrf_token %}
                     <button class="btn book" type="submit">Забронировать</button>
-                    <p>Нажимая на кнопку "Забронировать", вы соглашаетесь с условиями публичной оферты</p>
+                    <div style="margin: 0 auto;">
+                        <p class="book-info">Нажимая на кнопку "Забронировать", вы соглашаетесь с условиями публичной оферты</p>
+                    </div>
+                    
                 </form>
             </div>
             {% elif user_fields.organizer %}
-            <form method="post">
-                <button disabled type="submit">Арендодатель не может бронировать слоты</button>
+            <form class="form-orig" method="post">
+                <button  disabled type="submit">Арендодатель не может бронировать слоты</button>
             </form>
             {% else %}
-            <form method="post">
+            <form  method="post" style="width: 25%;">
                 <input name="__calendar_entry_request" type="hidden">
                 {% csrf_token %}
-                <button id="login_calendar_registrate_button" type="button">Войти</button>
+                <div style="width: 50%">
+                    <button class="btn enter" id="login_calendar_registrate_button" type="button">Войти</button>
+                </div>
             </form>
             {% endif %}
         </div>
