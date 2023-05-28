@@ -128,7 +128,7 @@
                                     </td>
                                 {% elif event.is_booked %}
                                 <!-- слот + бронь -->
-                                    <td class="{% if event.time_comparison == 'equal' %} today_cell {% endif %} {% if user_fields and user_fields.client and user_fields.client.id == event.client_id %} my_event_cell {% else %} cell_is_busy {% endif %}">
+                                    <td class="{% if event.time_comparison == 'equal' %} today_cell {% endif %} {% if user_fields and user_fields.client and user_fields.client.id == event.client_id %} my_event_cell {% elif user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %} cell_is_busy {% else %} undefined_event {% endif %}">
                                         <button onclick="timetable_button_click(this)"
                                                 event_day = {{ event.day }}
                                                 event_month = {{ event.month }}
