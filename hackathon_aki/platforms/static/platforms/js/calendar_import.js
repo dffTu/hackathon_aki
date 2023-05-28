@@ -7,7 +7,9 @@ function document_init() {
     let import_calendar_button = document.getElementById("import_calendar_button");
     let file_field = document.getElementById("calendar_importing_file_field");
 
-    file_field.style.display = 'none';
+    if (file_field) {
+        file_field.style.display = 'none';
+    }
 
     if (import_calendar_button) {
         import_calendar_button.onmousedown = function () {

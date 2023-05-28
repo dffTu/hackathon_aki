@@ -3,7 +3,7 @@ let button_next_month = document.getElementById("button_next_month");
 
 let calendar_window = document.getElementById("calendar-window");
 
-let confirm_deletion_platform_window = document.getElementById("confirm_deletion_platform_window");
+let confirm_deletion_platform_window = document.getElementById("confirm_delete_platform_window");
 let confirm_deletion_entry_window = document.getElementById("confirm_deletion_entry_window");
 let confirm_deletion_registration_window = document.getElementById("confirm_deletion_registration_window");
 
