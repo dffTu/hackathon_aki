@@ -1,8 +1,9 @@
+import pandas as pd
 from django.http import FileResponse
 from django.shortcuts import render, redirect
-from .models import Platform, Comment
+from .models import Platform
 from main.models import CommentAttachment
-from .forms import CommentFileAttachingForm, CommentLeavingForm
+from .forms import CommentFileAttachingForm, CommentLeavingForm, CalendarImportingForm
 from login_registrate_utils import process_post_forms_requests, show_catalogue_page
 from calendar_utils import Month, build_calendar
 
@@ -33,6 +34,7 @@ def show_platform_description(request, data, platform_id):
     data['months'] = build_calendar(platform_id)
     data['comment_leaving_form'] = CommentLeavingForm()
     data['attachment_form'] = CommentFileAttachingForm()
+    data['calendar_importing_form'] = CalendarImportingForm()
 
     return render(request, 'platforms/platform_description.html', data)
 
@@ -138,3 +140,29 @@ def download_agreement(request, data, platform_id):
         return render(request, 'platforms/platform_not_found.html', data)
 
     return FileResponse(platform.first().agreement, as_attachment=True)
+
+
+@process_post_forms_requests
+def update_platform_schedule(request, data, platform_id):
+    if not request.user.is_authenticated or request.method != 'POST' or request.user.is_staff:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    platform = Platform.objects.filter(id=platform_id)
+    is_organizer = (hasattr(request.user, 'organizer') and platform.first().organizer == request.user.organizer)
+
+    if not is_organizer:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    if not platform.exists():
+        return render(request, 'platforms/platform_not_found.html', data)
+
+    form = CalendarImportingForm(request.POST, request.FILES)
+    form.is_valid()
+
+    if form.cleaned_data['file_field']:
+        calendar_data = pd.read_excel(form.cleaned_data['file_field'])
+        entries = []
+        for i in range(calendar_data.shape[0]):
+            entries.append((calendar_data[calendar_data.columns[0]][i], calendar_data[calendar_data.columns[1]][i]))
+
+    return redirect('show_platform_description', platform_id=platform_id)
