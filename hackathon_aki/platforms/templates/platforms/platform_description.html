@@ -138,9 +138,12 @@
                                                 event_price = {{ event.price }}
                                                 event_is_booked = {{ event.is_booked }}
                                                 event_is_defined = {{ event.is_defined }}
+                                                event_client_id = {{ event.client_id }}
 
                                                 event_delete_registration_link = {% url "delete_registration" platform_id=platform.id client_id=event.client_id day=event.day month=event.month year=event.year %}
                                                 event_user_link = {% url "show_profile" profile_id=event.user_id %}
+
+                                                event_own_register = {% if user_fields and user_fields.client and user_fields.client.id == event.client_id %} true {% else %} false {% endif %};
 
                                                 {% if user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %}
                                                 {% elif user_fields and user_fields.client and user_fields.client.id == event.client_id %}
@@ -207,7 +210,7 @@
     {% endfor %}
 
     <div class="buttons">
-        <button id="button_prev_month" type="button" class="btn btn-danger">Предыдущий месяц</button>
+        <button id="button_prev_month" type="button" class="btn btn-danger" disabled>Предыдущий месяц</button>
         {% if user_fields %}
             {% if not user_fields.is_staff and user_fields.organizer and user_fields.organizer == platform.organizer %}
             <div class="buttons">
@@ -379,9 +382,9 @@
                     </div>
 
                     {% csrf_token %}
-                    <button class="btn book" type="submit">Забронировать</button>
+                    <button class="btn book" type="submit" id="register_client_button">Забронировать</button>
                     <div style="margin: 0 auto;">
-                        <p class="book-info">Нажимая на кнопку "Забронировать", вы соглашаетесь с условиями публичной оферты</p>
+                        <p class="book-info" id="text_under_register_button">Нажимая на кнопку "Забронировать", вы соглашаетесь с условиями публичной оферты</p>
                     </div>
                     
                 </form>

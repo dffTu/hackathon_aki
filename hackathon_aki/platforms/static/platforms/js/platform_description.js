@@ -39,8 +39,10 @@ if (button_prev_month) {
     button_prev_month.onmousedown = function () {
         if (get_current_month() === month1) return;
         if (get_current_month() === month2) {
+            button_prev_month.disabled = true;
             set_data(month1, month2);
         } else {
+            button_next_month.disabled = false;
             set_data(month2, month3);
         }
     }
@@ -50,8 +52,10 @@ if (button_next_month) {
     button_next_month.onmousedown = function () {
         if (get_current_month() === month3) return;
         if (get_current_month() === month2) {
+            button_next_month.disabled = true;
             set_data(month3, month2);
         } else {
+            button_prev_month.disabled = false;
             set_data(month2, month1);
         }
     }
@@ -91,6 +95,12 @@ function timetable_button_click(clicked_button) {
     let change_price_link = clicked_button.getAttribute("event_change_price_link");
 
     if (document.getElementById("user_client_register_form")) {
+        let own_register_button = clicked_button.getAttribute("event_own_register");
+        if (own_register_button == "true") {
+            document.getElementById("register_client_button").disabled = true;
+            document.getElementById("text_under_register_button").innerText = "Вы уже записались на этот слот";
+            document.getElementById("text_under_register_button").style.fontSize = "20px";
+        }
         document.getElementById("user_client_register_form").action = registration_link;
         document.getElementById("__day").value = clicked_button.getAttribute("event_day");
         document.getElementById("__month").value = clicked_button.getAttribute("event_month");
