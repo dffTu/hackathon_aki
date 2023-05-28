@@ -191,20 +191,6 @@ def save_get_request(request, data):
     save_prices_request(request, data)
 
 
-def calendar_entry_request(request, data):
-    if not request.user.is_authenticated:
-        return redirect('show_page', page_id=1)
-    if hasattr(request.user, 'organizer'):
-        return redirect(request.path)
-    platform_id = int(request.POST['__platform_id'])
-    day = int(request.POST['__day'])
-    month = int(request.POST['__month'])
-    year = int(request.POST['__year'])
-    date = datetime.date(year, month, day)
-    entry = Entry(client=request.user.client, platform_id=platform_id, date=date)
-    entry.save()
-
-
 def show_catalogue_page(request, data, page_id, relevant_platforms_list):
     if 'search' in request.GET and request.GET['search'] != '':
         platform_names = [platform.name for platform in relevant_platforms_list]
@@ -343,10 +329,6 @@ def process_post_forms_requests(f):
                     return result
             if '__organizer_register' in request.POST:
                 result = organizer_registration(request, data)
-                if not result is None:
-                    return result
-            if '__calendar_entry_request' in request.POST:
-                result = calendar_entry_request(request, data)
                 if not result is None:
                     return result
             if '__comment_leaving_form' in request.POST:

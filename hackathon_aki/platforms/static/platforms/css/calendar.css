@@ -54,6 +54,7 @@
 .calendar button:hover:not(.last_month_cell){
   background: #ddd;
 }
+
 .last_month_cell button{
   background: #c0c1c2;
 }

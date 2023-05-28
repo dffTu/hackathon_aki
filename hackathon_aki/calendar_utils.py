@@ -1,6 +1,7 @@
 import datetime
 from django.utils import timezone
 from organizers.models import Entry
+from utils import DEFAULT_SLOT_PRICE
 
 WEEKDAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 MONTHS = ['Январь',
@@ -30,7 +31,7 @@ HUMANIZED_MONTHS = ['Января',
 
 
 class Slot:
-    def __init__(self, date, price, time_comparison, is_booked, user_id=None, client_id=None):
+    def __init__(self, date, price, time_comparison, is_booked, is_defined, user_id=None, client_id=None):
         self.day = date.day
         self.year = date.year
         self.month = date.month
@@ -39,6 +40,7 @@ class Slot:
         self.weekday = date.weekday()
         self.time_comparison = time_comparison
         self.is_booked = is_booked
+        self.is_defined = is_defined
         self.user_id = user_id
         self.client_id = client_id
 
@@ -78,16 +80,20 @@ class Month:
             else:
                 time_comparison = 'more'
 
-            user_id = None
-            client_id = None
-            if entries.filter(date=tmp_date).exclude(client__isnull=True).exists():
-                is_booked = True
-                client_id = entries.filter(date=tmp_date).exclude(client__isnull=True).first().client.id
-                user_id = entries.filter(date=tmp_date).exclude(client__isnull=True).first().client.user_id
-            else:
-                is_booked = False
+            user_id, client_id = None, None
+            price = DEFAULT_SLOT_PRICE
+            is_defined, is_booked = False, False
+            filtered_results = entries.filter(date=tmp_date)
+            if filtered_results.exists():
+                entry = filtered_results.first()
+                price = entry.price
+                if entry.client:
+                    is_booked = True
+                    client_id = entry.client.id
+                    user_id = entry.client.user_id
+                is_defined = True
 
-            week_slots.append(Slot(tmp_date, 1000, time_comparison, is_booked, user_id=user_id, client_id=client_id))
+            week_slots.append(Slot(tmp_date, price, time_comparison, is_booked, is_defined, user_id=user_id, client_id=client_id))
 
         self.weeks.append(week_slots)
 
@@ -95,7 +101,7 @@ class Month:
 def build_calendar(platform_id):
     today = datetime.date(year=timezone.now().year, month=timezone.now().month, day=timezone.now().day)
 
-    entries = Entry.objects.filter(platform_id=platform_id).exclude(client__isnull=True)
+    entries = Entry.objects.filter(platform_id=platform_id)
 
     months = []
     tmp = today

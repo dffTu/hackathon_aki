@@ -2,11 +2,13 @@
   color: #fff;
   background: #17A2B8;
 }
+
 .wrapper{
   width: auto;
   border-radius: 10px;
   padding: 20px 25px 40px;
 }
+
 header h2{
   font-size: 24px;
   font-weight: 600;
@@ -22,12 +24,14 @@ header p{
   display: flex;
   margin: 10% 0%;
 }
+
 .price-input .field{
   display: flex;
   width: 100%;
   height: 45px;
   align-items: center;
 }
+
 .field input{
   font-family: 'Cera Pro Bold';
   width: 100%;
@@ -39,10 +43,12 @@ header p{
   border: 1.5px solid #999;
   -moz-appearance: textfield;
 }
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
+
 .price-input .separator{
   font-family: 'Cera Pro Black';
   width: 20%;
@@ -51,12 +57,14 @@ input[type="number"]::-webkit-inner-spin-button {
   align-items: center;
   justify-content: center;
 }
+
 .slider{
   height: 5px;
   position: relative;
   background: #ddd;
   border-radius: 5px;
 }
+
 .slider .progress{
   height: 100%;
   left: 0%;
@@ -65,9 +73,11 @@ input[type="number"]::-webkit-inner-spin-button {
   border-radius: 5px;
   background: #0F2144;
 }
+
 .range-input{
   position: relative;
 }
+
 .range-input input{
   position: absolute;
   width: 100%;
@@ -78,6 +88,7 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+
 input[type="range"]::-webkit-slider-thumb{
   height: 17px;
   width: 17px;
@@ -87,6 +98,7 @@ input[type="range"]::-webkit-slider-thumb{
   -webkit-appearance: none;
   box-shadow: 0 0 6px rgba(0,0,0,0.05);
 }
+
 input[type="range"]::-moz-range-thumb{
   height: 17px;
   width: 17px;
