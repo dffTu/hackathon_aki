@@ -240,3 +240,11 @@ button {
     flex-direction: row;
     align-items: center;
 }
+
+.rating-filters {
+    display: flex;
+}
+
+.stars-pointer {
+    cursor: pointer;
+}

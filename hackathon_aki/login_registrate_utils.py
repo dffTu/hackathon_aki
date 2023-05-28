@@ -185,6 +185,9 @@ def save_get_request(request, data):
     if 'date_end' in request.GET:
         data['filters']['date_end'] = request.GET['date_end']
 
+    if 'rating_selector' in request.GET and request.GET['rating_selector'] in ['1', '2', '3', '4', '5']:
+        data['filters']['rating_selector'] = int(request.GET['rating_selector'])
+
 
 def calendar_entry_request(request, data):
     if not request.user.is_authenticated:
@@ -234,7 +237,13 @@ def show_catalogue_page(request, data, page_id, relevant_platforms_list):
     relevant_platforms_list_temp = [platform for platform in relevant_platforms_list]
     relevant_platforms_list = []
 
+    minimal_rating = 0
+    if 'rating_selector' in request.GET and request.GET['rating_selector'] in ['1', '2', '3', '4', '5']:
+        minimal_rating = int(request.GET['rating_selector'])
+
     for platform in relevant_platforms_list_temp:
+        if platform.rating < minimal_rating or minimal_rating != 0 and len(platform.comment_set.all()) == 0:
+            continue
         should_add = False
         for slot in platform.entry_set.all():
             if datetime.date.today() > slot.date:
@@ -243,7 +252,7 @@ def show_catalogue_page(request, data, page_id, relevant_platforms_list):
                 continue
             if has_date_end and slot.date > date_end.date():
                 continue
-            if minimal_price <= slot.price <= maximal_price:
+            if minimal_price <= slot.price * 1000 <= maximal_price:
                 should_add = True
                 break
         if should_add:
