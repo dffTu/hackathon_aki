@@ -254,6 +254,20 @@
     width: 100%;
 }
 
+.change-price{
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    font-family: 'Cera Pro Bold';
+}
+
+.change-price button {
+    background: #e63c3c;
+}
+.form-control {
+    width:58%;
+}
+
 .send {
     background: #878787;
 }

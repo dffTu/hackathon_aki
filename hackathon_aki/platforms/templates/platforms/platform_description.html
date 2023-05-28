@@ -454,10 +454,10 @@
 {% if user_fields and user_fields.organizer and user_fields.organizer == platform.organizer %}
     <div class="authorize-window" id="change_price_window">
         <div class="confirmation-window">
-            <form method="post" id="change_price_form">
+            <form class="change-price" method="post" id="change_price_form">
                 {% csrf_token %}
                 <input class="form-control" type="number" name="new_price" required>
-                <button class="btn delete" type="submit">Изменить цену</button>
+                <button class="btn" type="submit">Изменить цену</button>
             </form>
             <button class="btn btn-secondary" id="cancel_change_price_button">Отмена</button>
         </div>
