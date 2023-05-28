@@ -71,7 +71,11 @@
 }
 
 .cell_is_busy button{
-  background: #78bd5c!important;
+  background: #50c878;
+}
+
+.my_event_cell button{
+    background: #ffd800;
 }
 
 .defined_event{
