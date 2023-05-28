@@ -248,3 +248,9 @@ button {
 .stars-pointer {
     cursor: pointer;
 }
+
+.data-filter-text {
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
