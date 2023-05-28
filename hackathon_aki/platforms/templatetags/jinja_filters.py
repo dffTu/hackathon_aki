@@ -48,4 +48,4 @@ def shorten_text(value, arg):
 
 @register.filter(name='range')
 def shorten_text(value, arg):
-    return range(value, arg)
+    return range(int(value), int(arg))

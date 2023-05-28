@@ -21,6 +21,14 @@ class MultipleFileField(forms.FileField):
         return result
 
 
+class CalendarImportingForm(forms.Form):
+    file_field = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={
+        'id': 'calendar_importing_file_field',
+        'class': 'form-control calendar-importing-file-field',
+        'accept': '.xlsx'
+    }))
+
+
 class PlatformFileAttachingForm(forms.Form):
     file_field = MultipleFileField(required=False, widget=MultipleFileInput(attrs={
         'class': 'form-control',

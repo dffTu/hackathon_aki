@@ -5,6 +5,7 @@ let calendar_window = document.getElementById("calendar-window");
 
 let confirm_deletion_platform_window = document.getElementById("confirm_delete_platform_window");
 let confirm_deletion_entry_window = document.getElementById("confirm_delete_entry_window");
+let button_description_window = document.getElementById("button_description_window");
 
 let adding_comment_window = document.getElementById("adding_comment_window");
 
@@ -23,6 +24,7 @@ let cancel_deletion_platform_button = document.getElementById("cancel_deletion_p
 let cancel_deletion_entry_button = document.getElementById("cancel_deletion_entry_button");
 
 let add_comment_button = document.getElementById("add_comment_button");
+let desc_import_calendar_button = document.getElementById('desc_import_calendar_button');
 
 let get_arendator_info_button = document.getElementById("get_arendator_info_button");
 
@@ -125,6 +127,15 @@ window.onmousedown = function (event) {
     }
     if (event.target === adding_comment_window) {
         adding_comment_window.style.display = "none";
+    }
+    if (event.target === button_description_window) {
+        button_description_window.style.display = "none";
+    }
+}
+
+if (desc_import_calendar_button) {
+    desc_import_calendar_button.onmousedown = function() {
+        button_description_window.style.display = "flex";
     }
 }
 
