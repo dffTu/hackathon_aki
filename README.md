@@ -49,7 +49,7 @@
 2. Создайте базу данных и запомните её название и порт.
 3. Пропишите в папке с requirements.txt следующую команду:
     ```
-    python3 -m pip install -r requirements.txt
+    pip install -r requirements.txt
     ```
     Если возникнут ошибки, то убедитесь, что у вас стоит последняя версия Python и модуля pip
 4. В своём почтовом ящике создайте пароль для внешних приложений (например, для mail.ru: https://help.mail.ru/mail/security/protection/external)
