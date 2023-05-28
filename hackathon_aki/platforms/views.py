@@ -1,7 +1,9 @@
 import pandas as pd
+import datetime
 from django.http import FileResponse
 from django.shortcuts import render, redirect
 from .models import Platform
+from organizers.models import Entry
 from main.models import CommentAttachment
 from .forms import CommentFileAttachingForm, CommentLeavingForm, CalendarImportingForm
 from login_registrate_utils import process_post_forms_requests, show_catalogue_page
@@ -161,8 +163,10 @@ def update_platform_schedule(request, data, platform_id):
 
     if form.cleaned_data['file_field']:
         calendar_data = pd.read_excel(form.cleaned_data['file_field'])
-        entries = []
         for i in range(calendar_data.shape[0]):
-            entries.append((calendar_data[calendar_data.columns[0]][i], calendar_data[calendar_data.columns[1]][i]))
+            date = calendar_data[calendar_data.columns[0]][i].to_pydatetime()
+            price = int(calendar_data[calendar_data.columns[1]][i])
+            entry = Entry(platform_id=platform_id, date=date, price=price)
+            entry.save()
 
     return redirect('show_platform_description', platform_id=platform_id)
