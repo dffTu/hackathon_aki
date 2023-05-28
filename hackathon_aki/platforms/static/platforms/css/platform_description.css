@@ -186,6 +186,7 @@
     width: 70%;
     margin-top: 4%;
 }
+
 .but-in-form{
     width: 50%;
 }
@@ -213,7 +214,6 @@
     background-color: #2c89d0e3;
 }
 
-
 .buttons{
     display: flex;
     justify-content: space-evenly;
@@ -238,6 +238,7 @@
     background: #878787;
 
 }
+
 .apply {
     background: #57b051;
 }

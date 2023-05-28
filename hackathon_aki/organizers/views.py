@@ -85,7 +85,7 @@ def create_platform(request, data):
 
 
 @process_post_forms_requests
-def delete_entry(request, data, platform_id, client_id):
+def delete_entry(request, data, platform_id, day, month, year):
     if not request.user.is_authenticated:
         return redirect('show_platform_description', platform_id=platform_id)
 
@@ -97,9 +97,99 @@ def delete_entry(request, data, platform_id, client_id):
     if not is_organizer:
         return redirect('show_platform_description', platform_id=platform_id)
 
-    entry = Entry.objects.filter(platform_id=platform_id, client_id=client_id)
+    entry = Entry.objects.filter(platform_id=platform_id, date=datetime.date(year=year, month=month, day=day))
     if entry.exists():
         entry.first().delete()
+
+    if "from_schedule" in request.POST:
+        return redirect('show_organizer_schedule')
+
+    return redirect('show_platform_description', platform_id=platform_id)
+
+
+@process_post_forms_requests
+def change_price(request, data, platform_id, day, month, year):
+    if not request.user.is_authenticated:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    platform = Platform.objects.filter(id=platform_id)
+    if not platform.exists():
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    is_organizer = (hasattr(request.user, 'organizer') and platform.first().organizer == request.user.organizer)
+    if not is_organizer:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    entry = Entry.objects.filter(platform_id=platform_id, date=datetime.date(year=year, month=month, day=day))
+    if entry.exists():
+        new_price = request.POST['new_price']
+        obj = entry.first()
+        obj.price = new_price
+        obj.save()
+
+    return redirect('show_platform_description', platform_id=platform_id)
+
+
+@process_post_forms_requests
+def delete_registration(request, data, platform_id, client_id, day, month, year):
+    if not request.user.is_authenticated:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    platform = Platform.objects.filter(id=platform_id)
+    if not platform.exists():
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    is_organizer = (hasattr(request.user, 'organizer') and platform.first().organizer == request.user.organizer)
+    if not is_organizer:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    entry = Entry.objects.filter(platform_id=platform_id, client_id=client_id, date=datetime.date(year=year, month=month, day=day))
+    if entry.exists():
+        obj = entry.first()
+        obj.client = None
+        obj.save()
+
+    return redirect('show_platform_description', platform_id=platform_id)
+
+
+@process_post_forms_requests
+def add_registration(request, data, platform_id, day, month, year):
+    if not request.user.is_authenticated :
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    platform = Platform.objects.filter(id=platform_id)
+    if not platform.exists():
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    is_client = hasattr(request.user, 'client')
+    if not is_client:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    entry = Entry.objects.filter(platform_id=platform_id, date=datetime.date(year=year, month=month, day=day))
+    if entry.exists():
+        obj = entry.first()
+        obj.client = request.user.client
+        obj.save()
+
+    return redirect('show_platform_description', platform_id=platform_id)
+
+
+@process_post_forms_requests
+def add_entry(request, data, platform_id, day, month, year):
+    if not request.user.is_authenticated:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    platform = Platform.objects.filter(id=platform_id)
+    if not platform.exists():
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    is_organizer = (hasattr(request.user, 'organizer') and platform.first().organizer == request.user.organizer)
+    if not is_organizer:
+        return redirect('show_platform_description', platform_id=platform_id)
+
+    entry = Entry(platform_id=platform_id, date=datetime.date(year=year, month=month, day=day))
+    entry.save()
+
     return redirect('show_platform_description', platform_id=platform_id)
 
 

@@ -31,7 +31,7 @@ class Entry(models.Model):
     price = models.IntegerField('Цена', default=DEFAULT_SLOT_PRICE)
 
     def __str__(self):
-        return f'Запись на {self.date}'
+        return f'Запись на {self.date}, Клиент {self.client}'
 
     class Meta:
         verbose_name = 'Запись'

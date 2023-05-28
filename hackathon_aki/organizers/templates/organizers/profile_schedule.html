@@ -47,7 +47,11 @@
                                 <p>{{ entry.price }} руб.</p>
                             </div>
                             <div>
-                                <button class="btn delete">Удалить запись</button>
+                                <form method="post" action="{% url 'delete_entry' platform_id=entry.platform.id client_id=entry.client.id %}">
+                                    <input name="from_schedule" type="hidden">
+                                    {% csrf_token %}
+                                    <button class="btn delete" type="submit">Удалить запись</button>
+                                </form>
                             </div>
                         </div>
                     </li>
