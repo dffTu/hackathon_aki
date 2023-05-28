@@ -239,7 +239,7 @@ ul {
     top: 100%;
     height: max-content;
     width: 10rem;
-    z-index: 10;
+    z-index: 1;
     -webkit-transition: 0.3s ease-in-out;
     -moz-transition: 0.3s ease-in-out;
     -o-transition: 0.3s ease-in-out;
@@ -307,7 +307,7 @@ ul {
 .card1 img, .card2 img, .card3 img{
     height: 50%;
     width: 50%;
-    z-index: 10;
+    z-index: 1;
     position: relative;
     top: -180px;
     left: 65%;
