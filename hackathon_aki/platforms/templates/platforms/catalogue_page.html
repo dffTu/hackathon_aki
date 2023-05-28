@@ -14,7 +14,6 @@
 
 <div class="cat">
     <h2 class="name-of-page">Каталог</h2>
-    <p> страница {{ page_id }}</p>
 </div>
 
 
@@ -51,7 +50,7 @@
             <!--  Начало ползунка цен    -->
             <div class="wrapper">
               <header>
-                <h4>Цена</h4>
+                <h4>Цена (тыс. ₽)</h4>
               </header>
               <div class="price-input">
                 <div class="field">
@@ -183,7 +182,11 @@
                                         <div class="img-platforms">
                                             <img src="{% static 'main\img\star-yellow.svg' %}" alt="Рейтинг">
                                         </div>
-                                        <p>{{ platform.rating|round:1 }}</p>
+                                        {% if platform.comment_set|get_all|length > 0 %}
+                                            <p>{{ platform.rating|round:1 }}</p>
+                                        {% else %}
+                                            <p>Нет рейтинга</p>
+                                        {% endif %}
                                         <img class="comment" src="{% static 'main\img\comment.svg' %}">
                                         <p>{{ platform.comment_set|get_all|length }}</p>
                                     </div>
@@ -227,9 +230,17 @@
                             <button class="num-page" type="submit">
                                 <div class="pages" style="display: flex; ">
                                     {% if page_number == all_pages|length or page_number == page_id|add:2 %}
-                                        <a href="#" onclick="submitForm{{page_number}}()" style="margin-right: 0;"> {{ page_number }} </a>
+                                        {% if page_number == page_id %}
+                                            <a href="#" onclick="submitForm{{page_number}}()" style="margin-right: 0; color: orange;"> {{ page_number }} </a>
+                                        {% else %}
+                                            <a href="#" onclick="submitForm{{page_number}}()" style="margin-right: 0;"> {{ page_number }} </a>
+                                        {% endif %}
                                     {% else %}
-                                        <a href="#" onclick="submitForm{{page_number}}()"> {{ page_number }} </a>
+                                        {% if page_number == page_id %}
+                                            <a href="#" onclick="submitForm{{page_number}}()" style="color: orange;"> {{ page_number }} </a>
+                                        {% else %}
+                                            <a href="#" onclick="submitForm{{page_number}}()"> {{ page_number }} </a>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </button>
