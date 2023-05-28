@@ -100,7 +100,10 @@ def delete_entry(request, data, platform_id, client_id):
     entry = Entry.objects.filter(platform_id=platform_id, client_id=client_id)
     if entry.exists():
         entry.first().delete()
-    return redirect('show_platform_description', platform_id=platform_id)
+    if "from_schedule" in request.POST:
+        return redirect('show_organizer_schedule')
+    else:
+        return redirect('show_platform_description', platform_id=platform_id)
 
 
 @process_post_forms_requests
