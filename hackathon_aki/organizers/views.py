@@ -67,11 +67,6 @@ def create_platform(request, data):
 
             current_date = datetime.date.today()
 
-            for i in range(SLOTS_COUNT_FOR_PLATFORM + 1):
-                new_slot = Entry(client=None, platform=platform, date=current_date + datetime.timedelta(days=i),
-                                 price=DEFAULT_SLOT_PRICE)
-                new_slot.save()
-
             return redirect('show_organizer_platforms', page_id=1)
 
     data['errors'] = errors

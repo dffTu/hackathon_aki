@@ -76,7 +76,7 @@ platform_categories = {
 }
 
 
-DEFAULT_SLOT_PRICE = 1000
+DEFAULT_SLOT_PRICE = 1
 SLOTS_COUNT_FOR_PLATFORM = 90
 
 
