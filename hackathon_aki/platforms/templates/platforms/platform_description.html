@@ -270,9 +270,13 @@
                 <div class="text-comment">
                     <p>{{ comment.text }}</p>
                 </div>
-                {% for file_description in comment.commentattachment_set.all %}
-                    <img src="{{ file_description.file.url }}">
-                {% endfor %}
+                
+                <div class="grid-photos">
+                    {% for file_description in comment.commentattachment_set.all %}
+                    <img class="comment-img" src="{{ file_description.file.url }}">
+                    {% endfor %}
+
+                </div>
             </div>
         {% endfor %}
 
