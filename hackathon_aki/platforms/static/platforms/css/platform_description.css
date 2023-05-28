@@ -286,6 +286,7 @@
     justify-content: center;
     width: 70%;
 }
+
 .form-orig button {
     color: #fff;
     font-size: 14px;
@@ -327,6 +328,7 @@
     justify-content: space-between;
     flex-direction: column;
     margin-bottom: 2%;
+    padding: 2%;
     border-radius: 7px;
     border: 2px solid #c7c2c24f;
 }
@@ -357,8 +359,25 @@
     margin: 1% 3%   ;
 }
 
+.grid-photos {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 60%;
+}
+
+.comment-img{
+    left: 0;
+    top: 0;
+    object-fit: cover;
+    margin-left: 5%;
+    overflow: hidden;
+    border-radius: 7px;
+}
+
 .calendar-importing-file-field {
     width: 30%;
     margin: 15px auto;
 }
 /* Конец секции комментариев */
+
