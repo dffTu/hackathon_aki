@@ -234,3 +234,9 @@ button {
 .pages a:hover {
     color: orange;
 }
+
+.date-begin-filter, .date-end-filter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
