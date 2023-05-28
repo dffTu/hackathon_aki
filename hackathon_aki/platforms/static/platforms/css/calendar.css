@@ -56,7 +56,7 @@
 }
 
 .last_month_cell button{
-  background: #c0c1c2;
+  background: #9b9b9b;
 }
 
 .calendar .lastmonth,.calendar .nextmonth,.calendar .nextmonth ~ *{
@@ -70,8 +70,16 @@
   text-shadow: 0 0 10px rgba(0,0,0,.1);
 }
 
-.calendar .hastask{
-  font-weight: s700;
+.cell_is_busy button{
+  background: #78bd5c!important;
+}
+
+.defined_event{
+  font-family: 'Cera Pro Bold';
+}
+
+.undefined_event button{
+  color: #d5d5d5!important;
 }
 
 .calendar tr:last-of-type td:first-of-type{border-radius:0 0 0 5px;}
